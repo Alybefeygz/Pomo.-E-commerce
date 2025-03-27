@@ -1,0 +1,219 @@
+{% extends "rest_framework/base.html" %}
+
+{% block script %}
+{{ block.super }}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Sayfa yüklendiğinde URL'yi kontrol et
+    var currentUrl = window.location.href;
+    
+    // Eğer KategoriKomisyonBulmaView sayfasındaysak
+    if (currentUrl.includes("kategori-komisyon-orani-bulma")) {
+        
+        // Kategori seçildiğinde alt kategorileri getir
+        var kategoriSelect = document.querySelector('select[name="kategori"]');
+        var altKategoriSelect = document.querySelector('select[name="alt_kategori"]');
+        var urunGrubuSelect = document.querySelector('select[name="urun_grubu"]');
+        
+        if (kategoriSelect && altKategoriSelect && urunGrubuSelect) {
+            // Alt kategori seçimi önce devre dışı bırakılır
+            altKategoriSelect.disabled = true;
+            urunGrubuSelect.disabled = true;
+            
+            // Kategori seçildiğinde
+            kategoriSelect.addEventListener("change", function() {
+                var selectedKategoriId = this.value;
+                
+                // Alt kategori seçimini temizle
+                altKategoriSelect.innerHTML = '<option value="">---------</option>';
+                // Ürün grubu seçimini temizle
+                urunGrubuSelect.innerHTML = '<option value="">---------</option>';
+                
+                // Kategori seçilmezse, seçimleri devre dışı bırak
+                if (!selectedKategoriId) {
+                    altKategoriSelect.disabled = true;
+                    urunGrubuSelect.disabled = true;
+                    return;
+                }
+                
+                // Alt kategorileri getir
+                fetch('/api/hesap/kategoriler/' + selectedKategoriId + '/alt-kategoriler/')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Alt kategorileri doldur
+                        data.forEach(function(altKategori) {
+                            var option = document.createElement('option');
+                            option.value = altKategori.id;
+                            option.textContent = altKategori.alt_kategori_adi;
+                            altKategoriSelect.appendChild(option);
+                        });
+                        
+                        // Alt kategori seçimini etkinleştir
+                        altKategoriSelect.disabled = false;
+                    })
+                    .catch(error => console.error('Alt kategorileri getirirken hata oluştu:', error));
+            });
+            
+            // Alt kategori seçildiğinde
+            altKategoriSelect.addEventListener("change", function() {
+                var selectedAltKategoriId = this.value;
+                
+                // Ürün grubu seçimini temizle
+                urunGrubuSelect.innerHTML = '<option value="">---------</option>';
+                
+                // Alt kategori seçilmezse, ürün grubu seçimini devre dışı bırak
+                if (!selectedAltKategoriId) {
+                    urunGrubuSelect.disabled = true;
+                    return;
+                }
+                
+                // Ürün gruplarını getir
+                fetch('/api/hesap/alt-kategoriler/' + selectedAltKategoriId + '/urun-gruplari/')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Ürün gruplarını doldur
+                        data.forEach(function(urunGrubu) {
+                            var option = document.createElement('option');
+                            option.value = urunGrubu.id;
+                            option.textContent = urunGrubu.urun_grubu_adi;
+                            urunGrubuSelect.appendChild(option);
+                        });
+                        
+                        // Ürün grubu seçimini etkinleştir
+                        urunGrubuSelect.disabled = false;
+                    })
+                    .catch(error => console.error('Ürün gruplarını getirirken hata oluştu:', error));
+            });
+        }
+    }
+    
+    // Eğer SatisFiyatBelirlemeView sayfasındaysak
+    if (currentUrl.includes("satis-fiyat-belirleme")) {
+        
+        // Kategori seçildiğinde alt kategorileri getir
+        var kategoriSelect = document.querySelector('select[name="kategori"]');
+        var altKategoriSelect = document.querySelector('select[name="alt_kategori"]');
+        var urunGrubuSelect = document.querySelector('select[name="urun_grubu"]');
+        var kargoFirmaSelect = document.querySelector('select[name="kargo_firma"]');
+        
+        // Sayfa verilerini alıp kargo firmalarını doldur
+        fetch(window.location.href, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("API Response:", data);
+            // Kargo firma dropdown'ını doldur
+            if (kargoFirmaSelect && data.kargo_firma_secenekleri) {
+                console.log("Kargo firma seçenekleri:", data.kargo_firma_secenekleri);
+                // Mevcut seçenekleri temizle
+                kargoFirmaSelect.innerHTML = '';
+                
+                // Boş seçenek ekleme - geçerli bir değer seçilmeli 
+                var defaultOption = document.createElement('option');
+                defaultOption.value = "";
+                defaultOption.textContent = "Kargo firması seçiniz";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                kargoFirmaSelect.appendChild(defaultOption);
+                
+                // Kargo firmalarını doldur
+                for (var id in data.kargo_firma_secenekleri) {
+                    var option = document.createElement('option');
+                    option.value = id;
+                    option.textContent = data.kargo_firma_secenekleri[id];
+                    kargoFirmaSelect.appendChild(option);
+                    console.log("Eklendi:", id, data.kargo_firma_secenekleri[id]);
+                }
+                
+                // Form gönderilmeden önce kontrol et
+                var form = kargoFirmaSelect.closest('form');
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        if (!kargoFirmaSelect.value) {
+                            e.preventDefault();
+                            alert("Lütfen bir kargo firması seçiniz");
+                            kargoFirmaSelect.focus();
+                        }
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('API verilerini getirirken hata oluştu:', error));
+        
+        if (kategoriSelect && altKategoriSelect && urunGrubuSelect) {
+            // Alt kategori seçimi önce devre dışı bırakılır
+            altKategoriSelect.disabled = true;
+            urunGrubuSelect.disabled = true;
+            
+            // Kategori seçildiğinde
+            kategoriSelect.addEventListener("change", function() {
+                var selectedKategoriId = this.value;
+                
+                // Alt kategori seçimini temizle
+                altKategoriSelect.innerHTML = '<option value="">---------</option>';
+                // Ürün grubu seçimini temizle
+                urunGrubuSelect.innerHTML = '<option value="">---------</option>';
+                
+                // Kategori seçilmezse, seçimleri devre dışı bırak
+                if (!selectedKategoriId) {
+                    altKategoriSelect.disabled = true;
+                    urunGrubuSelect.disabled = true;
+                    return;
+                }
+                
+                // Alt kategorileri getir
+                fetch('/api/hesap/kategoriler/' + selectedKategoriId + '/alt-kategoriler/')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Alt kategorileri doldur
+                        data.forEach(function(altKategori) {
+                            var option = document.createElement('option');
+                            option.value = altKategori.id;
+                            option.textContent = altKategori.alt_kategori_adi;
+                            altKategoriSelect.appendChild(option);
+                        });
+                        
+                        // Alt kategori seçimini etkinleştir
+                        altKategoriSelect.disabled = false;
+                    })
+                    .catch(error => console.error('Alt kategorileri getirirken hata oluştu:', error));
+            });
+            
+            // Alt kategori seçildiğinde
+            altKategoriSelect.addEventListener("change", function() {
+                var selectedAltKategoriId = this.value;
+                
+                // Ürün grubu seçimini temizle
+                urunGrubuSelect.innerHTML = '<option value="">---------</option>';
+                
+                // Alt kategori seçilmezse, ürün grubu seçimini devre dışı bırak
+                if (!selectedAltKategoriId) {
+                    urunGrubuSelect.disabled = true;
+                    return;
+                }
+                
+                // Ürün gruplarını getir
+                fetch('/api/hesap/alt-kategoriler/' + selectedAltKategoriId + '/urun-gruplari/')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Ürün gruplarını doldur
+                        data.forEach(function(urunGrubu) {
+                            var option = document.createElement('option');
+                            option.value = urunGrubu.id;
+                            option.textContent = urunGrubu.urun_grubu_adi;
+                            urunGrubuSelect.appendChild(option);
+                        });
+                        
+                        // Ürün grubu seçimini etkinleştir
+                        urunGrubuSelect.disabled = false;
+                    })
+                    .catch(error => console.error('Ürün gruplarını getirirken hata oluştu:', error));
+            });
+        }
+    }
+});
+</script>
+{% endblock %} 

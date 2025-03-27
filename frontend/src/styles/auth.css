@@ -1,0 +1,110 @@
+/* Form validation styles override */
+.ant-form-item-explain-error {
+  color: #635e9c !important;
+}
+
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
+  border-color: #635e9c !important;
+}
+
+.ant-form-item-has-error .ant-input-prefix {
+  color: #635e9c !important;
+}
+
+.ant-form-item-has-error .ant-input:focus,
+.ant-form-item-has-error .ant-input-focused,
+.ant-form-item-has-error .ant-input:hover,
+.ant-form-item-has-error .ant-input-affix-wrapper:focus,
+.ant-form-item-has-error .ant-input-affix-wrapper-focused,
+.ant-form-item-has-error .ant-input-affix-wrapper:hover {
+  border-color: #43426e !important;
+  box-shadow: 0 0 0 2px rgba(67, 66, 110, 0.1) !important;
+}
+
+.ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+  border-color: #635e9c !important;
+}
+
+.ant-form-item-has-error .ant-input-affix-wrapper {
+  border-color: #635e9c !important;
+}
+
+/* Form feedback icon color override */
+.ant-form-item-has-error .ant-form-item-children-icon {
+  color: #635e9c !important;
+}
+
+/* Form success state override */
+.ant-form-item-has-success .ant-input,
+.ant-form-item-has-success .ant-input:hover,
+.ant-form-item-has-success .ant-input:focus,
+.ant-form-item-has-success .ant-input-focused {
+  background-color: #fff !important;
+  border-color: #43426e !important;
+}
+
+.ant-form-item-has-success .ant-input-affix-wrapper,
+.ant-form-item-has-success .ant-input-affix-wrapper:hover,
+.ant-form-item-has-success .ant-input-affix-wrapper:focus,
+.ant-form-item-has-success .ant-input-affix-wrapper-focused {
+  background-color: #fff !important;
+  border-color: #43426e !important;
+}
+
+.ant-form-item-has-success .ant-form-item-children-icon {
+  color: #43426e !important;
+}
+
+/* Password input specific overrides */
+.ant-input-password.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper,
+.ant-input-password.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover {
+  border-color: #635e9c !important;
+}
+
+.ant-input-password.ant-input-affix-wrapper:focus,
+.ant-input-password.ant-input-affix-wrapper-focused {
+  border-color: #43426e !important;
+  box-shadow: 0 0 0 2px rgba(67, 66, 110, 0.1) !important;
+}
+
+/* Hover state for all inputs */
+.ant-input:hover,
+.ant-input-affix-wrapper:hover {
+  border-color: #635e9c !important;
+}
+
+/* Focus state for all inputs */
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+  border-color: #43426e !important;
+  box-shadow: 0 0 0 2px rgba(67, 66, 110, 0.1) !important;
+}
+
+/* Override any background color on validation */
+.ant-form-item-has-success .ant-input-affix-wrapper,
+.ant-form-item-has-success .ant-input,
+.ant-form-item-has-error .ant-input-affix-wrapper,
+.ant-form-item-has-error .ant-input,
+.ant-input-affix-wrapper,
+.ant-input {
+  background-color: #fff !important;
+}
+
+/* Override any background color on hover and focus */
+.ant-form-item-has-success .ant-input-affix-wrapper:hover,
+.ant-form-item-has-success .ant-input:hover,
+.ant-form-item-has-error .ant-input-affix-wrapper:hover,
+.ant-form-item-has-error .ant-input:hover,
+.ant-input-affix-wrapper:hover,
+.ant-input:hover,
+.ant-form-item-has-success .ant-input-affix-wrapper:focus,
+.ant-form-item-has-success .ant-input:focus,
+.ant-form-item-has-error .ant-input-affix-wrapper:focus,
+.ant-form-item-has-error .ant-input:focus,
+.ant-input-affix-wrapper:focus,
+.ant-input:focus {
+  background-color: #fff !important;
+} 
