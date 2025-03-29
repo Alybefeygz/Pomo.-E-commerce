@@ -36,10 +36,10 @@ const HomePage: React.FC = () => {
               Ücretsiz hesaplama araçları ve yapay zeka destekli çözümlerle e-ticaretinizi büyütün.
             </Paragraph>
             <Space size="large">
-              <Button type="primary" size="large" icon={<CalculatorOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}>
+              <Button type="primary" size="large" icon={<CalculatorOutlined />}>
                 Ücretsiz Hesaplama Yap
               </Button>
-              <Button size="large" icon={<RocketOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}>
+              <Button size="large" icon={<RocketOutlined />}>
                 Demo İste
               </Button>
             </Space>
@@ -53,21 +53,21 @@ const HomePage: React.FC = () => {
         <Row gutter={[24, 24]}>
           <Col xs={24} sm={12} md={8}>
             <Card className="feature-card">
-              <CalculatorOutlined className="feature-icon" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+              <CalculatorOutlined className="feature-icon" />
               <Title level={4}>Ücretsiz Hesaplamalar</Title>
               <Paragraph>Fiyat, komisyon, kargo maliyeti hesaplama</Paragraph>
             </Card>
           </Col>
           <Col xs={24} sm={12} md={8}>
             <Card className="feature-card">
-              <LineChartOutlined className="feature-icon" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+              <LineChartOutlined className="feature-icon" />
               <Title level={4}>Rakip Analizi</Title>
               <Paragraph>Yapay zeka destekli rakip takibi</Paragraph>
             </Card>
           </Col>
           <Col xs={24} sm={12} md={8}>
             <Card className="feature-card">
-              <DatabaseOutlined className="feature-icon" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+              <DatabaseOutlined className="feature-icon" />
               <Title level={4}>Stok Takip Sistemi</Title>
               <Paragraph>Gelişmiş stok yönetimi</Paragraph>
             </Card>
@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
           <Col xs={24} md={8}>
             <Card className="step-card">
               <div className="step-number">1</div>
-              <UserOutlined className="step-icon" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+              <UserOutlined className="step-icon" />
               <Title level={4}>Kaydol / Giriş Yap</Title>
               <Paragraph>Hızlı ve güvenli hesap oluşturma</Paragraph>
             </Card>
@@ -90,7 +90,7 @@ const HomePage: React.FC = () => {
           <Col xs={24} md={8}>
             <Card className="step-card">
               <div className="step-number">2</div>
-              <ShopOutlined className="step-icon" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+              <ShopOutlined className="step-icon" />
               <Title level={4}>İhtiyacını Seç</Title>
               <Paragraph>Ücretsiz araçlar veya premium abonelik</Paragraph>
             </Card>
@@ -98,7 +98,7 @@ const HomePage: React.FC = () => {
           <Col xs={24} md={8}>
             <Card className="step-card">
               <div className="step-number">3</div>
-              <RocketOutlined className="step-icon" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+              <RocketOutlined className="step-icon" />
               <Title level={4}>E-Ticaretini Büyüt</Title>
               <Paragraph>Akıllı araçlarla işini büyüt</Paragraph>
             </Card>
@@ -115,8 +115,8 @@ const HomePage: React.FC = () => {
               <Title level={3}>Ücretsiz</Title>
               <div className="price">₺0/ay</div>
               <ul className="features-list">
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> Temel Hesaplamalar</li>
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> E-posta Destek</li>
+                <li><CheckCircleOutlined /> Temel Hesaplamalar</li>
+                <li><CheckCircleOutlined /> E-posta Destek</li>
               </ul>
               <Button type="primary" block>Başla</Button>
             </Card>
@@ -126,10 +126,10 @@ const HomePage: React.FC = () => {
               <Title level={3}>Pro</Title>
               <div className="price">₺9/ay</div>
               <ul className="features-list">
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> Temel Hesaplamalar</li>
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> 5 Rakip Analizi</li>
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> 100 Ürün Stok Takibi</li>
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> Canlı Destek</li>
+                <li><CheckCircleOutlined /> Temel Hesaplamalar</li>
+                <li><CheckCircleOutlined /> 5 Rakip Analizi</li>
+                <li><CheckCircleOutlined /> 100 Ürün Stok Takibi</li>
+                <li><CheckCircleOutlined /> Canlı Destek</li>
               </ul>
               <Button type="primary" block>14 Gün Ücretsiz Dene</Button>
             </Card>
@@ -139,10 +139,10 @@ const HomePage: React.FC = () => {
               <Title level={3}>Business</Title>
               <div className="price">₺29/ay</div>
               <ul className="features-list">
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> Tüm Özellikler</li>
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> Sınırsız Rakip Analizi</li>
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> Sınırsız Stok Takibi</li>
-                <li><CheckCircleOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} /> VIP Destek</li>
+                <li><CheckCircleOutlined /> Tüm Özellikler</li>
+                <li><CheckCircleOutlined /> Sınırsız Rakip Analizi</li>
+                <li><CheckCircleOutlined /> Sınırsız Stok Takibi</li>
+                <li><CheckCircleOutlined /> VIP Destek</li>
               </ul>
               <Button type="primary" block>14 Gün Ücretsiz Dene</Button>
             </Card>
@@ -158,11 +158,11 @@ const HomePage: React.FC = () => {
             <Card className="testimonial-card">
               <Space direction="vertical">
                 <div className="rating">
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+                  <StarOutlined />
+                  <StarOutlined />
+                  <StarOutlined />
+                  <StarOutlined />
+                  <StarOutlined />
                 </div>
                 <Paragraph>"Pomo ile aylık kârım %30 arttı!"</Paragraph>
                 <Paragraph strong>- Ahmet Y., Shopify Mağaza Sahibi</Paragraph>
@@ -173,11 +173,11 @@ const HomePage: React.FC = () => {
             <Card className="testimonial-card">
               <Space direction="vertical">
                 <div className="rating">
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
-                  <StarOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+                  <StarOutlined />
+                  <StarOutlined />
+                  <StarOutlined />
+                  <StarOutlined />
+                  <StarOutlined />
                 </div>
                 <Paragraph>"Rakip analizi özelliği mükemmel!"</Paragraph>
                 <Paragraph strong>- Ayşe K., E-ticaret Danışmanı</Paragraph>

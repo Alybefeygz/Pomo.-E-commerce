@@ -733,8 +733,8 @@ const App: React.FC = () => {
                     <span>Çıkış</span>
                     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#e7bd99] group-hover:w-1/2 transition-all duration-300"></div>
                   </button>
-                  <div className="flex items-center px-3 py-1 ml-1">
-                    <span className="text-[#43426e] font-medium mr-2">{username}</span>
+                  <div className="flex items-center px-4 py-2 bg-gradient-to-r from-[#43426e]/5 to-[#635e9c]/5 rounded-lg border border-[#43426e]/10">
+                    <span className="text-[#43426e] font-semibold mr-2">{username}</span>
                     <div className="relative">
                       <Avatar icon={<UserOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />} className="bg-gradient-to-r from-[#43426e] to-[#635e9c]" />
                       <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>

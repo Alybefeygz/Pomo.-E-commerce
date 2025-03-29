@@ -2,9 +2,68 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, message, Modal } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import '../styles/auth.css';
+import { login } from '../services/authService';
 
 // Define empty handler functions for pointer events
 const emptyPointerHandler = () => {};
+
+// Yaygın şifrelerin listesi
+const commonPasswords = [
+  'password', '123456', '12345678', 'qwerty', '111111', 'abc123',
+  'password123', 'admin', 'letmein', 'welcome', '123123', 'test'
+];
+
+// Şifre doğrulama fonksiyonu
+const validatePassword = (password: string, username: string): { isValid: boolean; message: string } => {
+  // Minimum uzunluk kontrolü
+  if (password.length < 8) {
+    return {
+      isValid: false,
+      message: 'Şifre en az 8 karakter uzunluğunda olmalıdır'
+    };
+  }
+
+  // Tamamen sayısal şifre kontrolü
+  if (/^\d+$/.test(password)) {
+    return {
+      isValid: false,
+      message: 'Şifre sadece sayılardan oluşamaz'
+    };
+  }
+
+  // Karmaşıklık kontrolü
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  if (!(hasLetter && hasNumber && hasSpecialChar)) {
+    return {
+      isValid: false,
+      message: 'Şifre en az bir harf, bir rakam ve bir özel karakter içermelidir'
+    };
+  }
+
+  // Yaygın şifre kontrolü
+  if (commonPasswords.includes(password.toLowerCase())) {
+    return {
+      isValid: false,
+      message: 'Bu şifre çok yaygın, lütfen daha güvenli bir şifre seçin'
+    };
+  }
+
+  // Kullanıcı adı benzerlik kontrolü
+  if (username && password.toLowerCase().includes(username.toLowerCase())) {
+    return {
+      isValid: false,
+      message: 'Şifre, kullanıcı adınızı içeremez'
+    };
+  }
+
+  return {
+    isValid: true,
+    message: ''
+  };
+};
 
 interface LoginFormProps {
   onLogin: (values: any) => void;
@@ -43,20 +102,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onShowRegister, initialV
   const handleSubmit = async (values: any) => {
     setLoading(true);
     try {
-      // Simüle edilmiş başarılı giriş
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Token'ı localStorage'a kaydet
-      localStorage.setItem('authToken', 'dummy-token');
+      // Backend'e giriş isteği gönder
+      const response = await login(values.username, values.password);
       
       // Başarılı giriş mesajı göster
       message.success('Giriş başarılı!');
       
       // Parent component'e login bilgilerini gönder
-      onLogin(values);
+      onLogin(response);
       onCancel(); // Modal'ı kapat
     } catch (error: any) {
-      message.error('Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.');
+      message.error(error.message || 'Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.');
     } finally {
       setLoading(false);
     }
@@ -99,7 +155,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onShowRegister, initialV
             ]}
           >
             <Input
-              prefix={<UserOutlined className="text-gray-400" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
+              prefix={<UserOutlined className="text-gray-400" />}
               placeholder="Kullanıcı Adı"
               size="large"
               className={`rounded-lg ${!isUsernameEditable ? 'cursor-pointer hover:border-[#43426e]' : ''}`}
@@ -113,11 +169,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onShowRegister, initialV
             name="password"
             rules={[
               { required: true, message: 'Lütfen şifrenizi girin' },
-              { min: 6, message: 'Şifre en az 6 karakter olmalıdır' }
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value) {
+                    return Promise.resolve();
+                  }
+                  const username = getFieldValue('username');
+                  const validation = validatePassword(value, username);
+                  if (!validation.isValid) {
+                    return Promise.reject(new Error(validation.message));
+                  }
+                  return Promise.resolve();
+                },
+              })
             ]}
+            hasFeedback
           >
             <Input.Password
-              prefix={<LockOutlined className="text-gray-400" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
+              prefix={<LockOutlined className="text-gray-400" />}
               placeholder="Şifre"
               size="large"
               className="rounded-lg"

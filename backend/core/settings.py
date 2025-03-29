@@ -143,20 +143,48 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = 'uploads'
 
 
+# CORS ayarları
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+# CSRF ayarları
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+# REST Framework ayarları
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
 }
 
-
-### KAYIT İŞLEMLERİ İÇİN GEREKLİ
-SITE_ID = 1 #siteye id vermemiz lazım
-
-
-ACCOUNT_EMAIL_VERIFICATION = 'none' # kayıt esnasında email onayı istiyor muyuz?
-ACCOUNT_EMAIL_REQUIRED = (True,) # kayıt esnasında kullanıcı email adresi vermeli mi?
+# dj-rest-auth ayarları
+REST_AUTH = {
+    'USE_JWT': False,
+    'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
+    'JWT_AUTH_COOKIE': 'auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'refresh-auth',
+    'REGISTER_SERIALIZER': 'dj_rest_auth.registration.serializers.RegisterSerializer',
+    'TOKEN_SERIALIZER': 'dj_rest_auth.serializers.TokenSerializer',
+    'JWT_SERIALIZER': 'dj_rest_auth.serializers.JWTSerializer',
+    'JWT_SERIALIZER_WITH_EXPIRATION': 'dj_rest_auth.serializers.JWTSerializerWithExpiration',
+    'JWT_TOKEN_CLAIMS_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenObtainPairSerializer',
+    'USER_DETAILS_SERIALIZER': 'dj_rest_auth.serializers.UserDetailsSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetSerializer',
+    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetConfirmSerializer',
+    'PASSWORD_CHANGE_SERIALIZER': 'dj_rest_auth.serializers.PasswordChangeSerializer',
+    'REGISTER_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+    'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
+}
 
 # Logging configuration
 LOGGING = {
@@ -199,14 +227,6 @@ LOGGING = {
     },
 }
 
-# CORS ayarları
-CORS_ALLOW_ALL_ORIGINS = True  # Geliştirme aşamasında tüm originlere izin ver
-# Canlı ortamda aşağıdaki gibi izin verilen originleri belirtebilirsiniz:
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",
-#     "http://127.0.0.1:3000",
-# ]
-
 # CORS izin verilen metodlar
 CORS_ALLOW_METHODS = [
     "DELETE",
@@ -229,3 +249,17 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+### KAYIT İŞLEMLERİ İÇİN GEREKLİ
+SITE_ID = 1 #siteye id vermemiz lazım
+
+ACCOUNT_EMAIL_VERIFICATION = 'none' # kayıt esnasında email onayı istiyor muyuz?
+
+# AllAuth ayarları
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}  # Hem email hem username ile giriş yapılabilir
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']  # Kayıt formunda gerekli alanlar
+ACCOUNT_UNIQUE_EMAIL = True  # Email adresi benzersiz olmalı
+ACCOUNT_USERNAME_MIN_LENGTH = 3  # Minimum kullanıcı adı uzunluğu
+ACCOUNT_PASSWORD_MIN_LENGTH = 6  # Minimum şifre uzunluğu
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True

@@ -78,11 +78,7 @@ const MainContent: React.FC<MainContentProps> = ({
                     className="flex items-center px-3 py-1 text-[#43426e] transition-all duration-200 relative group"
                     onClick={() => console.log("Profile clicked")}
                   >
-                    <UserOutlined 
-                      className="mr-1"
-                      onPointerEnterCapture={emptyPointerHandler}
-                      onPointerLeaveCapture={emptyPointerHandler}
-                    />
+                    <UserOutlined className="mr-1" />
                     <span>Profil</span>
                     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#e7bd99] group-hover:w-1/2 transition-all duration-300"></div>
                   </button>
@@ -90,21 +86,14 @@ const MainContent: React.FC<MainContentProps> = ({
                     className="flex items-center px-3 py-1 text-[#43426e] transition-all duration-200 relative group"
                     onClick={handleLogout}
                   >
-                    <LogoutOutlined 
-                      className="mr-1"
-                      onPointerEnterCapture={emptyPointerHandler}
-                      onPointerLeaveCapture={emptyPointerHandler}
-                    />
+                    <LogoutOutlined className="mr-1" />
                     <span>Çıkış</span>
                     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#e7bd99] group-hover:w-1/2 transition-all duration-300"></div>
                   </button>
                   <div className="flex items-center px-3 py-1 ml-1">
                     <span className="text-[#43426e] font-medium mr-2">{username}</span>
                     <div className="relative">
-                      <Avatar icon={<UserOutlined 
-                        onPointerEnterCapture={emptyPointerHandler}
-                        onPointerLeaveCapture={emptyPointerHandler}
-                      />} className="bg-gradient-to-r from-[#43426e] to-[#635e9c]" />
+                      <Avatar icon={<UserOutlined />} className="bg-gradient-to-r from-[#43426e] to-[#635e9c]" />
                       <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                     </div>
                   </div>
@@ -114,11 +103,7 @@ const MainContent: React.FC<MainContentProps> = ({
                   className="flex items-center text-[#43426e] border border-[#43426e] px-4 py-2 rounded-lg hover:bg-gray-50 transition-all shadow-sm relative group"
                   onClick={handleCalculationsClick}
                 >
-                  <LoginOutlined 
-                    className="mr-2"
-                    onPointerEnterCapture={emptyPointerHandler}
-                    onPointerLeaveCapture={emptyPointerHandler}
-                  />
+                  <LoginOutlined className="mr-2" />
                   <span className="font-medium">Giriş</span>
                   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#e7bd99] group-hover:w-1/2 transition-all duration-300"></div>
                 </button>

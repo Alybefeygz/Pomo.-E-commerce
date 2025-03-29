@@ -2,9 +2,68 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, message, Modal } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import '../styles/auth.css';
+import { register } from '../services/authService';
 
 // Define empty handler functions for pointer events
 const emptyPointerHandler = () => {};
+
+// Yaygın şifrelerin listesi
+const commonPasswords = [
+  'password', '123456', '12345678', 'qwerty', '111111', 'abc123',
+  'password123', 'admin', 'letmein', 'welcome', '123123', 'test'
+];
+
+// Şifre doğrulama fonksiyonu
+const validatePassword = (password: string, username: string): { isValid: boolean; message: string } => {
+  // Minimum uzunluk kontrolü
+  if (password.length < 8) {
+    return {
+      isValid: false,
+      message: 'Şifre en az 8 karakter uzunluğunda olmalıdır'
+    };
+  }
+
+  // Tamamen sayısal şifre kontrolü
+  if (/^\d+$/.test(password)) {
+    return {
+      isValid: false,
+      message: 'Şifre sadece sayılardan oluşamaz'
+    };
+  }
+
+  // Karmaşıklık kontrolü
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  if (!(hasLetter && hasNumber && hasSpecialChar)) {
+    return {
+      isValid: false,
+      message: 'Şifre en az bir harf, bir rakam ve bir özel karakter içermelidir'
+    };
+  }
+
+  // Yaygın şifre kontrolü
+  if (commonPasswords.includes(password.toLowerCase())) {
+    return {
+      isValid: false,
+      message: 'Bu şifre çok yaygın, lütfen daha güvenli bir şifre seçin'
+    };
+  }
+
+  // Kullanıcı adı benzerlik kontrolü
+  if (username && password.toLowerCase().includes(username.toLowerCase())) {
+    return {
+      isValid: false,
+      message: 'Şifre, kullanıcı adınızı içeremez'
+    };
+  }
+
+  return {
+    isValid: true,
+    message: ''
+  };
+};
 
 interface RegisterFormProps {
   onRegister: (values: { username: string; email: string; password: string }) => void;
@@ -27,17 +86,41 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
   const handleSubmit = async (values: any) => {
     setLoading(true);
     try {
-      // Simüle edilmiş başarılı kayıt
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Backend'e kayıt isteği gönder
+      const response = await register(
+        values.username,
+        values.email,
+        values.password, // password1
+        values.confirmPassword // password2
+      );
       
       // Başarılı kayıt mesajı göster
       message.success('Kayıt başarılı! Giriş yapabilirsiniz.');
       
       // Parent component'e kayıt bilgilerini gönder
-      onRegister(values);
-      onCancel(); // Modal'ı kapat
+      onRegister({
+        username: values.username,
+        email: values.email,
+        password: values.password
+      });
+
+      // Modal'ı kapat ve giriş formuna yönlendir
+      onCancel();
+      onBackToLogin();
     } catch (error: any) {
-      message.error('Kayıt olurken bir hata oluştu. Lütfen tekrar deneyin.');
+      // Backend'den gelen hata mesajlarını kontrol et
+      if (error.response?.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach(key => {
+          if (Array.isArray(errors[key])) {
+            message.error(`${key}: ${errors[key][0]}`);
+          } else if (typeof errors[key] === 'string') {
+            message.error(`${key}: ${errors[key]}`);
+          }
+        });
+      } else {
+        message.error(error.message || 'Kayıt olurken bir hata oluştu. Lütfen tekrar deneyin.');
+      }
     } finally {
       setLoading(false);
     }
@@ -77,7 +160,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
             hasFeedback
           >
             <Input
-              prefix={<UserOutlined className="text-gray-400" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
+              prefix={<UserOutlined className="text-gray-400" />}
               placeholder="Kullanıcı Adı"
               size="large"
               className="rounded-lg"
@@ -94,7 +177,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
             hasFeedback
           >
             <Input
-              prefix={<MailOutlined className="text-gray-400" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
+              prefix={<MailOutlined className="text-gray-400" />}
               placeholder="E-posta"
               size="large"
               className="rounded-lg"
@@ -106,16 +189,24 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
             name="password"
             rules={[
               { required: true, message: 'Lütfen şifrenizi girin' },
-              { min: 6, message: 'Şifre en az 6 karakter olmalıdır' },
-              {
-                pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{6,}$/,
-                message: 'Şifre en az bir harf ve bir rakam içermelidir'
-              }
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value) {
+                    return Promise.resolve();
+                  }
+                  const username = getFieldValue('username');
+                  const validation = validatePassword(value, username);
+                  if (!validation.isValid) {
+                    return Promise.reject(new Error(validation.message));
+                  }
+                  return Promise.resolve();
+                },
+              })
             ]}
             hasFeedback
           >
             <Input.Password
-              prefix={<LockOutlined className="text-gray-400" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
+              prefix={<LockOutlined className="text-gray-400" />}
               placeholder="Şifre"
               size="large"
               className="rounded-lg"
@@ -140,7 +231,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
             ]}
           >
             <Input.Password
-              prefix={<LockOutlined className="text-gray-400" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
+              prefix={<LockOutlined className="text-gray-400" />}
               placeholder="Şifre Tekrarı"
               size="large"
               className="rounded-lg"

@@ -3253,3 +3253,289 @@ WARNING 2025-03-27 16:55:12,214 log Bad Request: /api/rest-auth/login/
 WARNING 2025-03-27 16:55:12,215 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 68
 WARNING 2025-03-27 16:55:14,078 log Bad Request: /api/rest-auth/login/
 WARNING 2025-03-27 16:55:14,079 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 68
+INFO 2025-03-27 23:52:13,137 autoreload Watching for file changes with StatReloader
+INFO 2025-03-27 23:53:01,907 autoreload Watching for file changes with StatReloader
+INFO 2025-03-27 23:54:40,467 autoreload Watching for file changes with StatReloader
+INFO 2025-03-27 23:55:33,671 autoreload Watching for file changes with StatReloader
+INFO 2025-03-27 23:55:56,406 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:04:19,217 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-28 00:04:29,257 log Not Found: /
+WARNING 2025-03-28 00:04:29,259 basehttp "GET / HTTP/1.1" 404 3274
+INFO 2025-03-28 00:04:32,107 basehttp "GET /api/ HTTP/1.1" 200 21069
+WARNING 2025-03-28 00:07:26,344 log Method Not Allowed: /api/rest-auth/registration/
+WARNING 2025-03-28 00:07:26,345 basehttp "GET /api/rest-auth/registration/ HTTP/1.1" 405 23920
+WARNING 2025-03-28 00:07:29,382 log Method Not Allowed: /api/rest-auth/login/
+WARNING 2025-03-28 00:07:29,383 basehttp "GET /api/rest-auth/login/ HTTP/1.1" 405 23778
+WARNING 2025-03-28 00:08:03,575 log Not Found: /api/rest-auth/register/
+WARNING 2025-03-28 00:08:03,575 basehttp "GET /api/rest-auth/register/ HTTP/1.1" 404 4928
+WARNING 2025-03-28 00:11:41,677 log Method Not Allowed: /api/rest-auth/registration/
+WARNING 2025-03-28 00:11:41,678 basehttp "GET /api/rest-auth/registration/ HTTP/1.1" 405 23920
+INFO 2025-03-28 00:12:06,662 basehttp "OPTIONS /api/rest-auth/registration/ HTTP/1.1" 200 0
+WARNING 2025-03-28 00:12:06,692 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:06,693 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:07,413 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:07,413 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:10,492 log Method Not Allowed: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:10,492 basehttp "GET /api/rest-auth/registration/ HTTP/1.1" 405 23920
+INFO 2025-03-28 00:12:13,191 basehttp "GET /api/profil/ HTTP/1.1" 200 21208
+INFO 2025-03-28 00:12:14,423 basehttp "GET /api/profil/durum/ HTTP/1.1" 200 25626
+INFO 2025-03-28 00:12:15,533 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22708
+INFO 2025-03-28 00:12:15,616 basehttp "GET /static/rest_framework/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+WARNING 2025-03-28 00:12:20,366 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:20,367 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:38,846 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:38,847 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:39,321 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:39,321 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:39,499 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:39,499 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:39,666 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:39,667 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:39,823 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:39,824 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:39,985 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:39,986 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:12:40,302 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:12:40,303 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+INFO 2025-03-28 00:13:02,520 basehttp "POST /api-auth/logout/?next=/api/profil/profilleri/ HTTP/1.1" 302 0
+WARNING 2025-03-28 00:13:02,527 log Unauthorized: /api/profil/profilleri/
+WARNING 2025-03-28 00:13:02,528 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 401 20409
+INFO 2025-03-28 00:13:19,143 basehttp "GET /api-auth/login/?next=/api/profil/profilleri/ HTTP/1.1" 200 2723
+INFO 2025-03-28 00:13:21,472 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-03-28 00:13:21,488 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22707
+INFO 2025-03-28 00:13:27,091 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-03-28 00:13:27,220 basehttp "GET /admin/ HTTP/1.1" 200 18691
+INFO 2025-03-28 00:13:27,271 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2804
+INFO 2025-03-28 00:13:27,272 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-03-28 00:13:27,272 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-03-28 00:13:27,273 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22092
+INFO 2025-03-28 00:13:27,274 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 17972
+INFO 2025-03-28 00:13:27,285 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-03-28 00:13:27,314 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-03-28 00:13:27,315 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-03-28 00:13:27,319 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-03-28 00:13:29,508 basehttp "GET /admin/authtoken/tokenproxy/ HTTP/1.1" 200 18081
+INFO 2025-03-28 00:13:29,546 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+INFO 2025-03-28 00:13:29,550 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-03-28 00:13:29,559 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2025-03-28 00:13:29,559 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9097
+INFO 2025-03-28 00:13:29,562 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2025-03-28 00:13:29,572 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-03-28 00:13:29,573 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-03-28 00:13:29,577 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-03-28 00:13:29,599 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2025-03-28 00:13:29,627 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-03-28 00:13:29,669 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2025-03-28 00:13:29,697 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-03-28 00:13:29,698 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-03-28 00:14:27,040 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:14:27,630 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:14:41,633 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:16:12,339 basehttp "OPTIONS /api/rest-auth/registration/ HTTP/1.1" 200 0
+WARNING 2025-03-28 00:16:12,362 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:16:12,363 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+INFO 2025-03-28 00:16:16,278 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22707
+INFO 2025-03-28 00:16:18,336 basehttp "GET /admin/authtoken/tokenproxy/ HTTP/1.1" 200 18081
+INFO 2025-03-28 00:16:18,359 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,360 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,361 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,361 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,362 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,362 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,365 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,366 basehttp "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,367 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,367 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,368 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,368 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,369 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,369 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,370 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,374 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,375 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,382 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,382 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:16:18,382 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:19:11,669 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:19:12,707 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:19:19,702 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:20:10,405 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:20:11,707 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:20:18,926 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:20:44,622 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-28 00:21:08,598 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:21:08,598 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+INFO 2025-03-28 00:21:12,937 basehttp "GET /admin/authtoken/tokenproxy/ HTTP/1.1" 200 18081
+INFO 2025-03-28 00:21:12,957 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,962 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,962 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,962 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,963 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,963 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,965 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,966 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,966 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,967 basehttp "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,967 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,969 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,969 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,970 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,971 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,973 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,977 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,984 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,984 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:12,984 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:21:13,610 basehttp "GET /admin/authtoken/tokenproxy/ HTTP/1.1" 200 18081
+INFO 2025-03-28 00:22:17,590 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:22:18,625 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:22:22,003 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-28 00:23:33,584 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:23:33,585 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+INFO 2025-03-28 00:25:30,214 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:25:31,421 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-28 00:27:44,523 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:27:44,524 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:32:15,957 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:32:15,957 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:32:16,824 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:32:16,825 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:32:17,622 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:32:17,623 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:32:18,538 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:32:18,539 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+INFO 2025-03-28 00:34:16,992 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-28 00:34:38,443 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:34:38,444 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+WARNING 2025-03-28 00:37:29,082 log Bad Request: /api/rest-auth/registration/
+WARNING 2025-03-28 00:37:29,082 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 400 115
+INFO 2025-03-28 00:37:51,081 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:37:52,064 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:38:31,592 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:38:32,408 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:38:49,286 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 201 50
+INFO 2025-03-28 00:39:00,465 basehttp "OPTIONS /api/rest-auth/login/ HTTP/1.1" 200 0
+INFO 2025-03-28 00:39:01,091 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
+INFO 2025-03-28 00:39:20,113 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-03-28 00:39:20,167 basehttp "GET /admin/ HTTP/1.1" 200 18691
+INFO 2025-03-28 00:39:20,205 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:20,205 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:20,208 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:20,209 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:20,210 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:20,215 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:20,248 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-03-28 00:39:20,260 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:20,260 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-03-28 00:39:22,361 basehttp "GET /admin/authtoken/tokenproxy/ HTTP/1.1" 200 18316
+INFO 2025-03-28 00:39:22,383 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,383 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,383 basehttp "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,383 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,383 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,384 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,386 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,386 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,387 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,387 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,394 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,404 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:22,404 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:43,860 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22855
+INFO 2025-03-28 00:39:43,905 basehttp "GET /static/rest_framework/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+INFO 2025-03-28 00:39:52,104 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:39:53,069 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:39:55,016 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo. E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-28 00:39:55,702 autoreload Watching for file changes with StatReloader
+INFO 2025-03-28 00:42:58,385 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
+INFO 2025-03-28 00:43:13,502 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
+INFO 2025-03-28 00:51:35,352 basehttp "GET /api-auth/login/?next=/api/profil/profilleri/ HTTP/1.1" 200 2723
+INFO 2025-03-29 23:13:35,604 autoreload Watching for file changes with StatReloader
+INFO 2025-03-29 23:14:02,289 basehttp "OPTIONS /api/rest-auth/login/ HTTP/1.1" 200 0
+INFO 2025-03-29 23:14:02,994 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
+WARNING 2025-03-29 23:14:18,508 log Not Found: /
+WARNING 2025-03-29 23:14:18,508 basehttp "GET / HTTP/1.1" 404 3274
+WARNING 2025-03-29 23:14:18,630 log Not Found: /favicon.ico
+WARNING 2025-03-29 23:14:18,631 basehttp "GET /favicon.ico HTTP/1.1" 404 3325
+INFO 2025-03-29 23:14:22,423 basehttp "GET /api/ HTTP/1.1" 200 21068
+INFO 2025-03-29 23:14:22,632 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+INFO 2025-03-29 23:14:22,636 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2025-03-29 23:14:22,637 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2025-03-29 23:14:22,639 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2025-03-29 23:14:22,655 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+INFO 2025-03-29 23:14:22,670 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2025-03-29 23:14:22,670 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2025-03-29 23:14:22,674 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+INFO 2025-03-29 23:14:22,678 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+INFO 2025-03-29 23:14:22,685 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+INFO 2025-03-29 23:14:22,692 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2025-03-29 23:14:22,697 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+INFO 2025-03-29 23:14:25,823 basehttp "POST /api-auth/logout/?next=/api/ HTTP/1.1" 302 0
+INFO 2025-03-29 23:14:25,830 basehttp "GET /api/ HTTP/1.1" 200 20535
+INFO 2025-03-29 23:14:26,709 basehttp "GET /api-auth/login/?next=/api/ HTTP/1.1" 200 2705
+INFO 2025-03-29 23:14:37,995 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-03-29 23:14:38,006 basehttp "GET /api/ HTTP/1.1" 200 21069
+INFO 2025-03-29 23:14:43,548 basehttp "POST /api-auth/logout/?next=/api/ HTTP/1.1" 302 0
+INFO 2025-03-29 23:14:43,552 basehttp "GET /api/ HTTP/1.1" 200 20535
+INFO 2025-03-29 23:14:44,780 basehttp "GET /api-auth/login/?next=/api/ HTTP/1.1" 200 2705
+INFO 2025-03-29 23:14:47,853 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-03-29 23:14:47,864 basehttp "GET /api/ HTTP/1.1" 200 21068
+INFO 2025-03-29 23:14:55,402 basehttp "GET /admin/ HTTP/1.1" 200 18691
+INFO 2025-03-29 23:14:55,427 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,427 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,437 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,437 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,438 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,438 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,451 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,457 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-03-29 23:14:55,457 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,151 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 21718
+INFO 2025-03-29 23:15:03,171 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,171 basehttp "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,172 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,172 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,172 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,176 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,178 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,178 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,179 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,180 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,190 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-03-29 23:15:03,190 basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-03-29 23:15:03,195 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,204 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-03-29 23:15:03,226 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,226 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+INFO 2025-03-29 23:15:03,235 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-03-29 23:15:05,302 basehttp "GET /admin/auth/user/5/change/ HTTP/1.1" 200 38047
+INFO 2025-03-29 23:15:05,330 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-03-29 23:15:05,337 basehttp "GET /static/admin/css/forms.css HTTP/1.1" 200 8794
+INFO 2025-03-29 23:15:05,344 basehttp "GET /static/admin/js/SelectBox.js HTTP/1.1" 200 4530
+INFO 2025-03-29 23:15:05,344 basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+INFO 2025-03-29 23:15:05,347 basehttp "GET /static/admin/js/SelectFilter2.js HTTP/1.1" 200 15502
+INFO 2025-03-29 23:15:05,348 basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2025-03-29 23:15:05,348 basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2025-03-29 23:15:05,356 basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 200 11564
+INFO 2025-03-29 23:15:05,376 basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-03-29 23:15:05,420 basehttp "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+INFO 2025-03-29 23:15:05,420 basehttp "GET /static/admin/img/icon-unknown-alt.svg HTTP/1.1" 200 655
+INFO 2025-03-29 23:15:05,420 basehttp "GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+INFO 2025-03-29 23:15:05,420 basehttp "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2025-03-29 23:15:05,427 basehttp "GET /static/admin/img/selector-icons.svg HTTP/1.1" 200 3291
+INFO 2025-03-29 23:15:14,582 basehttp "POST /admin/auth/user/5/change/ HTTP/1.1" 302 0
+INFO 2025-03-29 23:15:14,604 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 21912
+INFO 2025-03-29 23:15:14,628 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+WARNING 2025-03-29 23:15:27,176 log Not Found: /
+WARNING 2025-03-29 23:15:27,177 basehttp "GET / HTTP/1.1" 404 3274
+INFO 2025-03-29 23:15:35,395 basehttp "GET /api/ HTTP/1.1" 200 21068
+INFO 2025-03-29 23:15:38,281 basehttp "POST /api-auth/logout/?next=/api/ HTTP/1.1" 302 0
+INFO 2025-03-29 23:15:38,289 basehttp "GET /api/ HTTP/1.1" 200 20535
+INFO 2025-03-29 23:15:39,105 basehttp "GET /api-auth/login/?next=/api/ HTTP/1.1" 200 2705
+INFO 2025-03-29 23:15:50,957 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-03-29 23:15:50,969 basehttp "GET /api/ HTTP/1.1" 200 21069
+INFO 2025-03-29 23:15:56,629 basehttp "GET /api/hesap/ HTTP/1.1" 200 21210
+INFO 2025-03-29 23:15:56,854 basehttp "GET /api/hesap/username-admin2/ HTTP/1.1" 200 21792
+INFO 2025-03-29 23:16:00,035 basehttp "GET /api/hesap/admin/ HTTP/1.1" 200 22680
+INFO 2025-03-29 23:18:58,749 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
+INFO 2025-03-29 23:23:43,310 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
