@@ -3539,3 +3539,305 @@ INFO 2025-03-29 23:15:56,854 basehttp "GET /api/hesap/username-admin2/ HTTP/1.1"
 INFO 2025-03-29 23:16:00,035 basehttp "GET /api/hesap/admin/ HTTP/1.1" 200 22680
 INFO 2025-03-29 23:18:58,749 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
 INFO 2025-03-29 23:23:43,310 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
+INFO 2025-03-30 21:14:07,366 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-30 21:14:15,688 log Not Found: /
+WARNING 2025-03-30 21:14:15,691 basehttp "GET / HTTP/1.1" 404 3274
+WARNING 2025-03-30 21:14:15,788 log Not Found: /favicon.ico
+WARNING 2025-03-30 21:14:15,789 basehttp "GET /favicon.ico HTTP/1.1" 404 3325
+INFO 2025-03-30 21:14:19,882 basehttp "GET /api/ HTTP/1.1" 200 20535
+INFO 2025-03-30 21:14:20,062 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2025-03-30 21:14:20,062 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2025-03-30 21:14:20,064 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+INFO 2025-03-30 21:14:20,066 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2025-03-30 21:14:20,077 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+INFO 2025-03-30 21:14:20,087 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+INFO 2025-03-30 21:14:20,088 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2025-03-30 21:14:20,095 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+INFO 2025-03-30 21:14:20,106 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2025-03-30 21:14:20,107 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+INFO 2025-03-30 21:14:20,114 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2025-03-30 21:14:20,124 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+INFO 2025-03-30 21:14:25,249 basehttp "GET /api-auth/login/?next=/api/ HTTP/1.1" 200 2705
+INFO 2025-03-30 21:14:28,592 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-03-30 21:14:28,602 basehttp "GET /api/ HTTP/1.1" 200 21069
+INFO 2025-03-30 21:18:45,288 basehttp "GET /api/hesap/ HTTP/1.1" 200 21210
+INFO 2025-03-30 21:18:45,322 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,328 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,328 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,328 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,328 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,328 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,329 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,332 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,332 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,332 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,332 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:45,338 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2025-03-30 21:18:46,558 basehttp "GET /api/hesap/username-admin2/ HTTP/1.1" 200 21792
+INFO 2025-03-30 21:18:48,519 basehttp - Broken pipe from ('127.0.0.1', 52052)
+INFO 2025-03-30 21:18:48,751 basehttp "GET /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 200 103662
+INFO 2025-03-30 21:18:48,783 basehttp "GET /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 200 1244
+INFO 2025-03-30 21:19:08,029 basehttp "GET /api/hesap/kategoriler/16/alt-kategoriler/ HTTP/1.1" 200 964
+INFO 2025-03-30 21:19:09,016 basehttp "GET /api/hesap/alt-kategoriler/74/urun-gruplari/ HTTP/1.1" 200 390
+INFO 2025-03-30 21:19:12,714 views Request data: <QueryDict: {'csrfmiddlewaretoken': ['j5wfy9DW11aqFQJrjjDjRGEuwD3UFtvDqrsR40BvADRRb9dJE0EFXqwwCeBi5L6i'], 'email': ['ygzefealyb@gmail.com'], 'urun_ismi': ['WINDMILL'], 'kdv_orani': ['20'], 'urun_maliyeti': ['1'], 'urun_paketleme_maliyeti': ['1'], 'en': ['1'], 'boy': ['1'], 'yukseklik': ['1'], 'net_agirlik': ['1'], 'kargo_firma': ['8'], 'kategori': ['16'], 'alt_kategori': ['74'], 'urun_grubu': ['246'], 'istenilen_kar_orani': ['1']}>
+INFO 2025-03-30 21:19:12,715 views Kargo firma choices for validation: {'1': 'Aras', '2': 'Kolay Gelsin', '3': 'MNG', '4': 'PTT', '5': 'Sürat', '6': 'TEX', '7': 'Yurtiçi', '8': 'Borusan', '9': 'CEVA', '10': 'Horoz'}
+INFO 2025-03-30 21:19:12,722 views Validated data: {'email': 'ygzefealyb@gmail.com', 'urun_ismi': 'WINDMILL', 'kdv_orani': Decimal('20.00'), 'urun_maliyeti': Decimal('1.00'), 'urun_paketleme_maliyeti': Decimal('1.00'), 'en': 1.0, 'boy': 1.0, 'yukseklik': 1.0, 'net_agirlik': 1.0, 'kargo_firma': '8', 'kategori': <Kategori: Mobilya>, 'alt_kategori': <AltKategori: Mobilya > Salon Mobilyasý>, 'urun_grubu': <UrunGrubu: Mobilya > Salon Mobilyasý > Ayakkabýlýk,Yemek Masasý,Portmanto,Berjer, Dresuar,TV Koltuðu, Yemek Odasý Sandalyesi, Vitrin & Gümüþlük, Portmanto Askýlýk,Dergilik & Gazetelikler, Yan Sehpa, Zigon,TV Sehpalarý & Üniteleri,Orta Sehpa,
+Konsol, Puf & Bench,
+Þaraplýk>, 'istenilen_kar_orani': Decimal('1.00')}
+WARNING 2025-03-30 21:19:13,006 log Bad Request: /api/hesap/username-admin2/satis-fiyat-belirleme/
+WARNING 2025-03-30 21:19:13,007 basehttp "POST /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 400 100457
+INFO 2025-03-30 21:19:13,048 basehttp "GET /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 200 1244
+INFO 2025-03-30 21:19:15,984 basehttp "GET /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 200 103662
+INFO 2025-03-30 21:19:16,034 basehttp "GET /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 200 1244
+INFO 2025-03-30 21:19:28,914 basehttp "GET /api/hesap/kategoriler/15/alt-kategoriler/ HTTP/1.1" 200 218
+INFO 2025-03-30 21:19:30,236 basehttp "GET /api/hesap/alt-kategoriler/66/urun-gruplari/ HTTP/1.1" 200 491
+INFO 2025-03-30 21:19:31,998 views Request data: <QueryDict: {'csrfmiddlewaretoken': ['v36CPkqhq2d3e3paqDRDZQQWbH07obFUCp2elboQZEUuKmTsLkSZ5AIYhiyvOtgz'], 'email': ['admin2@gmail.com'], 'urun_ismi': ['WINDMILL'], 'kdv_orani': ['20'], 'urun_maliyeti': ['1'], 'urun_paketleme_maliyeti': ['1'], 'en': ['1'], 'boy': ['1'], 'yukseklik': ['1'], 'net_agirlik': ['1'], 'kargo_firma': ['3'], 'kategori': ['15'], 'alt_kategori': ['66'], 'urun_grubu': ['234'], 'istenilen_kar_orani': ['1']}>
+INFO 2025-03-30 21:19:32,001 views Kargo firma choices for validation: {'1': 'Aras', '2': 'Kolay Gelsin', '3': 'MNG', '4': 'PTT', '5': 'Sürat', '6': 'TEX', '7': 'Yurtiçi', '8': 'Borusan', '9': 'CEVA', '10': 'Horoz'}
+INFO 2025-03-30 21:19:32,004 views Validated data: {'email': 'admin2@gmail.com', 'urun_ismi': 'WINDMILL', 'kdv_orani': Decimal('20.00'), 'urun_maliyeti': Decimal('1.00'), 'urun_paketleme_maliyeti': Decimal('1.00'), 'en': 1.0, 'boy': 1.0, 'yukseklik': 1.0, 'net_agirlik': 1.0, 'kargo_firma': '3', 'kategori': <Kategori: Kozmetik & Kiþisel Bakým>, 'alt_kategori': <AltKategori: Kozmetik & Kiþisel Bakým > Kozmetik>, 'urun_grubu': <UrunGrubu: Kozmetik & Kiþisel Bakým > Kozmetik > Makyaj>, 'istenilen_kar_orani': Decimal('1.00')}
+INFO 2025-03-30 21:19:32,325 basehttp "POST /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 200 101462
+INFO 2025-03-30 21:19:32,349 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,349 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,349 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,349 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,350 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,350 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,353 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,353 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,354 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,354 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,354 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:19:32,384 basehttp "GET /api/hesap/username-admin2/satis-fiyat-belirleme/ HTTP/1.1" 200 1244
+INFO 2025-03-30 21:19:41,068 basehttp "GET /api/ HTTP/1.1" 200 21069
+INFO 2025-03-30 21:36:45,078 basehttp "OPTIONS /api/rest-auth/login/ HTTP/1.1" 200 0
+INFO 2025-03-30 21:36:45,470 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 50
+INFO 2025-03-30 21:40:03,017 basehttp "GET /api/profil/ HTTP/1.1" 200 21208
+INFO 2025-03-30 21:40:03,047 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,048 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,048 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,049 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,049 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,051 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,051 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,052 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,052 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,052 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,053 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,059 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2025-03-30 21:40:03,180 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22856
+INFO 2025-03-30 21:40:03,225 basehttp "GET /static/rest_framework/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+INFO 2025-03-30 21:40:05,521 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22856
+WARNING 2025-03-30 21:45:14,215 log Method Not Allowed: /api/rest-auth/registration/
+WARNING 2025-03-30 21:45:14,216 basehttp "GET /api/rest-auth/registration/ HTTP/1.1" 405 23920
+INFO 2025-03-30 21:45:14,243 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,248 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,248 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,249 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,249 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,249 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,250 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,251 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,251 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,251 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,252 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:45:14,260 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+WARNING 2025-03-30 21:45:17,543 log Method Not Allowed: /api/rest-auth/login/
+WARNING 2025-03-30 21:45:17,543 basehttp "GET /api/rest-auth/login/ HTTP/1.1" 405 23778
+INFO 2025-03-30 21:45:21,584 basehttp "POST /api-auth/logout/?next=/api/rest-auth/login/ HTTP/1.1" 302 0
+WARNING 2025-03-30 21:45:21,594 log Method Not Allowed: /api/rest-auth/login/
+WARNING 2025-03-30 21:45:21,594 basehttp "GET /api/rest-auth/login/ HTTP/1.1" 405 23244
+WARNING 2025-03-30 21:45:30,724 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:45:30,725 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23309
+INFO 2025-03-30 21:45:49,144 basehttp "GET /api-auth/login/?next=/api/rest-auth/login/ HTTP/1.1" 200 2721
+INFO 2025-03-30 21:45:51,502 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+WARNING 2025-03-30 21:45:51,513 log Method Not Allowed: /api/rest-auth/login/
+WARNING 2025-03-30 21:45:51,513 basehttp "GET /api/rest-auth/login/ HTTP/1.1" 405 23778
+WARNING 2025-03-30 21:45:59,057 log Not Found: /api/profilleri/1/
+WARNING 2025-03-30 21:45:59,058 basehttp "GET /api/profilleri/1/ HTTP/1.1" 404 3343
+WARNING 2025-03-30 21:46:01,663 log Not Found: /api/profilleri/
+WARNING 2025-03-30 21:46:01,663 basehttp "GET /api/profilleri/ HTTP/1.1" 404 3337
+INFO 2025-03-30 21:46:05,669 basehttp "GET /api/ HTTP/1.1" 200 21069
+INFO 2025-03-30 21:46:06,699 basehttp "GET /api/profil/ HTTP/1.1" 200 21208
+INFO 2025-03-30 21:46:07,815 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22856
+INFO 2025-03-30 21:46:07,838 basehttp "GET /static/rest_framework/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+INFO 2025-03-30 21:46:14,400 basehttp "GET /api/profil/profilleri/5 HTTP/1.1" 301 0
+INFO 2025-03-30 21:46:14,414 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 24768
+INFO 2025-03-30 21:46:53,625 basehttp "POST /api-auth/logout/?next=/api/profil/profilleri/5/ HTTP/1.1" 302 0
+WARNING 2025-03-30 21:46:53,633 log Unauthorized: /api/profil/profilleri/5/
+WARNING 2025-03-30 21:46:53,633 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 401 20575
+WARNING 2025-03-30 21:47:00,435 log Method Not Allowed: /api/rest-auth/registration/
+WARNING 2025-03-30 21:47:00,436 basehttp "GET /api/rest-auth/registration/ HTTP/1.1" 405 23386
+WARNING 2025-03-30 21:47:03,921 log Method Not Allowed: /api/rest-auth/login/
+WARNING 2025-03-30 21:47:03,921 basehttp "GET /api/rest-auth/login/ HTTP/1.1" 405 23244
+WARNING 2025-03-30 21:47:11,764 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:47:11,764 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23309
+WARNING 2025-03-30 21:47:22,077 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:47:22,078 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23294
+WARNING 2025-03-30 21:47:41,233 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:47:41,234 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:04,746 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:04,747 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:05,430 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:05,431 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:05,720 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:05,721 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:05,864 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:05,865 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:06,008 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:06,008 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:06,136 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:06,137 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:08,334 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:08,336 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:13,224 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:13,225 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:14,572 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:14,573 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23314
+WARNING 2025-03-30 21:48:24,220 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:48:24,221 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23294
+WARNING 2025-03-30 21:49:35,143 log Bad Request: /api/rest-auth/login/
+WARNING 2025-03-30 21:49:35,144 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 23294
+INFO 2025-03-30 21:49:35,171 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,171 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,171 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,172 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,172 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,172 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,172 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,174 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,175 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,175 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:49:35,175 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 21:58:51,289 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\profiller\api\serializers.py changed, reloading.
+INFO 2025-03-30 21:58:52,096 autoreload Watching for file changes with StatReloader
+INFO 2025-03-30 21:59:03,438 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-03-30 21:59:04,027 autoreload Watching for file changes with StatReloader
+INFO 2025-03-30 22:06:34,079 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 136
+INFO 2025-03-30 22:06:53,237 basehttp "GET /api/ HTTP/1.1" 200 20535
+INFO 2025-03-30 22:06:53,259 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,266 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,271 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,271 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,271 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,272 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,272 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,273 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,274 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,274 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,274 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:53,276 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2025-03-30 22:06:54,562 basehttp "GET /api/profil/ HTTP/1.1" 200 20674
+WARNING 2025-03-30 22:06:55,526 log Unauthorized: /api/profil/profilleri/
+WARNING 2025-03-30 22:06:55,526 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 401 20409
+INFO 2025-03-30 22:06:57,428 basehttp "GET /api-auth/login/?next=/api/profil/profilleri/ HTTP/1.1" 200 2723
+INFO 2025-03-30 22:06:59,766 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-03-30 22:06:59,781 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22856
+INFO 2025-03-30 22:06:59,800 basehttp "GET /static/rest_framework/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+INFO 2025-03-30 22:07:04,358 basehttp "GET /api/profil/profilleri/5 HTTP/1.1" 301 0
+INFO 2025-03-30 22:07:04,381 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 24768
+INFO 2025-03-30 22:07:19,581 basehttp "GET /api-auth/login/?next=/api/profil/profilleri/ HTTP/1.1" 200 2723
+INFO 2025-03-30 22:07:21,788 basehttp "GET /api/ HTTP/1.1" 200 21069
+INFO 2025-03-30 22:07:23,028 basehttp "GET /api/hesap/ HTTP/1.1" 200 21210
+INFO 2025-03-30 22:07:26,347 basehttp "GET /api/ HTTP/1.1" 200 21069
+INFO 2025-03-30 22:07:27,687 basehttp "GET /api/profil/ HTTP/1.1" 200 21208
+INFO 2025-03-30 22:07:28,922 basehttp "GET /api/hesap/ HTTP/1.1" 200 21210
+INFO 2025-03-30 22:07:30,181 basehttp "GET /api/profil/ HTTP/1.1" 200 21208
+INFO 2025-03-30 22:07:30,951 basehttp "GET /api/profil/durum/ HTTP/1.1" 200 25949
+INFO 2025-03-30 22:07:33,726 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 22856
+INFO 2025-03-30 22:07:41,573 basehttp "GET /api/profil/profilleri/?search=5 HTTP/1.1" 200 22320
+INFO 2025-03-30 22:07:46,107 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 24768
+WARNING 2025-03-30 22:07:52,015 log Not Found: /api/profil/profilleri/5/foto
+WARNING 2025-03-30 22:07:52,016 basehttp "GET /api/profil/profilleri/5/foto HTTP/1.1" 404 7356
+WARNING 2025-03-30 22:08:09,630 log Not Found: /api/profil/profilleri/5/profil-detail
+WARNING 2025-03-30 22:08:09,631 basehttp "GET /api/profil/profilleri/5/profil-detail HTTP/1.1" 404 7383
+WARNING 2025-03-30 22:11:50,813 log Method Not Allowed: /api/profil/profil_foto/
+WARNING 2025-03-30 22:11:50,813 basehttp "GET /api/profil/profil_foto/ HTTP/1.1" 405 23152
+INFO 2025-03-30 22:11:59,145 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 23571
+INFO 2025-03-30 22:16:56,106 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 222
+INFO 2025-03-30 22:39:11,354 basehttp "OPTIONS /api/rest-auth/user/ HTTP/1.1" 200 0
+INFO 2025-03-30 22:39:11,359 basehttp "GET /api/rest-auth/user/ HTTP/1.1" 200 86
+INFO 2025-03-30 23:03:44,913 basehttp "GET /api/profil HTTP/1.1" 301 0
+INFO 2025-03-30 23:03:44,928 basehttp "GET /api/profil/ HTTP/1.1" 200 21208
+INFO 2025-03-30 23:03:44,962 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,962 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,963 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,965 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,965 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,966 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,966 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,966 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,967 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,967 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:44,967 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:03:47,206 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 23112
+INFO 2025-03-30 23:03:50,615 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 25141
+INFO 2025-03-30 23:04:02,655 basehttp "PUT /api/profil/profilleri/5/ HTTP/1.1" 200 25235
+INFO 2025-03-30 23:04:31,652 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 246
+INFO 2025-03-30 23:25:36,019 basehttp "OPTIONS /api/profil/profilleri/5 HTTP/1.1" 200 0
+ERROR 2025-03-30 23:25:36,104 log Internal Server Error: /api/profil/profilleri/5
+Traceback (most recent call last):
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\utils\deprecation.py", line 131, in __call__
+    response = self.process_response(request, response)
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\middleware\common.py", line 108, in process_response
+    return self.response_redirect_class(self.get_full_path_with_slash(request))
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\middleware\common.py", line 87, in get_full_path_with_slash
+    raise RuntimeError(
+    ...<9 lines>...
+    )
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/api/profil/profilleri/5/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+ERROR 2025-03-30 23:25:36,108 basehttp "POST /api/profil/profilleri/5 HTTP/1.1" 500 80535
+ERROR 2025-03-30 23:26:10,343 log Internal Server Error: /api/profil/profilleri/5
+Traceback (most recent call last):
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\utils\deprecation.py", line 131, in __call__
+    response = self.process_response(request, response)
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\middleware\common.py", line 108, in process_response
+    return self.response_redirect_class(self.get_full_path_with_slash(request))
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\middleware\common.py", line 87, in get_full_path_with_slash
+    raise RuntimeError(
+    ...<9 lines>...
+    )
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/api/profil/profilleri/5/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+ERROR 2025-03-30 23:26:10,345 basehttp "POST /api/profil/profilleri/5 HTTP/1.1" 500 80535
+ERROR 2025-03-30 23:26:13,279 log Internal Server Error: /api/profil/profilleri/5
+Traceback (most recent call last):
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\utils\deprecation.py", line 131, in __call__
+    response = self.process_response(request, response)
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\middleware\common.py", line 108, in process_response
+    return self.response_redirect_class(self.get_full_path_with_slash(request))
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\venv\Lib\site-packages\django\middleware\common.py", line 87, in get_full_path_with_slash
+    raise RuntimeError(
+    ...<9 lines>...
+    )
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/api/profil/profilleri/5/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+ERROR 2025-03-30 23:26:13,283 basehttp "POST /api/profil/profilleri/5 HTTP/1.1" 500 80535
+INFO 2025-03-30 23:29:49,427 basehttp "OPTIONS /api/profil/profilleri/5/ HTTP/1.1" 200 0
+WARNING 2025-03-30 23:29:49,431 log Method Not Allowed: /api/profil/profilleri/5/
+WARNING 2025-03-30 23:29:49,432 basehttp "POST /api/profil/profilleri/5/ HTTP/1.1" 405 41
+INFO 2025-03-30 23:35:05,615 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 178
+INFO 2025-03-30 23:35:12,788 basehttp "PUT /api/profil/profilleri/5/ HTTP/1.1" 200 25244
+INFO 2025-03-30 23:35:12,811 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:16,159 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 181
+INFO 2025-03-30 23:35:16,201 basehttp "GET /media/profil_fotolari/2025/03/Ekran_g%C3%B6r%C3%BCnt%C3%BCs%C3%BC_2024-09-08_143124.png HTTP/1.1" 200 338667
+INFO 2025-03-30 23:35:23,129 basehttp "PUT /api/profil/profilleri/5/ HTTP/1.1" 200 25244
+INFO 2025-03-30 23:35:24,851 basehttp "GET /static/rest_framework/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,340 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 23149
+INFO 2025-03-30 23:35:27,366 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,367 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,367 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,367 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,370 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,371 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,372 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,372 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,373 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,373 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:27,374 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-03-30 23:35:29,310 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 181

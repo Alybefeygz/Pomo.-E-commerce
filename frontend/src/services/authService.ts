@@ -154,4 +154,15 @@ export const getUserInfo = async () => {
   } catch (error) {
     handleError(error as AxiosError);
   }
+};
+
+// Kullanıcı profil bilgilerini getir (id'ye göre)
+export const getUserProfileById = async (userId: string | number) => {
+  try {
+    const response = await api.get(`/profil/profilleri/${userId}/`);
+    return response.data;
+  } catch (error) {
+    handleError(error as AxiosError);
+    return null;
+  }
 }; 

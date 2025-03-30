@@ -5,7 +5,7 @@ import '../styles/auth.css';
 import { register } from '../services/authService';
 
 // Define empty handler functions for pointer events
-const emptyPointerHandler = () => {};
+// const emptyPointerHandler = () => {};
 
 // Yaygın şifrelerin listesi
 const commonPasswords = [
@@ -87,7 +87,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
     setLoading(true);
     try {
       // Backend'e kayıt isteği gönder
-      const response = await register(
+      await register(
         values.username,
         values.email,
         values.password, // password1

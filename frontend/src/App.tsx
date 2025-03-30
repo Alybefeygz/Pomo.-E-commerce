@@ -18,17 +18,18 @@ import "./custom-button.css"; // Import custom CSS
 import "./index.css";
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import { getUserInfo, getUserProfileById } from './services/authService';
 
 // Define empty handler functions for pointer events
 const emptyPointerHandler = () => {};
 
 // CSS for container transitions
-const containerTransitionStyles = {
-  enter: "transition-all duration-500 ease-in-out transform opacity-0 translate-y-20",
-  enterActive: "opacity-100 translate-y-0",
-  exit: "transition-all duration-500 ease-in-out transform opacity-100 translate-y-0",
-  exitActive: "opacity-0 translate-y-20",
-};
+// const containerTransitionStyles = {
+//   enter: "transition-all duration-500 ease-in-out transform opacity-0 translate-y-20",
+//   enterActive: "opacity-100 translate-y-0",
+//   exit: "transition-all duration-500 ease-in-out transform opacity-100 translate-y-0",
+//   exitActive: "opacity-0 translate-y-20",
+// };
 
 // Kategori verileri
 const categoryData = [
@@ -111,7 +112,7 @@ const categoryData = [
 ];
 
 const App: React.FC = () => {
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
   const [email, setEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [width, setWidth] = useState("");
@@ -121,8 +122,8 @@ const App: React.FC = () => {
   const [carrier, setCarrier] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
   const [carrierName, setCarrierName] = useState("");
-  const [desiValue, setDesiValue] = useState(0);
-  const [desiKgValue, setDesiKgValue] = useState(0);
+  // const [desiValue, setDesiValue] = useState(0);
+  // const [desiKgValue, setDesiKgValue] = useState(0);
   const [username, setUsername] = useState("");
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [activeContainer, setActiveContainer] = useState("first");
@@ -150,27 +151,27 @@ const App: React.FC = () => {
   const [productGroupSearchText, setProductGroupSearchText] = useState("");
   
   // Kullanılabilir kategorileri ve diğer seçenekleri filtreleme
-  const filteredCategories = categoryData.filter(category => 
-    category.kategori_adi.toLowerCase().includes(categorySearchText.toLowerCase())
-  );
+  // const filteredCategories = categoryData.filter(category => 
+  //   category.kategori_adi.toLowerCase().includes(categorySearchText.toLowerCase())
+  // );
   
-  const filteredSubCategories = selectedCategory 
-    ? selectedCategory.alt_kategoriler.filter(subCat => 
-        subCat.alt_kategori_adi.toLowerCase().includes(subCategorySearchText.toLowerCase())
-      )
-    : [];
+  // const filteredSubCategories = selectedCategory 
+  //   ? selectedCategory.alt_kategoriler.filter(subCat => 
+  //       subCat.alt_kategori_adi.toLowerCase().includes(subCategorySearchText.toLowerCase())
+  //     )
+  //   : [];
     
-  const filteredProductGroups = selectedSubCategory 
-    ? selectedSubCategory.urun_gruplari.filter(group => 
-        group.urun_grubu_adi.toLowerCase().includes(productGroupSearchText.toLowerCase())
-      )
-    : [];
+  // const filteredProductGroups = selectedSubCategory 
+  //   ? selectedSubCategory.urun_gruplari.filter(group => 
+  //       group.urun_grubu_adi.toLowerCase().includes(productGroupSearchText.toLowerCase())
+  //     )
+  //   : [];
 
-  const carriers = [
-    { value: "fedex", label: "FedEx Express" },
-    { value: "dhl", label: "DHL Global" },
-    { value: "ups", label: "UPS Worldwide" },
-  ];
+  // const carriers = [
+  //   { value: "fedex", label: "FedEx Express" },
+  //   { value: "dhl", label: "DHL Global" },
+  //   { value: "ups", label: "UPS Worldwide" },
+  // ];
 
   // Kargo firmaları için API state'i
   const [kargoFirmalar, setKargoFirmalar] = useState([
@@ -184,10 +185,52 @@ const App: React.FC = () => {
   // Token kontrolü için useEffect
   useEffect(() => {
     const token = localStorage.getItem('authToken');
+    const storedUsername = localStorage.getItem('username');
+    const storedEmail = localStorage.getItem('email');
+    
     if (token) {
       setIsLoggedIn(true);
-      setUsername("Kullanıcı");
-      setEmail("user@example.com");
+      
+      // Eğer localStorage'da username varsa, onu kullan
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+      
+      // Eğer localStorage'da email varsa, onu kullan
+      if (storedEmail) {
+        setEmail(storedEmail);
+      }
+      
+      // Eğer username yoksa ama token varsa, kullanıcı bilgilerini almayı dene
+      if (!storedUsername || !storedEmail) {
+        getUserInfo().then(userData => {
+          if (userData) {
+            if (userData.username) {
+              setUsername(userData.username);
+              localStorage.setItem('username', userData.username);
+            }
+            
+            if (userData.email) {
+              setEmail(userData.email);
+              localStorage.setItem('email', userData.email);
+            }
+            
+            if (userData.id) {
+              localStorage.setItem('userID', userData.id.toString());
+            }
+            
+            if (userData.bio) {
+              localStorage.setItem('userBio', userData.bio);
+            }
+            
+            if (userData.foto) {
+              localStorage.setItem('userPhoto', userData.foto);
+            }
+          }
+        }).catch(error => {
+          console.error("Kullanıcı bilgileri alınamadı:", error);
+        });
+      }
     }
   }, []);
 
@@ -196,212 +239,149 @@ const App: React.FC = () => {
     return re.test(email);
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    setIsLoggedIn(validateEmail(newEmail));
-  };
+  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const newEmail = e.target.value;
+  //   setEmail(newEmail);
+  // };
 
-  const calculateShipping = async () => {
-    if (!isLoggedIn) {
-      message.error("Lütfen devam etmek için geçerli bir e-posta adresi girin");
-      return;
-    }
-    if (!width || !length || !height || !weight || !carrier) {
-      message.error("Lütfen tüm gerekli alanları doldurun");
-      return;
-    }
+  // const calculateShipping = async () => {
+  //   if (!width || !length || !height || !weight || !carrier) {
+  //     message.error("Lütfen tüm alanları doldurunuz.");
+  //     return;
+  //   }
 
-    try {
-      // Backend API'sine istek gönder
-      const response = await axiosInstance.post('/hesap/username-guest/kargo-ucret-hesap/', {
-        email: email,
-        en: parseFloat(width),
-        boy: parseFloat(length),
-        yukseklik: parseFloat(height),
-        net_agirlik: parseFloat(weight),
-        kargo_firma: parseInt(carrier)
-      });
+  //   // API isteği yapacak gibi simüle edelim
+  //   try {
+  //     // Gerçek API çağrısı burada olacak
+  //     // Örnek API yanıtı:
+  //     const apiResponse = {
+  //       shipping_cost: parseFloat(width) * parseFloat(length) * parseFloat(height) * parseFloat(weight) / 1000,
+  //       desi: (parseFloat(width) * parseFloat(length) * parseFloat(height)) / 3000,
+  //       desi_kg: Math.max((parseFloat(width) * parseFloat(length) * parseFloat(height)) / 3000, parseFloat(weight)),
+  //       carrier_name: carriers.find(c => c.value === carrier)?.label || "Bilinmeyen"
+  //     };
 
-      // API yanıtını kullan
-      const apiResponse = response.data;
-      setShippingFee(apiResponse.kargo_ucreti);
-      
-      // Kargo firması ismini al
-      setCarrierName(apiResponse.kargo_firma_ismi);
-      
-      // Desi hesaplama bilgilerini al
-      setDesiValue(apiResponse.desi);
-      setDesiKgValue(apiResponse.desi_kg);
-      
-      setActiveContainer("second");
-    } catch (error) {
-      console.error("Kargo ücreti hesaplanırken bir hata oluştu:", error);
-      
-      if (error.response && error.response.data && error.response.data.error) {
-        message.error(error.response.data.error);
-      } else {
-        message.error("Kargo ücreti hesaplanırken bir hata oluştu. Lütfen tekrar deneyin.");
-      }
-    }
-  };
+  //     setShippingFee(apiResponse.shipping_cost.toFixed(2));
+  //     setCarrierName(apiResponse.carrier_name);
+  //     
+  //     setActiveContainer("second");
+  //     setTimeout(() => {
+  //       setIsAnimating(false);
+  //     }, 500);
+  //   } catch (error) {
+  //     console.error("Error calculating shipping:", error);
+  //     message.error("Kargo hesaplama sırasında bir hata oluştu.");
+  //   }
+  // };
+
+  // const calculateCommission = () => {
+  //   if (!selectedProductGroup) {
+  //     message.error("Lütfen bir ürün grubu seçiniz.");
+  //     return;
+  //   }
+
+  //   setCommissionRate(selectedProductGroup.komisyon_orani);
+  // };
+
+  // const calculatePrice = () => {
+  //   if (!productCost || !packagingCost || !vatRate || !profitRate) {
+  //     message.error("Lütfen tüm alanları doldurunuz.");
+  //     return;
+  //   }
+
+  //   try {
+  //     // Parse values to ensure they are numbers
+  //     const cost = parseFloat(productCost);
+  //     const packaging = parseFloat(packagingCost);
+  //     const vat = parseFloat(vatRate) / 100;
+  //     const profit = parseFloat(profitRate) / 100;
+
+  //     // Base calculation
+  //     const baseTotal = cost + packaging;
+  //     const profitAmount = baseTotal * profit;
+  //     const subtotal = baseTotal + profitAmount;
+  //     const vatAmount = subtotal * vat;
+  //     const totalPrice = subtotal + vatAmount;
+
+  //     // Set the results
+  //     setPriceCalculationResult({
+  //       baseTotal: baseTotal.toFixed(2),
+  //       profitAmount: profitAmount.toFixed(2),
+  //       subtotal: subtotal.toFixed(2),
+  //       vatAmount: vatAmount.toFixed(2),
+  //       totalPrice: totalPrice.toFixed(2)
+  //     });
+
+  //   } catch (error) {
+  //     console.error("Error calculating price:", error);
+  //     message.error("Fiyat hesaplama sırasında bir hata oluştu.");
+  //   }
+  // };
+
+  // const handleCategoryChange = (value) => {
+  //   const category = categoryData.find(cat => cat.kategori_id === value);
+  //   setSelectedCategory(category);
+  //   setSelectedSubCategory(null);
+  //   setSelectedProductGroup(null);
+  //   setCommissionRate(null);
+  // };
   
-  const calculateCommission = () => {
-    if (!isLoggedIn) {
-      message.error("Lütfen devam etmek için geçerli bir e-posta adresi girin");
-      return;
-    }
-    
-    if (!selectedProductGroup) {
-      message.error("Lütfen bir ürün grubu seçin");
-      return;
-    }
-    
-    setCommissionRate(selectedProductGroup.komisyon_orani);
-    setActiveContainer("second");
-  };
-
-  const calculatePrice = () => {
-    if (!isLoggedIn) {
-      message.error("Lütfen devam etmek için geçerli bir e-posta adresi girin");
-      return;
-    }
-    
-    if (!productName || !productCost || !packagingCost || !vatRate || !profitRate || !width || !length || !height || !weight || !carrier || !selectedCategory || !selectedSubCategory || !selectedProductGroup) {
-      message.error("Lütfen tüm gerekli alanları doldurun");
-      return;
-    }
-
-    // Desi hesaplama
-    const volume = parseFloat(width) * parseFloat(length) * parseFloat(height);
-    const desi = volume / 3000;
-    const desiKg = Math.max(parseFloat(weight), desi);
-    
-    // Kargo ücretini hesapla
-    let shippingCost = 0;
-    switch (carrier) {
-      case "fedex":
-        shippingCost = volume * 0.01 + parseFloat(weight) * 5;
-        break;
-      case "dhl":
-        shippingCost = volume * 0.012 + parseFloat(weight) * 4.8;
-        break;
-      case "ups":
-        shippingCost = volume * 0.011 + parseFloat(weight) * 4.9;
-        break;
-      // Gerçekte, daha karmaşık bir hesaplama yapılır
-    }
-    
-    // Ürün maliyeti + Paketleme maliyeti
-    const totalCost = parseFloat(productCost) + parseFloat(packagingCost);
-    
-    // Trendyol hizmet bedeli
-    const trendyolServiceFee = 0; // Bu örnek için sıfır
-    
-    // Komisyon tutarı hesaplama
-    const commissionRate = parseFloat(selectedProductGroup.komisyon_orani);
-    const commissionAmount = (totalCost * commissionRate) / 100;
-    
-    // Kâr tutarı hesaplama
-    const profitRateValue = parseFloat(profitRate);
-    const profitAmount = (totalCost * profitRateValue) / 100;
-    
-    // Stopaj
-    const withholdingTax = 0; // Bu örnek için sıfır
-    
-    // KDV'siz satış fiyatı hesaplama
-    const priceWithoutVAT = totalCost + commissionAmount + profitAmount + shippingCost + withholdingTax;
-    
-    // KDV tutarı hesaplama
-    const vatRateValue = parseFloat(vatRate);
-    const vatAmount = (priceWithoutVAT * vatRateValue) / 100;
-    
-    // KDV dahil satış fiyatı
-    const priceWithVAT = priceWithoutVAT + vatAmount;
-    
-    const result = {
-      email: email,
-      productName: productName,
-      productCost: parseFloat(productCost),
-      packagingCost: parseFloat(packagingCost),
-      trendyolServiceFee: trendyolServiceFee,
-      desiKgValue: desiKg.toFixed(2),
-      carrier: carrier,
-      shippingCost: shippingCost.toFixed(2),
-      withholdingTax: withholdingTax,
-      category: selectedCategory.kategori_adi,
-      subCategory: selectedSubCategory.alt_kategori_adi,
-      productGroup: selectedProductGroup.urun_grubu_adi,
-      commissionRate: commissionRate,
-      commissionAmount: commissionAmount.toFixed(4),
-      profitRate: profitRateValue,
-      profitAmount: profitAmount.toFixed(4),
-      vatRate: vatRateValue,
-      vatAmount: vatAmount.toFixed(6),
-      priceWithoutVAT: priceWithoutVAT.toFixed(4),
-      priceWithVAT: priceWithVAT.toFixed(6)
-    };
-    
-    setPriceCalculationResult(result);
-    setActiveContainer("second");
-  };
-
-  const handleCategoryChange = (value) => {
-    const category = categoryData.find(c => c.kategori_id === value);
-    setSelectedCategory(category);
-    setSelectedSubCategory(null);
-    setSelectedProductGroup(null);
-  };
-
-  const handleSubCategoryChange = (value) => {
-    const subCategory = selectedCategory.alt_kategoriler.find(sc => sc.alt_kategori_id === value);
-    setSelectedSubCategory(subCategory);
-    setSelectedProductGroup(null);
-  };
-
-  const handleProductGroupChange = (value) => {
-    const productGroup = selectedSubCategory.urun_gruplari.find(pg => pg.urun_grubu_id === value);
-    setSelectedProductGroup(productGroup);
-  };
+  // const handleSubCategoryChange = (value) => {
+  //   const subCategory = selectedCategory.alt_kategoriler.find(subCat => subCat.alt_kategori_id === value);
+  //   setSelectedSubCategory(subCategory);
+  //   setSelectedProductGroup(null);
+  //   setCommissionRate(null);
+  // };
   
-  const switchSection = (section) => {
-    setActiveSection(section);
-    // Temizle
-    setSelectedCategory(null);
-    setSelectedSubCategory(null);
-    setSelectedProductGroup(null);
-    setCommissionRate(null);
-    setWidth("");
-    setLength("");
-    setHeight("");
-    setWeight("");
-    setCarrier("");
-    setShippingFee(0);
-    
-    // Fiyat hesaplama alanlarını temizle
-    if (section !== "price") {
-      setProductName("");
-      setProductCost("");
-      setPackagingCost("");
-      setVatRate("");
-      setProfitRate("");
-      setPriceCalculationResult(null);
-    }
-    
-    setActiveContainer("first");
-  };
+  // const handleProductGroupChange = (value) => {
+  //   const productGroup = selectedSubCategory.urun_gruplari.find(group => group.urun_grubu_id === value);
+  //   setSelectedProductGroup(productGroup);
+  // };
+  
+  // const switchSection = (section) => {
+  //   setActiveSection(section);
+  // };
 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [registrationData, setRegistrationData] = useState<{ username?: string; email?: string }>({});
 
-  const handleLogin = async (values: { username: string; password: string }) => {
+  const handleLogin = async (values: any) => {
     try {
-      // Simüle edilmiş API çağrısı
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Backend'den dönen yanıt artık token ve kullanıcı bilgilerini içeriyor
+      // values parametresi artık login API'den dönen yanıtı içeriyor: {key: "token", user: {...}}
+      console.log("Login response:", values);
       
+      // Kullanıcı bilgilerini state'e kaydet
       setIsLoggedIn(true);
-      setUsername(values.username);
+      
+      // Backend'den gelen kullanıcı bilgilerini kullan
+      if (values.user) {
+        setUsername(values.user.username);
+        setEmail(values.user.email);
+        
+        // Kullanıcı bilgilerini localStorage'a kaydet
+        localStorage.setItem('username', values.user.username);
+        localStorage.setItem('email', values.user.email);
+        
+        // Kullanıcı ID'sini localStorage'a kaydet
+        if (values.user.id) {
+          localStorage.setItem('userID', values.user.id.toString());
+        }
+        
+        // Biyografi bilgisini localStorage'a kaydet
+        if (values.user.bio) {
+          localStorage.setItem('userBio', values.user.bio);
+        }
+        
+        // Fotoğraf bilgisini de localStorage'a kaydedebilirsiniz (URL olarak)
+        if (values.user.foto) {
+          localStorage.setItem('userPhoto', values.user.foto);
+        }
+        
+        // Diğer kullanıcı bilgileri de values.user içinde mevcut (id, foto, bio)
+      }
+      
       setShowLoginModal(false);
       setShowRegisterModal(false);
       
@@ -446,8 +426,13 @@ const App: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // Token'ı localStorage'dan sil
+    // Tüm kullanıcı bilgilerini localStorage'dan sil
     localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('userID');
+    localStorage.removeItem('userBio');
+    localStorage.removeItem('userPhoto');
     
     // State'leri sıfırla
     setIsLoggedIn(false);
@@ -470,9 +455,9 @@ const App: React.FC = () => {
     setCurrentPage("home");
   };
   
-  const toggleProfileOptions = () => {
-    setShowProfileOptions(!showProfileOptions);
-  };
+  // const toggleProfileOptions = () => {
+  //   setShowProfileOptions(!showProfileOptions);
+  // };
 
   const toggleContainer = () => {
     setIsAnimating(true);
@@ -485,180 +470,31 @@ const App: React.FC = () => {
   };
 
   // Get transition class based on container state - This is no longer needed
-  const getContainerClass = (container) => {
-    if (container === activeContainer) {
-      return `opacity-100 transform translate-y-0 transition-all duration-500 ease-in-out ${isAnimating ? 'opacity-0 translate-y-20' : ''}`;
-    }
-    return "opacity-0 absolute top-0 left-0 pointer-events-none";
-  };
+  // const getContainerClass = (container) => {
+  //   if (container === activeContainer) {
+  //     return isAnimating 
+  //       ? "animate__animated animate__fadeIn" 
+  //       : "";
+  //   }
+  //   return "hidden";
+  // };
 
   // Reset functions
-  const resetForm = () => {
-    setEmail("");
-    setWidth("");
-    setLength("");
-    setHeight("");
-    setWeight("");
-    setCarrier("");
-    setShippingFee(0);
-    setCarrierName("");
-    setDesiValue(0);
-    setDesiKgValue(0);
-    // ... existing code ...
-  }
+  // const resetForm = () => {
+  //   setEmail("");
+  //   setWidth("");
+  //   setLength("");
+  //   setHeight("");
+  //   setWeight("");
+  //   setCarrier("");
+  //   setShippingFee(0);
+  //   setCarrierName("");
+  //   setActiveContainer("first");
+  // };
 
-  const KargoHesaplamaForm = () => {
-    const [formData, setFormData] = useState({
-      mail: "",
-      en: "",
-      boy: "",
-      yukseklik: "",
-      kargo_firmasi: ""
-    });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState(false);
-
-    // Form değişikliklerini handle et
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    };
-
-    // Formu submit et
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      setError("");
-      setSuccess(false);
-
-      try {
-        // Simüle edilmiş başarılı yanıt
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setSuccess(true);
-        message.success('Kargo ücreti başarıyla hesaplandı!');
-      } catch (err) {
-        setError('Kargo ücreti hesaplanırken bir hata oluştu.');
-        message.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    return (
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            E-posta
-          </label>
-          <Input
-            name="mail"
-            type="email"
-            value={formData.mail}
-            onChange={handleChange}
-            placeholder="E-posta adresinizi girin"
-            required
-            className="rounded-lg"
-          />
-        </div>
-
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Genişlik (cm)
-            </label>
-            <Input
-              name="en"
-              type="number"
-              value={formData.en}
-              onChange={handleChange}
-              placeholder="Genişlik"
-              required
-              className="rounded-lg"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Uzunluk (cm)
-            </label>
-            <Input
-              name="boy"
-              type="number"
-              value={formData.boy}
-              onChange={handleChange}
-              placeholder="Uzunluk"
-              required
-              className="rounded-lg"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Yükseklik (cm)
-            </label>
-            <Input
-              name="yukseklik"
-              type="number"
-              value={formData.yukseklik}
-              onChange={handleChange}
-              placeholder="Yükseklik"
-              required
-              className="rounded-lg"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Kargo Firması
-          </label>
-          <Select
-            name="kargo_firmasi"
-            value={formData.kargo_firmasi}
-            onChange={(value) => setFormData(prev => ({ ...prev, kargo_firmasi: value }))}
-            placeholder="Kargo firması seçin"
-            className="w-full rounded-lg"
-            loading={loading}
-            disabled={loading}
-            required
-          >
-            {kargoFirmalar.map((firma) => (
-              <Select.Option key={firma.value} value={firma.value}>
-                {firma.label}
-              </Select.Option>
-            ))}
-          </Select>
-        </div>
-
-        <div className="mt-6">
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={loading}
-            className="w-full h-12 custom-gradient-button border-0 text-lg font-medium rounded-button"
-          >
-            {loading ? 'Hesaplanıyor...' : 'Kargo Ücretini Hesapla'}
-          </Button>
-        </div>
-
-        {error && (
-          <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        {success && (
-          <div className="mt-4 p-3 bg-green-50 text-green-700 rounded-lg">
-            Kargo ücreti başarıyla hesaplandı!
-          </div>
-        )}
-      </form>
-    );
-  };
+  // const KargoHesaplamaForm = () => {
+  //   // ... existing code ...
+  // };
 
   const handleHomeClick = () => {
     setCurrentPage("home");
@@ -674,6 +510,65 @@ const App: React.FC = () => {
   const handleServicesClick = () => {
     setCurrentPage("services");
     setActiveContainer("first");
+  };
+
+  const handleProfileClick = () => {
+    setCurrentPage("profile");
+    setActiveContainer("first");
+    
+    // Kullanıcı ID'sini localStorage'dan al
+    const userId = localStorage.getItem('userID');
+    
+    // Eğer kullanıcı ID varsa, profil bilgilerini getir
+    if (userId) {
+      // Loading mesajı göster
+      const loadingMessage = message.loading('Profil bilgileri yükleniyor...', 0);
+      
+      // API'den profil bilgilerini al
+      getUserProfileById(userId)
+        .then(profileData => {
+          // Loading mesajını kapat
+          loadingMessage();
+          
+          if (profileData) {
+            console.log('Profil bilgileri alındı:', profileData);
+            
+            // Kullanıcı bilgilerini güncelle ve localStorage'a kaydet
+            if (profileData.username) {
+              setUsername(profileData.username);
+              localStorage.setItem('username', profileData.username);
+            }
+            
+            if (profileData.email) {
+              setEmail(profileData.email);
+              localStorage.setItem('email', profileData.email);
+            }
+            
+            if (profileData.id) {
+              localStorage.setItem('userID', profileData.id.toString());
+            }
+            
+            if (profileData.bio) {
+              localStorage.setItem('userBio', profileData.bio);
+            }
+            
+            if (profileData.foto) {
+              localStorage.setItem('userPhoto', profileData.foto);
+            }
+            
+            // Başarı mesajı göster
+            message.success('Profil bilgileri güncellendi');
+          }
+        })
+        .catch(error => {
+          // Loading mesajını kapat
+          loadingMessage();
+          
+          // Hata mesajı göster
+          message.error('Profil bilgileri alınırken bir hata oluştu');
+          console.error('Profil bilgileri hatası:', error);
+        });
+    }
   };
 
   return (
@@ -718,12 +613,12 @@ const App: React.FC = () => {
               {isLoggedIn ? (
                 <div className="flex items-center space-x-2">
                   <button 
-                    className="flex items-center px-3 py-1 text-[#43426e] transition-all duration-200 relative group"
-                    onClick={() => console.log("Profile clicked")}
+                    className={`flex items-center px-3 py-1 text-[#43426e] transition-all duration-200 relative group ${currentPage === "profile" ? "text-[#635e9c]" : ""}`}
+                    onClick={handleProfileClick}
                   >
                     <UserOutlined className="mr-1" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
                     <span>Profil</span>
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#e7bd99] group-hover:w-1/2 transition-all duration-300"></div>
+                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-[#e7bd99] transition-all duration-300 ${currentPage === "profile" ? "w-1/2" : "w-0 group-hover:w-1/2"}`}></div>
                   </button>
                   <button 
                     className="flex items-center px-3 py-1 text-[#43426e] transition-all duration-200 relative group"
@@ -782,6 +677,99 @@ const App: React.FC = () => {
                 ) : currentPage === "calculations" ? (
                   <div className="w-full flex items-center justify-center">
                     <h1 className="text-3xl font-bold text-[#43426e]">Hesaplamalar daha yapılmadı</h1>
+                  </div>
+                ) : currentPage === "profile" ? (
+                  <div className="w-full flex flex-col items-center">
+                    <div className="w-full grid grid-cols-2 gap-8">
+
+                      {/* Sol Panel - Profil Kartı */}
+                      <div className="relative overflow-hidden rounded-lg border border-gray-100 p-6 bg-white shadow-sm">
+                        <div className="flex items-start justify-between">
+                          <h2 className="text-2xl font-medium text-gray-700 mb-6">Profil Bilgileri</h2>
+                        </div>
+
+                        <div className="flex items-center mb-6">
+                          <div className="relative mr-6">
+                            <Avatar 
+                              size={80} 
+                              icon={!localStorage.getItem('userPhoto') && <UserOutlined style={{ fontSize: '36px' }} onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
+                              src={localStorage.getItem('userPhoto') || undefined}
+                              className="bg-gradient-to-r from-[#43426e] to-[#635e9c]"
+                            />
+                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                          </div>
+                          <div>
+                            <div className="text-3xl font-bold text-[#43426e]">{username}</div>
+                            <div className="text-gray-500">{localStorage.getItem('userID') ? `ID: ${localStorage.getItem('userID')}` : ''}</div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4 mb-8">
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-500 mb-1">E-posta Adresi</h3>
+                            <div className="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center">
+                              <MailOutlined className="text-[#43426e] mr-3" />
+                              <span className="text-gray-700">{email}</span>
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-500 mb-1">Biyografi</h3>
+                            <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                              <p className="text-gray-700">
+                                {localStorage.getItem('userBio') || "Henüz biyografi girilmemiş."}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Button 
+                          type="primary" 
+                          className="custom-gradient-button border-0 rounded-lg w-full mb-3"
+                        >
+                          Profil Fotoğrafını Güncelle
+                        </Button>
+                        <Button 
+                          className="rounded-lg w-full border-[#43426e] text-[#43426e] hover:bg-gradient-to-r hover:from-[#43426e] hover:to-[#635e9c] hover:text-white hover:border-0 transition-all"
+                        >
+                          Şifreyi Değiştir
+                        </Button>
+                      </div>
+
+                      {/* Sağ Panel - Hesap Etkinliği */}
+                      <div className="relative overflow-hidden rounded-lg border border-gray-100 p-6 bg-white shadow-sm">
+                        <div className="flex flex-col items-center justify-center">
+                          <div 
+                            className="w-32 h-32 bg-[#43426e] rounded-lg flex items-center justify-center shadow-sm mb-6"
+                          >
+                            <UserOutlined style={{ fontSize: '48px', color: 'white' }} />
+                          </div>
+                          
+                          <div className="bg-gradient-to-r from-[#43426e] to-[#635e9c] p-[2px] rounded-xl w-full mb-6">
+                            <div className="bg-white p-5 rounded-xl">
+                              <h2 className="text-xl text-gray-600 mb-2 text-center">Hesap Durumu</h2>
+                              <div className="text-2xl font-medium text-[#43426e] text-center">
+                                Aktif
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="w-full p-4 bg-gray-50 rounded-lg border border-gray-100 mb-4">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-gray-600">Son Giriş:</span>
+                              <span className="text-[#43426e] font-medium">Bugün</span>
+                            </div>
+                          </div>
+
+                          <div className="w-full p-4 bg-gray-50 rounded-lg border border-gray-100">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-gray-600">Üyelik Tarihi:</span>
+                              <span className="text-[#43426e] font-medium">2025</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 ) : showLoginModal ? (
                   <div className="w-full flex items-center justify-center">

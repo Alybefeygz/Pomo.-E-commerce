@@ -5,7 +5,7 @@ import '../styles/auth.css';
 import { login } from '../services/authService';
 
 // Define empty handler functions for pointer events
-const emptyPointerHandler = () => {};
+// const emptyPointerHandler = () => {};
 
 // Yaygın şifrelerin listesi
 const commonPasswords = [

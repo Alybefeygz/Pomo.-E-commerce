@@ -1,5 +1,7 @@
 from profiller.models import Profil, ProfilDurum
 from rest_framework import serializers
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 class ProfilSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only = True)
@@ -22,3 +24,38 @@ class ProfilDurumSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfilDurum
         fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """Kullanıcı bilgilerini serileştirmek için serializer"""
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+        # Password hash'ini döndürmek güvenli olmadığı için password'ü eklemedik
+
+class CustomTokenSerializer(serializers.ModelSerializer):
+    """Token ve kullanıcı bilgilerini birlikte döndüren serializer"""
+    user = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Token
+        fields = ['key', 'user']
+        
+    def get_user(self, obj):
+        """Token sahibi olan kullanıcının detaylarını döndürür"""
+        user_data = UserSerializer(obj.user).data
+        
+        # Profil bilgilerini ekle
+        try:
+            profil = Profil.objects.get(user=obj.user)
+            profil_data = ProfilSerializer(profil).data
+            
+            # Kullanıcı verilerine profil bilgilerini ekle
+            user_data['foto'] = profil_data.get('foto', None)
+            user_data['bio'] = profil_data.get('bio', None)
+        except Profil.DoesNotExist:
+            # Profil yoksa varsayılan değerler
+            user_data['foto'] = None
+            user_data['bio'] = None
+        
+        return user_data
