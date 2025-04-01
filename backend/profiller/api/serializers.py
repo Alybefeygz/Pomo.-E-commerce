@@ -7,9 +7,32 @@ class ProfilSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only = True)
     foto = serializers.ImageField(read_only = True)
     
+    # User modelinden alanları al
+    email = serializers.EmailField(source='user.email', read_only=True)
+    first_name = serializers.CharField(source='user.first_name')
+    last_name = serializers.CharField(source='user.last_name')
+    
     class Meta:
         model = Profil
-        fields = '__all__'
+        fields = ['id', 'user', 'foto', 'bio', 'email', 'first_name', 'last_name']
+    
+    def update(self, instance, validated_data):
+        # User modeline ait değerleri al
+        user_data = validated_data.pop('user', {})
+        
+        # Profil modelini güncelle
+        instance = super().update(instance, validated_data)
+        
+        # User modelini güncelle
+        if user_data:
+            user = instance.user
+            if 'first_name' in user_data:
+                user.first_name = user_data['first_name']
+            if 'last_name' in user_data:
+                user.last_name = user_data['last_name']
+            user.save()
+        
+        return instance
         
         
 class ProfilFotoSerializer(serializers.ModelSerializer):

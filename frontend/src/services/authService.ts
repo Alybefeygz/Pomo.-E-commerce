@@ -165,4 +165,56 @@ export const getUserProfileById = async (userId: string | number) => {
     handleError(error as AxiosError);
     return null;
   }
+};
+
+// Kullanıcı profil bilgilerini güncelle
+export const updateUserProfile = async (userId: string | number, profileData: any) => {
+  try {
+    const response = await api.put(`/profil/profilleri/${userId}/`, profileData);
+    return response.data;
+  } catch (error) {
+    handleError(error as AxiosError);
+    return null;
+  }
+};
+
+// Şifre değiştirme
+export const changePassword = async (oldPassword: string, newPassword1: string, newPassword2: string) => {
+  try {
+    const response = await api.post('/rest-auth/password/change/', {
+      old_password: oldPassword,
+      new_password1: newPassword1,
+      new_password2: newPassword2
+    });
+    return response.data;
+  } catch (error) {
+    handleError(error as AxiosError);
+    return null;
+  }
+};
+
+// Profil fotoğrafı yükle
+export const updateProfilePhoto = async (file: File) => {
+  try {
+    // FormData oluştur
+    const formData = new FormData();
+    formData.append('foto', file);
+    
+    // İsteği gönder (multipart/form-data olarak)
+    const response = await axios.put(
+      `${API_URL}/profil/profil_foto/`, 
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Token ${localStorage.getItem('authToken')}`
+        }
+      }
+    );
+    
+    return response.data;
+  } catch (error) {
+    handleError(error as AxiosError);
+    return null;
+  }
 }; 

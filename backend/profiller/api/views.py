@@ -22,7 +22,7 @@ class ProfilViewSet(
     serializer_class = ProfilSerializer
     permission_classes = [IsAuthenticated, KendiProfiliYaDaReadOnly]
     filter_backends = [SearchFilter]
-    search_fields = ['bio']
+    search_fields = ['bio', 'user__first_name', 'user__last_name', 'user__email']
     
     
     
