@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Upload, message } from 'antd';
-import { UserOutlined, MailOutlined, PictureOutlined, LockOutlined, CloseOutlined } from '@ant-design/icons';
+import { UserOutlined, MailOutlined, PictureOutlined, LockOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd/es/upload/interface';
 import type { UploadProps } from 'antd';
 import { updateUserProfile, changePassword, updateProfilePhoto } from '../services/authService';
@@ -23,6 +23,17 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [photoChanged, setPhotoChanged] = useState(false);
+
+  // initialValues'daki "Henüz değer girilmemiştir" değerlerini temizle
+  useEffect(() => {
+    const cleanedValues = {
+      ...initialValues,
+      isim: initialValues.isim === "Henüz değer girilmemiştir" ? "" : initialValues.isim,
+      soyisim: initialValues.soyisim === "Henüz değer girilmemiştir" ? "" : initialValues.soyisim,
+      bio: initialValues.bio === "Henüz girilmemiştir" ? "" : initialValues.bio
+    };
+    form.setFieldsValue(cleanedValues);
+  }, [initialValues, form]);
 
   // Eğer initialValues içinde foto varsa, fileList'i oluştur
   useEffect(() => {
@@ -50,11 +61,10 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
       let newPhotoUrl: string | null = null;
       if (photoChanged && fileList.length > 0 && fileList[0].originFileObj) {
         try {
-          // Fotoğrafı PUT isteği ile yükle
           const photoResponse = await updateProfilePhoto(fileList[0].originFileObj);
           if (photoResponse && photoResponse.foto) {
             newPhotoUrl = photoResponse.foto;
-            // Yeni fotoğraf URL'sini localStorage'a kaydet
+            // Sadece foto değeri varsa localStorage'a kaydet
             if (newPhotoUrl) {
               localStorage.setItem('userPhoto', newPhotoUrl);
             }
@@ -62,16 +72,16 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
         } catch (photoError: any) {
           console.error('Fotoğraf yükleme hatası:', photoError);
           message.error('Fotoğraf yüklenemedi: ' + (photoError.message || 'Bilinmeyen hata'));
-          return; // Fotoğraf yüklenemezse işlemi durdur
+          return;
         }
       }
 
       // 2. Profil bilgilerini güncelle
       const updateData = {
-        first_name: values.isim,
-        last_name: values.soyisim,
-        bio: values.bio,
-        foto: newPhotoUrl || localStorage.getItem('userPhoto') // Yeni fotoğraf yoksa mevcut fotoğrafı kullan
+        first_name: values.isim?.trim() || "Henüz değer girilmemiştir",
+        last_name: values.soyisim?.trim() || "Henüz değer girilmemiştir",
+        bio: values.bio?.trim() || "Henüz girilmemiştir",
+        foto: photoChanged ? (newPhotoUrl || null) : localStorage.getItem('userPhoto')
       };
 
       // Profil bilgilerini PUT isteği ile güncelle
@@ -79,9 +89,10 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
 
       if (profileUpdateResult) {
         // Başarılı güncelleme durumunda localStorage'ı güncelle
-        localStorage.setItem('userIsim', values.isim || '');
-        localStorage.setItem('userSoyisim', values.soyisim || '');
-        localStorage.setItem('userBio', values.bio || '');
+        // Boş değerler için "Henüz değer girilmemiştir" kullan
+        localStorage.setItem('userIsim', updateData.first_name);
+        localStorage.setItem('userSoyisim', updateData.last_name);
+        localStorage.setItem('userBio', updateData.bio);
 
         // 3. Şifre değiştirme işlemi (eğer gerekli alanlar doldurulmuşsa)
         if (values.currentPassword && values.newPassword && values.confirmPassword) {
@@ -111,13 +122,6 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
   };
 
   const uploadProps: UploadProps = {
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-      setPhotoChanged(true);
-    },
     beforeUpload: (file) => {
       // Dosya tipi kontrolü
       const isImage = file.type.startsWith('image/');
@@ -183,20 +187,6 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
                   </div>
                 </div>
 
-                {/* Remove Photo Button */}
-                {fileList.length > 0 && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setFileList([]);
-                      setPhotoChanged(true);
-                    }}
-                    className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600 transition-colors duration-200 z-10"
-                  >
-                    <CloseOutlined style={{ fontSize: '14px' }} />
-                  </button>
-                )}
-
                 {/* Loading Indicator */}
                 {loading && (
                   <div className="absolute inset-0 bg-black/30 rounded-full flex items-center justify-center">
@@ -232,7 +222,6 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
           <div className="grid grid-cols-2 gap-3">
             <Form.Item
               name="isim"
-              rules={[{ required: true, message: 'İsim gerekli' }]}
               className="mb-3"
             >
               <Input 
@@ -243,7 +232,6 @@ const ProfilDüzenleForm: React.FC<ProfilDüzenleFormProps> = ({ onCancel, onSuc
 
             <Form.Item
               name="soyisim"
-              rules={[{ required: true, message: 'Soyisim gerekli' }]}
               className="mb-3"
             >
               <Input 

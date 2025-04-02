@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import { Input, Select, Button, message, Avatar, Dropdown, Menu, Layout, Form, Card, Typography } from "antd";
+import { Input, Select, Button, message, Avatar, Dropdown, Menu, Layout, Form, Card, Typography, Modal } from "antd";
 import {
   MailOutlined,
   BoxPlotOutlined,
@@ -13,12 +13,23 @@ import {
   UpOutlined,
   AppstoreOutlined,
   PercentageOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
-import "./custom-button.css"; // Import custom CSS
+import "./custom-button.css";
 import "./index.css";
+import "./custom-message.css";
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
-import { getUserInfo, getUserProfileById } from './services/authService';
+import ProfilDüzenleForm from './components/ProfilDüzenleForm';
+import { getUserInfo, getUserProfileById, login, register, updateUserProfile } from './services/authService';
+
+// Message konfigürasyonu
+message.config({
+  maxCount: 3,
+  duration: 3,
+  rtl: false,
+  className: 'custom-message rounded-xl shadow-lg'
+});
 
 // Define empty handler functions for pointer events
 const emptyPointerHandler = () => {};
@@ -111,6 +122,51 @@ const categoryData = [
   }
 ];
 
+// Profil verilerini çekmek için yeni fonksiyon
+const fetchProfileData = async (userId: string) => {
+  try {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      throw new Error('Oturum bulunamadı');
+    }
+
+    const response = await fetch(`http://127.0.0.1:8000/api/profil/profilleri/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error('Oturum süresi dolmuş');
+      }
+      throw new Error('Profil bilgileri alınamadı');
+    }
+
+    const data = await response.json();
+    
+    // localStorage'ı güncelle
+    localStorage.setItem('userIsim', data.first_name || 'Henüz değer girilmemiştir');
+    localStorage.setItem('userSoyisim', data.last_name || 'Henüz değer girilmemiştir');
+    localStorage.setItem('userBio', data.bio || 'Henüz girilmemiştir');
+    if (data.foto) {
+      localStorage.setItem('userPhoto', data.foto);
+    }
+    
+    return data;
+  } catch (error: any) {
+    console.error('Profil bilgileri alınırken hata oluştu:', error);
+    if (error.message === 'Oturum süresi dolmuş') {
+      // Oturum süresinin dolması durumunda kullanıcıyı çıkış yaptır
+      localStorage.clear();
+      window.location.reload();
+    }
+    throw error;
+  }
+};
+
 const App: React.FC = () => {
   // const [form] = Form.useForm();
   const [email, setEmail] = useState("");
@@ -182,56 +238,87 @@ const App: React.FC = () => {
     { value: "5", label: "Sürat Kargo" }
   ]);
   
+  // Profil verilerini yükleme durumu için state ekleyelim
+  const [isProfileLoading, setIsProfileLoading] = useState(false);
+
+  // Profil verilerini yenileme fonksiyonu
+  const refreshProfileData = async (userId: string) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/profil/profilleri/${userId}/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${localStorage.getItem('authToken')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Profil bilgileri alınamadı');
+      }
+
+      const data = await response.json();
+      
+      // localStorage'ı güncelle
+      localStorage.setItem('userIsim', data.first_name || 'Henüz değer girilmemiştir');
+      localStorage.setItem('userSoyisim', data.last_name || 'Henüz değer girilmemiştir');
+      localStorage.setItem('userBio', data.bio || 'Henüz girilmemiştir');
+      if (data.foto) {
+        localStorage.setItem('userPhoto', data.foto);
+      }
+      
+      return data;
+    } catch (error) {
+      console.error('Profil bilgileri alınırken hata:', error);
+      throw error;
+    }
+  };
+
   // Token kontrolü için useEffect
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    const storedUsername = localStorage.getItem('username');
-    const storedEmail = localStorage.getItem('email');
-    
-    if (token) {
-      setIsLoggedIn(true);
-      
-      // Eğer localStorage'da username varsa, onu kullan
-      if (storedUsername) {
-        setUsername(storedUsername);
-      }
-      
-      // Eğer localStorage'da email varsa, onu kullan
-      if (storedEmail) {
-        setEmail(storedEmail);
-      }
-      
-      // Eğer username yoksa ama token varsa, kullanıcı bilgilerini almayı dene
-      if (!storedUsername || !storedEmail) {
-        getUserInfo().then(userData => {
+    const loadUserData = async () => {
+      setIsProfileLoading(true);
+      try {
+        const token = localStorage.getItem('authToken');
+        const storedUsername = localStorage.getItem('username');
+        const storedEmail = localStorage.getItem('email');
+        const userId = localStorage.getItem('userID');
+        
+        if (token && storedUsername && storedEmail) {
+          setIsLoggedIn(true);
+          setUsername(storedUsername);
+          setEmail(storedEmail);
+
+          if (userId) {
+            await refreshProfileData(userId);
+          }
+        } else if (token) {
+          const userData = await getUserInfo();
           if (userData) {
-            if (userData.username) {
-              setUsername(userData.username);
-              localStorage.setItem('username', userData.username);
-            }
-            
-            if (userData.email) {
-              setEmail(userData.email);
-              localStorage.setItem('email', userData.email);
-            }
+            setIsLoggedIn(true);
+            setUsername(userData.username);
+            setEmail(userData.email);
+            localStorage.setItem('username', userData.username);
+            localStorage.setItem('email', userData.email);
             
             if (userData.id) {
               localStorage.setItem('userID', userData.id.toString());
-            }
-            
-            if (userData.bio) {
-              localStorage.setItem('userBio', userData.bio);
-            }
-            
-            if (userData.foto) {
-              localStorage.setItem('userPhoto', userData.foto);
+              await refreshProfileData(userData.id.toString());
             }
           }
-        }).catch(error => {
-          console.error("Kullanıcı bilgileri alınamadı:", error);
-        });
+        }
+      } catch (error) {
+        console.error("Kullanıcı bilgileri alınırken hata oluştu:", error);
+        // Hata durumunda localStorage'ı temizle
+        localStorage.clear();
+        setIsLoggedIn(false);
+        setUsername("");
+        setEmail("");
+      } finally {
+        setIsProfileLoading(false);
       }
-    }
+    };
+
+    loadUserData();
   }, []);
 
   const validateEmail = (email: string) => {
@@ -345,15 +432,12 @@ const App: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [registrationData, setRegistrationData] = useState<{ username?: string; email?: string }>({});
+  const [showProfilDüzenleModal, setShowProfilDüzenleModal] = useState(false);
 
   const handleLogin = async (values: any) => {
+    setIsProfileLoading(true);
     try {
-      // Backend'den dönen yanıt artık token ve kullanıcı bilgilerini içeriyor
-      // values parametresi artık login API'den dönen yanıtı içeriyor: {key: "token", user: {...}}
       console.log("Login response:", values);
-      
-      // Kullanıcı bilgilerini state'e kaydet
-      setIsLoggedIn(true);
       
       // Backend'den gelen kullanıcı bilgilerini kullan
       if (values.user) {
@@ -363,32 +447,30 @@ const App: React.FC = () => {
         // Kullanıcı bilgilerini localStorage'a kaydet
         localStorage.setItem('username', values.user.username);
         localStorage.setItem('email', values.user.email);
+        localStorage.setItem('authToken', values.key);
         
-        // Kullanıcı ID'sini localStorage'a kaydet
         if (values.user.id) {
           localStorage.setItem('userID', values.user.id.toString());
+          
+          // Profil verilerini hemen çek
+          try {
+            await refreshProfileData(values.user.id.toString());
+            setIsLoggedIn(true);
+          } catch (error) {
+            console.error('Profil verileri çekilemedi:', error);
+            message.warning('Giriş yapıldı ancak profil bilgileri yüklenemedi.');
+          }
         }
-        
-        // Biyografi bilgisini localStorage'a kaydet
-        if (values.user.bio) {
-          localStorage.setItem('userBio', values.user.bio);
-        }
-        
-        // Fotoğraf bilgisini de localStorage'a kaydedebilirsiniz (URL olarak)
-        if (values.user.foto) {
-          localStorage.setItem('userPhoto', values.user.foto);
-        }
-        
-        // Diğer kullanıcı bilgileri de values.user içinde mevcut (id, foto, bio)
       }
       
       setShowLoginModal(false);
       setShowRegisterModal(false);
-      
-      // Ana sayfaya yönlendir
       setCurrentPage("home");
+      message.success('Giriş başarılı!');
     } catch (error) {
       message.error('Giriş yapılırken bir hata oluştu');
+    } finally {
+      setIsProfileLoading(false);
     }
   };
 
@@ -515,88 +597,38 @@ const App: React.FC = () => {
   const handleProfileClick = () => {
     setCurrentPage("profile");
     setActiveContainer("first");
-    
-    // Kullanıcı ID'sini localStorage'dan al
-    const userId = localStorage.getItem('userID');
-    
-    // Eğer kullanıcı ID varsa, profil bilgilerini getir
-    if (userId) {
-      // Loading mesajı göster
-      const loadingMessage = message.loading('Profil bilgileri yükleniyor...', 0);
-      
-      // API'den profil bilgilerini al
-      getUserProfileById(userId)
-        .then(profileData => {
-          // Loading mesajını kapat
-          loadingMessage();
-          
-          if (profileData) {
-            console.log('Profil bilgileri alındı:', profileData);
-            
-            // Kullanıcı bilgilerini güncelle ve localStorage'a kaydet
-            if (profileData.username) {
-              setUsername(profileData.username);
-              localStorage.setItem('username', profileData.username);
-            }
-            
-            if (profileData.email) {
-              setEmail(profileData.email);
-              localStorage.setItem('email', profileData.email);
-            }
-            
-            if (profileData.id) {
-              localStorage.setItem('userID', profileData.id.toString());
-            }
-            
-            if (profileData.bio) {
-              localStorage.setItem('userBio', profileData.bio);
-            }
-            
-            if (profileData.foto) {
-              localStorage.setItem('userPhoto', profileData.foto);
-            }
-            
-            // Başarı mesajı göster
-            message.success('Profil bilgileri güncellendi');
-          }
-        })
-        .catch(error => {
-          // Loading mesajını kapat
-          loadingMessage();
-          
-          // Hata mesajı göster
-          message.error('Profil bilgileri alınırken bir hata oluştu');
-          console.error('Profil bilgileri hatası:', error);
-        });
-    }
+  };
+
+  const handleProfilDüzenle = () => {
+    setShowProfilDüzenleModal(true);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col relative">
+    <div className="min-h-screen bg-gray-50 flex flex-col relative overflow-hidden">
       {/* Top Navbar */}
-      <div className="w-full bg-gray-50 pt-3 pb-2 px-4 flex justify-center">
-        <div className="max-w-[1200px] w-full bg-white rounded-xl shadow-lg">
-          <div className="flex items-center h-14 px-8 border-b border-gray-100">
+      <div className="w-full bg-gray-50 pt-[1vw] pb-[0.5vw] px-[1vw] flex justify-center">
+        <div className="w-[90vw] max-w-[1800px] bg-white rounded-xl shadow-lg">
+          <div className="flex items-center h-[4vw] min-h-[50px] px-[2vw] border-b border-gray-100">
             {/* Left: Logo with Navigation */}
             <div className="flex items-center">
               <div 
-                className="w-10 h-10 bg-[#43426e] rounded-lg flex items-center justify-center shadow-sm mr-6 cursor-pointer hover:bg-[#635e9c] transition-colors"
+                className="w-[3vw] h-[3vw] min-w-[40px] min-h-[40px] bg-[#43426e] rounded-lg flex items-center justify-center shadow-sm mr-[1.5vw] cursor-pointer hover:bg-[#635e9c] transition-colors"
                 onClick={handleHomeClick}
               >
-                <i className="fas fa-dog text-white text-xl"></i>
+                <i className="fas fa-dog text-white text-[1.2vw] min-text-[16px]"></i>
               </div>
               
               {/* Navigation */}
               <div className="flex">
                 <button 
-                  className={`text-[#43426e] font-medium px-4 py-4 hover:bg-gray-50 transition-all relative group ${currentPage === "calculations" ? "text-[#635e9c]" : ""}`}
+                  className={`text-[#43426e] font-medium px-[1vw] py-[1vw] text-[1vw] min-text-[14px] hover:bg-gray-50 transition-all relative group ${currentPage === "calculations" ? "text-[#635e9c]" : ""}`}
                   onClick={handleCalculationsClick}
                 >
                   Hesaplamalar
                   <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-[#43426e] transition-all duration-300 ${currentPage === "calculations" ? "w-1/2" : "w-0 group-hover:w-1/2"}`}></div>
                 </button>
                 <button 
-                  className={`text-[#43426e] font-medium px-4 py-4 hover:bg-gray-50 transition-all relative group ${currentPage === "services" ? "text-[#635e9c]" : ""}`}
+                  className={`text-[#43426e] font-medium px-[1vw] py-[1vw] text-[1vw] min-text-[14px] hover:bg-gray-50 transition-all relative group ${currentPage === "services" ? "text-[#635e9c]" : ""}`}
                   onClick={handleServicesClick}
                 >
                   Hizmetler
@@ -609,39 +641,44 @@ const App: React.FC = () => {
             <div className="flex-1"></div>
             
             {/* Right: User area */}
-            <div className="w-[400px] flex items-center justify-end">
+            <div className="w-[30vw] max-w-[400px] flex items-center justify-end">
               {isLoggedIn ? (
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-[0.5vw]">
                   <button 
-                    className={`flex items-center px-3 py-1 text-[#43426e] transition-all duration-200 relative group ${currentPage === "profile" ? "text-[#635e9c]" : ""}`}
+                    className={`flex items-center px-[0.8vw] py-[0.3vw] text-[1vw] min-text-[14px] text-[#43426e] transition-all duration-200 relative group ${currentPage === "profile" ? "text-[#635e9c]" : ""}`}
                     onClick={handleProfileClick}
                   >
-                    <UserOutlined className="mr-1" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+                    <UserOutlined className="mr-[0.3vw]" style={{ fontSize: 'max(14px, 1vw)' }} />
                     <span>Profil</span>
                     <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-[#e7bd99] transition-all duration-300 ${currentPage === "profile" ? "w-1/2" : "w-0 group-hover:w-1/2"}`}></div>
                   </button>
                   <button 
-                    className="flex items-center px-3 py-1 text-[#43426e] transition-all duration-200 relative group"
+                    className="flex items-center px-[0.8vw] py-[0.3vw] text-[1vw] min-text-[14px] text-[#43426e] transition-all duration-200 relative group"
                     onClick={handleLogout}
                   >
-                    <LogoutOutlined className="mr-1" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+                    <LogoutOutlined className="mr-[0.3vw]" style={{ fontSize: 'max(14px, 1vw)' }} />
                     <span>Çıkış</span>
                     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#e7bd99] group-hover:w-1/2 transition-all duration-300"></div>
                   </button>
-                  <div className="flex items-center px-4 py-2 bg-gradient-to-r from-[#43426e]/5 to-[#635e9c]/5 rounded-lg border border-[#43426e]/10">
-                    <span className="text-[#43426e] font-semibold mr-2">{username}</span>
+                  <div className="flex items-center px-[1vw] py-[0.5vw] bg-gradient-to-r from-[#43426e]/5 to-[#635e9c]/5 rounded-lg border border-[#43426e]/10">
+                    <span className="text-[#43426e] font-semibold mr-[0.5vw] text-[1vw] min-text-[14px]">{username}</span>
                     <div className="relative">
-                      <Avatar icon={<UserOutlined onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />} className="bg-gradient-to-r from-[#43426e] to-[#635e9c]" />
-                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                      <Avatar 
+                        size={Math.max(32, window.innerWidth * 0.02)} 
+                        icon={!localStorage.getItem('userPhoto') && <UserOutlined />}
+                        src={localStorage.getItem('userPhoto') || undefined}
+                        className="bg-gradient-to-r from-[#43426e] to-[#635e9c]"
+                      />
+                      <div className="absolute -bottom-1 -right-1 w-[0.8vw] h-[0.8vw] min-w-[10px] min-h-[10px] bg-green-500 rounded-full border-2 border-white"></div>
                     </div>
                   </div>
                 </div>
               ) : (
                 <button 
-                  className="flex items-center text-[#43426e] border border-[#43426e] px-4 py-2 rounded-lg hover:bg-gray-50 transition-all shadow-sm relative group"
+                  className="flex items-center text-[#43426e] border border-[#43426e] px-[1vw] py-[0.5vw] text-[1vw] min-text-[14px] rounded-lg hover:bg-gray-50 transition-all shadow-sm relative group"
                   onClick={handleLoginClick}
                 >
-                  <LoginOutlined className="mr-2" onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />
+                  <LoginOutlined className="mr-[0.5vw]" style={{ fontSize: 'max(14px, 1vw)' }} />
                   <span className="font-medium">Giriş</span>
                   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#e7bd99] group-hover:w-1/2 transition-all duration-300"></div>
                 </button>
@@ -652,88 +689,92 @@ const App: React.FC = () => {
       </div>
       
       {/* Main Content - Using Transition Classes */}
-      <div className="flex flex-col items-center pt-3 pb-6 px-4 overflow-hidden">
+      <div className="flex-1 flex flex-col items-center pt-[1vw] pb-[2vw] px-[1vw]">
         {/* Container Wrapper with fixed height */}
-        <div className="max-w-[1200px] w-full relative" style={{ minHeight: '600px', height: 'auto' }}>
+        <div className="w-[90vw] max-w-[1800px] relative flex items-center justify-center h-[calc(100vh-12vw)]">
           {/* First Container */}
           <div 
-            className={`absolute top-0 left-0 w-full transition-all duration-700 ease-in-out shadow-lg rounded-xl ${
+            className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ease-in-out shadow-lg rounded-xl ${
               activeContainer === "first" 
                 ? "opacity-100 transform translate-y-0 z-10" 
                 : "opacity-0 transform -translate-y-20 z-0 pointer-events-none"
             }`}
           >
-            <div className="bg-white rounded-xl shadow-lg flex flex-col min-h-[600px]">
+            <div className="bg-white rounded-xl shadow-lg flex flex-col h-full">
               {/* Content */}
-              <div className="flex px-6 py-5 flex-grow relative">
+              <div className="flex px-[2vw] py-[2vw] flex-grow relative overflow-auto">
                 {currentPage === "home" ? (
                   <div className="w-full flex items-center justify-center">
-                    <h1 className="text-3xl font-bold text-[#43426e]">Ana Sayfa</h1>
+                    <h1 className="text-[2.5vw] min-text-[24px] font-bold text-[#43426e]">Ana Sayfa</h1>
                   </div>
                 ) : currentPage === "services" ? (
                   <div className="w-full flex items-center justify-center">
-                    <h1 className="text-3xl font-bold text-[#43426e]">Hizmetler daha yapılmadı</h1>
+                    <h1 className="text-[2.5vw] min-text-[24px] font-bold text-[#43426e]">Hizmetler daha yapılmadı</h1>
                   </div>
                 ) : currentPage === "calculations" ? (
                   <div className="w-full flex items-center justify-center">
-                    <h1 className="text-3xl font-bold text-[#43426e]">Hesaplamalar daha yapılmadı</h1>
+                    <h1 className="text-[2.5vw] min-text-[24px] font-bold text-[#43426e]">Hesaplamalar daha yapılmadı</h1>
                   </div>
                 ) : currentPage === "profile" ? (
-                  <div className="w-full flex flex-col items-center">
-                    <div className="w-full grid grid-cols-2 gap-8">
-
+                  <div className="w-full h-full flex flex-col items-center justify-center py-[2vw]">
+                    <div className="w-full grid grid-cols-2 gap-[2vw]">
                       {/* Sol Panel - Profil Kartı */}
-                      <div className="relative overflow-hidden rounded-lg border border-gray-100 p-6 bg-white shadow-sm">
-                        <div className="flex items-start justify-between">
-                          <h2 className="text-2xl font-medium text-gray-700 mb-6">Profil Bilgileri</h2>
-                        </div>
-
-                        <div className="flex items-center mb-6">
-                          <div className="relative mr-6">
-                            <Avatar 
-                              size={80} 
-                              icon={!localStorage.getItem('userPhoto') && <UserOutlined style={{ fontSize: '36px' }} onPointerEnterCapture={emptyPointerHandler} onPointerLeaveCapture={emptyPointerHandler} />}
-                              src={localStorage.getItem('userPhoto') || undefined}
-                              className="bg-gradient-to-r from-[#43426e] to-[#635e9c]"
-                            />
-                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
-                          </div>
-                          <div>
-                            <div className="text-3xl font-bold text-[#43426e]">{username}</div>
-                            <div className="text-gray-500">{localStorage.getItem('userID') ? `ID: ${localStorage.getItem('userID')}` : ''}</div>
-                          </div>
-                        </div>
-
-                        <div className="space-y-4 mb-8">
-                          <div>
-                            <h3 className="text-sm font-medium text-gray-500 mb-1">E-posta Adresi</h3>
-                            <div className="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center">
-                              <MailOutlined className="text-[#43426e] mr-3" />
-                              <span className="text-gray-700">{email}</span>
+                      <div className="relative overflow-hidden rounded-lg border border-gray-100 p-[1.5vw] bg-white shadow-sm">
+                        <div className="flex flex-col items-start">
+                          <h2 className="text-[1.8vw] min-text-[20px] font-medium text-gray-700 mb-[1.5vw]">Profil Bilgileri</h2>
+                          <div className="flex items-center mb-[1.5vw]">
+                            <div className="relative mr-[1.5vw]">
+                              <Avatar 
+                                size={Math.max(100, window.innerWidth * 0.06)}
+                                icon={!localStorage.getItem('userPhoto') && <UserOutlined style={{ fontSize: 'max(40px, 3vw)' }} />}
+                                src={localStorage.getItem('userPhoto') || undefined}
+                                className="bg-gradient-to-r from-[#43426e] to-[#635e9c]"
+                              />
+                              <div className="absolute -bottom-1 -right-1 w-[1.5vw] h-[1.5vw] min-w-[16px] min-h-[16px] bg-green-500 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div>
+                              <div className="text-[2vw] min-text-[24px] font-bold text-[#43426e]">{username}</div>
+                              <div className="text-[0.9vw] min-text-[12px] text-gray-500 mb-1">
+                                {localStorage.getItem('userIsim') === "Henüz değer girilmemiştir" && 
+                                 localStorage.getItem('userSoyisim') === "Henüz değer girilmemiştir" ? 
+                                  "Henüz İsim & Soyisim Bilgisi Girilmemiştir" : 
+                                  `${localStorage.getItem('userIsim') === "Henüz değer girilmemiştir" ? "" : localStorage.getItem('userIsim')} ${localStorage.getItem('userSoyisim') === "Henüz değer girilmemiştir" ? "" : localStorage.getItem('userSoyisim')}`.trim()
+                                }
+                              </div>
+                              <div className="text-[1vw] min-text-[12px] text-gray-500">{localStorage.getItem('userID') ? `ID: ${localStorage.getItem('userID')}` : ''}</div>
                             </div>
                           </div>
-                          
-                          <div>
-                            <h3 className="text-sm font-medium text-gray-500 mb-1">Biyografi</h3>
-                            <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                              <p className="text-gray-700">
-                                {localStorage.getItem('userBio') || "Henüz biyografi girilmemiş."}
-                              </p>
+
+                          <div className="space-y-4 w-full mb-8">
+                            <div>
+                              <h3 className="text-sm font-medium text-gray-500 mb-1 text-left">E-posta Adresi</h3>
+                              <div className="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center">
+                                <MailOutlined className="text-[#43426e] mr-3" />
+                                <span className="text-gray-700">{email}</span>
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <h3 className="text-sm font-medium text-gray-500 mb-1 text-left">Biyografi</h3>
+                              <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                                <p className="text-gray-700 text-left">
+                                  {localStorage.getItem('userBio') || "Henüz biyografi girilmemiş."}
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <Button 
-                          type="primary" 
-                          className="custom-gradient-button border-0 rounded-lg w-full mb-3"
-                        >
-                          Profil Fotoğrafını Güncelle
-                        </Button>
-                        <Button 
-                          className="rounded-lg w-full border-[#43426e] text-[#43426e] hover:bg-gradient-to-r hover:from-[#43426e] hover:to-[#635e9c] hover:text-white hover:border-0 transition-all"
-                        >
-                          Şifreyi Değiştir
-                        </Button>
+                          <div className="w-full">
+                            <Button 
+                              type="primary" 
+                              onClick={handleProfilDüzenle}
+                              className="custom-gradient-button border-0 rounded-lg w-full"
+                              icon={<EditOutlined />}
+                            >
+                              Profil Düzenle
+                            </Button>
+                          </div>
+                        </div>
                       </div>
 
                       {/* Sağ Panel - Hesap Etkinliği */}
@@ -844,16 +885,16 @@ const App: React.FC = () => {
             </div>
           </div>
         
-          {/* Second Container - Positioned below */}
+          {/* Second Container */}
           <div 
-            className={`absolute top-0 left-0 w-full transition-all duration-700 ease-in-out shadow-lg rounded-xl ${
+            className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ease-in-out shadow-lg rounded-xl ${
               activeContainer === "second" 
                 ? "opacity-100 transform translate-y-0 z-10" 
                 : "opacity-0 transform translate-y-20 z-0 pointer-events-none"
             }`}
           >
-            <div className="bg-white rounded-xl shadow-lg flex flex-col min-h-[600px]">
-              <div className="flex px-6 py-5 flex-grow relative">
+            <div className="bg-white rounded-xl shadow-lg flex flex-col h-full">
+              <div className="flex px-[2vw] py-[2vw] flex-grow relative overflow-auto">
                 {/* Kargo Hesaplama Sonuçları */}
                 {activeSection === "shipping" && (
                   <div className="w-full flex rounded-lg p-8">
@@ -1011,6 +1052,36 @@ const App: React.FC = () => {
         visible={showRegisterModal}
         onCancel={() => setShowRegisterModal(false)}
       />
+
+      {/* Profil Düzenleme Modal */}
+      <Modal
+        title={<div className="text-[#43426e] text-lg font-medium">Profil Düzenle</div>}
+        open={showProfilDüzenleModal}
+        onCancel={() => setShowProfilDüzenleModal(false)}
+        footer={null}
+        width={750}
+        centered
+        className="auth-modal"
+        maskClosable={false}
+        style={{ borderRadius: '16px', overflow: 'hidden' }}
+        bodyStyle={{ padding: '20px', borderRadius: '16px' }}
+      >
+        <ProfilDüzenleForm
+          onCancel={() => setShowProfilDüzenleModal(false)}
+          onSuccess={() => {
+            setShowProfilDüzenleModal(false);
+            refreshProfileData(localStorage.getItem('userID')); // Profil verilerini hemen yenile
+          }}
+          initialValues={{
+            username: username,
+            email: email || 'Henüz girilmemiştir',
+            bio: localStorage.getItem('userBio') || 'Henüz girilmemiştir',
+            foto: localStorage.getItem('userPhoto') || undefined,
+            isim: localStorage.getItem('userIsim') || 'Henüz değer girilmemiştir',
+            soyisim: localStorage.getItem('userSoyisim') || 'Henüz değer girilmemiştir',
+          }}
+        />
+      </Modal>
     </div>
   );
 };

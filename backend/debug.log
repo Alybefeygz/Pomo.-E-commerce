@@ -4423,3 +4423,687 @@ INFO 2025-04-01 19:14:05,406 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 2
 INFO 2025-04-01 19:14:05,412 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
 INFO 2025-04-01 19:14:06,350 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl.jpg HTTP/1.1" 304 0
 INFO 2025-04-01 19:14:06,380 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:20:22,806 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:20:22,813 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:20:53,063 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:20:53,068 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:07,934 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:07,940 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:16,998 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:20,966 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:24,700 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:31,407 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:49,242 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:49,249 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:51,050 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:21:51,053 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:52,404 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:52,409 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:53,933 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:21:53,937 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:22:04,211 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:13,211 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:14,394 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:14,401 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:14,815 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:14,822 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:16,526 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:23:16,528 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:17,254 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:20,826 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:21,914 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:25,020 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:35,812 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:36,588 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:38,099 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:43,242 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:43,254 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:47,363 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:47,368 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:49,239 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:49,249 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:51,304 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:51,311 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:52,551 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:55,644 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:55,649 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:23:56,890 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:01,484 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:01,496 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:03,084 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+WARNING 2025-04-01 19:24:05,193 log Unauthorized: /api/profil/profilleri/
+WARNING 2025-04-01 19:24:05,194 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 401 20409
+INFO 2025-04-01 19:24:07,131 basehttp "GET /api-auth/login/?next=/api/profil/profilleri/ HTTP/1.1" 200 2723
+INFO 2025-04-01 19:24:09,778 basehttp "POST /api-auth/login/ HTTP/1.1" 200 2963
+INFO 2025-04-01 19:24:14,576 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-04-01 19:24:14,591 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25699
+INFO 2025-04-01 19:24:19,672 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:19,681 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:20,804 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:24:20,810 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:23,347 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:23,364 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:30,498 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:30,506 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:32,179 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:32,192 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:34,321 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:34,327 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:35,332 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:35,337 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:36,195 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:39,029 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:39,041 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 226
+INFO 2025-04-01 19:24:41,790 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25699
+INFO 2025-04-01 19:24:42,388 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25699
+INFO 2025-04-01 19:24:55,318 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 70
+INFO 2025-04-01 19:24:55,365 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:24:55,381 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:24:55,396 basehttp "GET /media/profil_fotolari/2025/04/fon.jpg HTTP/1.1" 200 27485
+INFO 2025-04-01 19:24:58,033 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:26:58,780 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:26:58,795 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:27:01,717 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:02,244 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:02,390 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:02,519 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:02,645 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:03,720 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:27:03,726 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:27:04,718 basehttp "GET /media/profil_fotolari/2025/04/fon.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:27:04,732 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:27:08,654 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:27:08,664 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:27:36,406 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:36,558 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:36,691 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:27:49,497 basehttp "GET /media/profil_fotolari/2025/04/fon.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:28:12,651 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:28:12,664 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:28:14,351 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:14,778 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:14,921 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:15,044 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:15,170 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:15,308 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:15,449 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:15,593 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:15,764 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25689
+INFO 2025-04-01 19:28:17,896 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:28:17,900 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:28:18,958 basehttp "GET /media/profil_fotolari/2025/04/fon.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:28:18,964 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 221
+INFO 2025-04-01 19:28:27,119 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 83
+INFO 2025-04-01 19:28:27,149 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 234
+INFO 2025-04-01 19:28:27,160 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 234
+INFO 2025-04-01 19:28:27,174 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl_UjpEfsa.jpg HTTP/1.1" 200 23357
+INFO 2025-04-01 19:28:28,961 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25715
+INFO 2025-04-01 19:30:26,011 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 78
+INFO 2025-04-01 19:30:26,049 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-01 19:30:26,065 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-01 19:30:26,077 basehttp "GET /media/profil_fotolari/2025/04/fon_72OuIAs.jpg HTTP/1.1" 200 27485
+INFO 2025-04-01 19:30:28,081 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25705
+INFO 2025-04-01 19:35:30,114 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-01 19:35:30,118 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-01 19:36:07,196 basehttp "GET /media/profil_fotolari/2025/04/fon_72OuIAs.jpg HTTP/1.1" 304 0
+INFO 2025-04-01 19:36:07,200 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:24:27,528 autoreload Watching for file changes with StatReloader
+WARNING 2025-04-02 13:24:41,885 log Not Found: /
+WARNING 2025-04-02 13:24:41,886 basehttp "GET / HTTP/1.1" 404 3274
+WARNING 2025-04-02 13:24:41,982 log Not Found: /favicon.ico
+WARNING 2025-04-02 13:24:41,983 basehttp "GET /favicon.ico HTTP/1.1" 404 3325
+INFO 2025-04-02 13:24:44,461 basehttp "GET /api/ HTTP/1.1" 200 21070
+INFO 2025-04-02 13:24:44,493 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,497 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,497 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,497 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,497 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,498 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,498 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,501 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,501 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,501 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,501 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:44,505 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2025-04-02 13:24:46,600 basehttp "OPTIONS /api/profil/profilleri/7/ HTTP/1.1" 200 0
+INFO 2025-04-02 13:24:46,600 basehttp "OPTIONS /api/profil/profilleri/7/ HTTP/1.1" 200 0
+INFO 2025-04-02 13:24:46,610 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:24:46,615 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:26:34,996 basehttp "POST /api-auth/logout/?next=/api/ HTTP/1.1" 302 0
+INFO 2025-04-02 13:26:35,002 basehttp "GET /api/ HTTP/1.1" 200 20535
+INFO 2025-04-02 13:27:12,995 basehttp "GET /api-auth/login/?next=/api/ HTTP/1.1" 200 2705
+INFO 2025-04-02 13:27:15,740 basehttp "POST /api-auth/login/ HTTP/1.1" 200 2945
+INFO 2025-04-02 13:27:21,011 basehttp "POST /api-auth/login/ HTTP/1.1" 302 0
+INFO 2025-04-02 13:27:21,019 basehttp "GET /api/ HTTP/1.1" 200 21070
+INFO 2025-04-02 13:27:31,216 basehttp "OPTIONS /api/rest-auth/login/ HTTP/1.1" 200 0
+INFO 2025-04-02 13:27:31,742 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 13:27:39,137 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:27:43,893 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:27:43,949 basehttp "GET /media/profil_fotolari/2025/04/fon_72OuIAs.jpg HTTP/1.1" 200 27485
+INFO 2025-04-02 13:32:10,300 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:32:13,875 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:32:55,180 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:34:15,998 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:34:21,795 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:34:25,665 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:34:34,165 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 13:34:43,110 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:37:01,617 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:37:06,833 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:37:15,082 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 13:37:16,810 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:37:38,467 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:37:42,674 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:37:56,725 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 13:37:58,189 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:39:11,603 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:39:50,521 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:33,609 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:39,847 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:41,285 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:42,372 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:43,048 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:43,213 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:43,325 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:43,474 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:41:55,779 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 13:41:57,306 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 13:42:16,548 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 256
+INFO 2025-04-02 13:42:18,133 basehttp "OPTIONS /api/profil/profilleri/5/ HTTP/1.1" 200 0
+INFO 2025-04-02 13:42:18,142 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 264
+INFO 2025-04-02 13:42:21,644 basehttp "GET /api/profil/ HTTP/1.1" 200 21209
+INFO 2025-04-02 13:42:22,482 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25705
+INFO 2025-04-02 13:42:22,517 basehttp "GET /static/rest_framework/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+INFO 2025-04-02 13:42:28,575 basehttp "GET /media/profil_fotolari/2025/03/Ekran_g%C3%B6r%C3%BCnt%C3%BCs%C3%BC_2024-09-08_143124.png HTTP/1.1" 304 0
+INFO 2025-04-02 13:42:28,580 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 264
+INFO 2025-04-02 13:42:34,952 basehttp "OPTIONS /api/profil/profil_foto/ HTTP/1.1" 200 0
+INFO 2025-04-02 13:42:35,169 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 89
+INFO 2025-04-02 13:42:35,201 basehttp "PUT /api/profil/profilleri/5/ HTTP/1.1" 200 233
+INFO 2025-04-02 13:42:35,214 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 233
+INFO 2025-04-02 13:42:35,225 basehttp "GET /media/profil_fotolari/2025/04/T%C3%BCl_Perde_kldIwKF.jpg HTTP/1.1" 200 34486
+INFO 2025-04-02 13:42:37,491 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25643
+INFO 2025-04-02 13:42:47,135 basehttp "PUT /api/profil/profilleri/5/ HTTP/1.1" 200 233
+INFO 2025-04-02 13:42:47,146 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 233
+INFO 2025-04-02 13:47:05,611 basehttp "OPTIONS /api/rest-auth/registration/ HTTP/1.1" 200 0
+INFO 2025-04-02 13:47:06,058 basehttp "POST /api/rest-auth/registration/ HTTP/1.1" 201 131
+INFO 2025-04-02 13:47:13,173 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 131
+INFO 2025-04-02 13:47:14,886 basehttp "OPTIONS /api/profil/profilleri/10/ HTTP/1.1" 200 0
+INFO 2025-04-02 13:47:14,892 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 100
+INFO 2025-04-02 13:48:01,858 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 25969
+INFO 2025-04-02 13:48:07,284 basehttp "GET /api/profil/profilleri/10 HTTP/1.1" 301 0
+INFO 2025-04-02 13:48:07,295 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21526
+INFO 2025-04-02 14:05:59,215 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 100
+INFO 2025-04-02 14:06:01,003 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 100
+INFO 2025-04-02 14:06:16,347 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21526
+INFO 2025-04-02 14:06:18,589 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 100
+INFO 2025-04-02 14:07:22,474 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 147
+INFO 2025-04-02 14:07:22,483 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 147
+INFO 2025-04-02 14:07:23,699 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 147
+INFO 2025-04-02 14:07:35,643 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 137
+INFO 2025-04-02 14:07:35,657 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 137
+INFO 2025-04-02 14:08:02,053 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 137
+INFO 2025-04-02 14:08:09,851 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 137
+INFO 2025-04-02 14:08:22,337 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 137
+INFO 2025-04-02 14:08:39,899 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:08:39,913 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:08:42,983 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:08:45,046 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:08:45,065 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:08:46,679 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:08:59,898 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:08:59,910 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:09:12,305 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:09:21,096 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:09:32,925 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:09:34,330 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:09:38,644 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:09:45,463 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:11:10,279 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:11:39,832 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:11:59,467 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21538
+INFO 2025-04-02 14:12:11,136 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:13:30,266 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:13:31,026 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+INFO 2025-04-02 14:13:42,745 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 102
+WARNING 2025-04-02 14:14:50,899 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:14:50,900 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 92
+WARNING 2025-04-02 14:14:51,670 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:14:51,671 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 92
+WARNING 2025-04-02 14:14:51,818 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:14:51,819 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 92
+WARNING 2025-04-02 14:14:51,969 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:14:51,970 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 92
+INFO 2025-04-02 14:15:31,911 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 92
+WARNING 2025-04-02 14:15:31,923 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:15:31,924 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 92
+INFO 2025-04-02 14:15:36,050 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 100
+INFO 2025-04-02 14:15:36,088 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 208
+INFO 2025-04-02 14:15:36,097 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 208
+INFO 2025-04-02 14:15:36,112 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 200 50058
+INFO 2025-04-02 14:16:00,690 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 208
+WARNING 2025-04-02 14:16:03,965 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:16:03,966 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 82
+WARNING 2025-04-02 14:16:54,507 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:16:54,508 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 92
+INFO 2025-04-02 14:17:00,049 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:17:00,064 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 208
+INFO 2025-04-02 14:17:01,485 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 208
+WARNING 2025-04-02 14:17:05,780 log Bad Request: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:17:05,781 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 400 92
+INFO 2025-04-02 14:17:09,963 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21773
+INFO 2025-04-02 14:17:10,588 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21773
+INFO 2025-04-02 14:17:10,747 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21773
+INFO 2025-04-02 14:17:10,904 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21773
+INFO 2025-04-02 14:19:05,031 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:19:05,045 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 208
+INFO 2025-04-02 14:19:06,083 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 208
+INFO 2025-04-02 14:19:09,851 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:19:09,873 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:19:14,042 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21827
+INFO 2025-04-02 14:19:19,182 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:21:11,465 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:21:11,479 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:21:12,989 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:21:17,692 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 188
+INFO 2025-04-02 14:21:17,703 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 188
+INFO 2025-04-02 14:21:19,004 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 188
+INFO 2025-04-02 14:21:23,064 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:21:23,075 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:21:25,878 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:21:51,084 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:22:17,353 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:22:17,367 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:22:32,928 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21806
+INFO 2025-04-02 14:22:50,864 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:22:52,202 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:22:57,940 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:22:57,943 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:25:22,134 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:25:22,142 basehttp "GET /api/profil/profilleri/10 HTTP/1.1" 301 0
+INFO 2025-04-02 14:25:22,148 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:25:22,155 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:25:22,155 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:25:24,790 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:25:24,792 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:25:24,793 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:25:41,304 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:25:42,678 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:25:42,680 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:25:42,681 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:25:54,201 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:25:54,203 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:25:54,204 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+WARNING 2025-04-02 14:28:30,909 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:28:30,910 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:28:48,816 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:28:48,830 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:28:48,838 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:28:48,839 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:28:50,401 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:28:52,886 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 214
+INFO 2025-04-02 14:28:52,897 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 214
+INFO 2025-04-02 14:28:56,097 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 214
+WARNING 2025-04-02 14:28:56,101 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:28:56,102 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:28:58,086 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 214
+INFO 2025-04-02 14:29:00,209 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 215
+INFO 2025-04-02 14:29:00,223 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 215
+INFO 2025-04-02 14:29:01,643 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 215
+INFO 2025-04-02 14:29:04,167 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:29:04,176 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:29:07,522 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:29:07,527 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:29:07,528 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:29:31,312 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21806
+WARNING 2025-04-02 14:29:44,347 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:29:44,348 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:30:27,735 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:30:27,750 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:30:27,757 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:30:27,758 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:30:28,946 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:30:39,474 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 199
+INFO 2025-04-02 14:30:39,490 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 199
+INFO 2025-04-02 14:30:42,338 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 199
+INFO 2025-04-02 14:30:46,378 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:30:46,389 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:30:50,631 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:30:50,634 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:30:50,635 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:30:54,673 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:30:54,680 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:30:54,681 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:31:12,458 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:31:13,267 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:31:15,248 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:31:15,249 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:31:15,250 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+WARNING 2025-04-02 14:31:26,293 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:31:26,293 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+WARNING 2025-04-02 14:31:40,440 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:31:40,440 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:31:43,971 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:31:43,973 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:31:43,974 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:31:54,183 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:31:54,185 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:31:54,186 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:32:19,074 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:32:21,953 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:32:21,972 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:32:24,236 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+WARNING 2025-04-02 14:32:24,239 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:32:24,239 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:32:34,330 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+WARNING 2025-04-02 14:32:34,331 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:32:34,332 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:32:51,571 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:32:52,550 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:32:52,562 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+WARNING 2025-04-02 14:33:22,928 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:33:22,930 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:33:26,586 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 191
+WARNING 2025-04-02 14:33:35,746 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:33:35,746 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:34:01,109 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+WARNING 2025-04-02 14:34:03,063 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:34:03,064 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+WARNING 2025-04-02 14:34:07,614 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:34:07,616 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+WARNING 2025-04-02 14:34:16,183 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:34:16,184 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:34:19,182 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21756
+WARNING 2025-04-02 14:34:26,546 log Unauthorized: /api/profil/profilleri/10/
+WARNING 2025-04-02 14:34:26,547 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 401 58
+INFO 2025-04-02 14:35:06,587 basehttp "OPTIONS /api/profil/profilleri/10 HTTP/1.1" 200 0
+INFO 2025-04-02 14:35:06,598 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:35:26,954 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:35:26,957 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:35:50,800 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:35:52,496 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:35:55,522 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:36:11,315 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:36:13,301 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:36:17,538 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:37:19,077 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:37:30,855 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:37:30,865 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 191
+INFO 2025-04-02 14:37:35,099 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 190
+INFO 2025-04-02 14:38:01,053 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 190
+INFO 2025-04-02 14:38:10,553 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:38:11,927 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 190
+INFO 2025-04-02 14:38:48,592 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 190
+INFO 2025-04-02 14:39:08,534 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:39:11,449 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:39:14,160 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21806
+INFO 2025-04-02 14:39:16,763 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:39:22,655 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:39:41,746 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:39:54,074 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:39:54,090 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:39:55,710 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:40:21,458 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 14:40:21,463 basehttp "OPTIONS /api/profil/profilleri/7 HTTP/1.1" 200 0
+INFO 2025-04-02 14:40:21,470 basehttp "GET /api/profil/profilleri/7 HTTP/1.1" 301 0
+INFO 2025-04-02 14:40:21,487 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 14:40:22,630 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 229
+INFO 2025-04-02 14:40:32,637 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:41:03,618 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:41:06,485 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:41:20,039 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 244
+INFO 2025-04-02 14:41:23,559 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 264
+INFO 2025-04-02 14:41:27,314 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:41:33,056 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:41:50,949 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 14:41:50,973 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:41:52,068 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:43:11,159 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:43:30,522 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 14:43:30,544 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:43:31,901 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:43:49,149 basehttp "GET /api/profil/profilleri/7 HTTP/1.1" 301 0
+INFO 2025-04-02 14:43:49,266 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 26104
+INFO 2025-04-02 14:47:13,138 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:47:13,160 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:47:14,396 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:47:14,404 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:47:19,592 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:47:23,902 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:47:30,306 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 21806
+INFO 2025-04-02 14:47:44,683 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+WARNING 2025-04-02 14:47:56,923 log Bad Request: /api/rest-auth/login/
+WARNING 2025-04-02 14:47:56,925 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 400 68
+INFO 2025-04-02 14:48:02,938 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 14:48:02,955 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:48:03,945 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 257
+INFO 2025-04-02 14:48:23,250 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 26104
+INFO 2025-04-02 14:48:31,244 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 26146
+INFO 2025-04-02 14:48:34,625 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:48:41,413 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:49:09,144 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 14:49:09,150 basehttp "OPTIONS /api/profil/profilleri/5 HTTP/1.1" 200 0
+INFO 2025-04-02 14:49:09,155 basehttp "GET /api/profil/profilleri/5 HTTP/1.1" 301 0
+INFO 2025-04-02 14:49:09,166 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 233
+INFO 2025-04-02 14:49:10,134 basehttp "GET /media/profil_fotolari/2025/04/T%C3%BCl_Perde_kldIwKF.jpg HTTP/1.1" 200 34486
+INFO 2025-04-02 14:49:10,147 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 233
+INFO 2025-04-02 14:49:16,932 basehttp "PUT /api/profil/profilleri/5/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:49:20,518 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:49:22,993 basehttp "GET /api/profil/profilleri/5/ HTTP/1.1" 200 271
+INFO 2025-04-02 14:49:30,223 basehttp "PUT /api/profil/profilleri/5/ HTTP/1.1" 200 235
+INFO 2025-04-02 14:50:03,093 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 134
+INFO 2025-04-02 14:50:03,097 basehttp "OPTIONS /api/profil/profilleri/8 HTTP/1.1" 200 0
+INFO 2025-04-02 14:50:03,103 basehttp "GET /api/profil/profilleri/8 HTTP/1.1" 301 0
+INFO 2025-04-02 14:50:03,107 basehttp "OPTIONS /api/profil/profilleri/8/ HTTP/1.1" 200 0
+INFO 2025-04-02 14:50:03,117 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 103
+INFO 2025-04-02 14:50:04,351 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 103
+INFO 2025-04-02 14:50:08,726 basehttp "GET /api/profil/profilleri/ HTTP/1.1" 200 26293
+INFO 2025-04-02 14:50:13,362 basehttp "GET /api/profil/profilleri/8 HTTP/1.1" 301 0
+INFO 2025-04-02 14:50:13,373 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21524
+INFO 2025-04-02 14:50:14,789 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21524
+INFO 2025-04-02 14:50:18,862 basehttp "OPTIONS /api/profil/profilleri/8/ HTTP/1.1" 200 0
+INFO 2025-04-02 14:50:18,882 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 103
+INFO 2025-04-02 14:50:22,465 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21534
+INFO 2025-04-02 14:50:27,637 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 157
+INFO 2025-04-02 14:50:30,809 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 157
+INFO 2025-04-02 14:50:33,070 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 157
+INFO 2025-04-02 14:50:35,486 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21588
+INFO 2025-04-02 14:50:44,871 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 78
+INFO 2025-04-02 14:50:44,918 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:50:44,938 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 200 27485
+INFO 2025-04-02 14:50:50,169 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21760
+INFO 2025-04-02 14:50:56,355 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 227
+INFO 2025-04-02 14:51:07,082 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21765
+INFO 2025-04-02 14:51:11,427 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 208
+INFO 2025-04-02 14:51:26,913 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 168
+INFO 2025-04-02 14:51:29,196 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:51:29,216 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 168
+INFO 2025-04-02 14:51:33,986 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:51:37,342 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:51:37,368 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:51:39,480 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:51:43,078 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:51:43,096 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:51:45,765 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21760
+INFO 2025-04-02 14:51:49,642 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:51:49,656 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:51:54,119 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 227
+INFO 2025-04-02 14:51:58,084 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:51:58,101 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 227
+INFO 2025-04-02 14:52:00,572 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 227
+INFO 2025-04-02 14:52:03,476 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 227
+INFO 2025-04-02 14:52:05,452 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 21765
+INFO 2025-04-02 14:52:21,457 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 181
+INFO 2025-04-02 14:52:21,478 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 227
+INFO 2025-04-02 14:52:22,681 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:52:22,690 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 227
+INFO 2025-04-02 14:52:29,141 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:52:32,994 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:52:33,019 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:52:35,282 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 222
+INFO 2025-04-02 14:52:43,268 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 223
+INFO 2025-04-02 14:53:49,636 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:53:49,653 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 223
+INFO 2025-04-02 14:53:52,028 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 223
+INFO 2025-04-02 14:55:22,606 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 223
+INFO 2025-04-02 14:56:59,057 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 243
+INFO 2025-04-02 14:56:59,084 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 243
+INFO 2025-04-02 14:57:02,170 basehttp "GET /media/profil_fotolari/2025/04/fon_tsjBRSW.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:57:02,194 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 243
+INFO 2025-04-02 14:57:06,119 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 216
+INFO 2025-04-02 14:57:06,149 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 216
+INFO 2025-04-02 14:57:09,345 basehttp "PUT /api/profil/profilleri/8/ HTTP/1.1" 200 243
+INFO 2025-04-02 14:57:09,370 basehttp "GET /api/profil/profilleri/8/ HTTP/1.1" 200 243
+INFO 2025-04-02 14:57:20,345 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 195
+INFO 2025-04-02 14:57:20,363 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:57:21,556 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_SCivMOK.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 14:57:21,564 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 241
+INFO 2025-04-02 14:57:35,530 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 220
+INFO 2025-04-02 14:57:35,555 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 220
+INFO 2025-04-02 14:57:41,369 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:57:41,400 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:57:46,303 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:57:52,818 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:57:55,757 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:59:04,258 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:59:09,953 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:59:09,978 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:59:13,407 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 14:59:17,785 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 15:00:57,953 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 15:01:33,863 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 83
+INFO 2025-04-02 15:01:33,892 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:01:33,916 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl_GuMAW26.jpg HTTP/1.1" 200 23357
+INFO 2025-04-02 15:01:33,924 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:01:44,912 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 199
+INFO 2025-04-02 15:01:44,935 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:01:46,948 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl_GuMAW26.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 15:01:46,965 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:03:45,042 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:04:06,560 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 199
+INFO 2025-04-02 15:04:06,582 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:04:08,635 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl_GuMAW26.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 15:04:08,655 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:04:32,889 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 199
+INFO 2025-04-02 15:04:32,905 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:04:43,585 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl_GuMAW26.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 15:04:43,604 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:05:26,948 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:05:26,952 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:15:50,333 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 199
+INFO 2025-04-02 15:15:50,346 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 245
+INFO 2025-04-02 15:15:50,356 basehttp "GET /media/profil_fotolari/2025/04/t%C3%BCl_GuMAW26.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 15:15:56,991 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 100
+INFO 2025-04-02 15:15:57,024 basehttp "PUT /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 15:15:57,037 basehttp "GET /api/profil/profilleri/10/ HTTP/1.1" 200 262
+INFO 2025-04-02 15:15:57,046 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_3_m8Q6Xq9.jpg HTTP/1.1" 200 50058
+INFO 2025-04-02 15:16:12,144 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 15:16:12,154 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 271
+INFO 2025-04-02 15:16:12,162 basehttp "GET /media/profil_fotolari/2025/04/fon_72OuIAs.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 15:17:03,533 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 225
+INFO 2025-04-02 15:17:03,544 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 271
+INFO 2025-04-02 15:17:15,698 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 268
+INFO 2025-04-02 15:17:15,709 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 268
+INFO 2025-04-02 15:17:48,234 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 268
+INFO 2025-04-02 15:18:03,689 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 231
+INFO 2025-04-02 15:18:03,705 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 231
+INFO 2025-04-02 15:18:55,003 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 231
+INFO 2025-04-02 15:21:05,316 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 223
+INFO 2025-04-02 15:21:05,327 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 231
+INFO 2025-04-02 15:21:12,175 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 232
+INFO 2025-04-02 15:21:12,187 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 232
+INFO 2025-04-02 15:29:25,146 basehttp "OPTIONS /api/rest-auth/login/ HTTP/1.1" 200 0
+INFO 2025-04-02 15:29:25,597 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 224
+INFO 2025-04-02 15:29:25,600 basehttp "OPTIONS /api/profil/profilleri/7/ HTTP/1.1" 200 0
+INFO 2025-04-02 15:29:25,608 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 232
+INFO 2025-04-02 15:29:33,478 basehttp "OPTIONS /api/profil/profilleri/7/ HTTP/1.1" 200 0
+INFO 2025-04-02 15:29:33,497 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 233
+INFO 2025-04-02 15:29:33,507 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 233
+INFO 2025-04-02 15:29:38,213 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 270
+INFO 2025-04-02 15:29:38,223 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 270
+INFO 2025-04-02 15:29:43,924 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 232
+INFO 2025-04-02 15:29:43,938 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 232
+INFO 2025-04-02 15:29:53,067 basehttp "PUT /api/profil/profil_foto/ HTTP/1.1" 200 92
+INFO 2025-04-02 15:29:53,095 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 15:29:53,105 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 15:29:53,113 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_8.jpg HTTP/1.1" 200 41754
+INFO 2025-04-02 15:35:33,684 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 238
+INFO 2025-04-02 15:35:33,694 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 15:35:33,704 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_8.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 15:35:41,233 basehttp "PUT /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 15:35:41,241 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+WARNING 2025-04-02 16:06:16,504 log Unauthorized: /api/rest-auth/login/
+WARNING 2025-04-02 16:06:16,505 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 401 27
+INFO 2025-04-02 16:06:28,620 basehttp "OPTIONS /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/ HTTP/1.1" 200 0
+WARNING 2025-04-02 16:06:28,625 log Unauthorized: /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/
+WARNING 2025-04-02 16:06:28,626 basehttp "GET /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/ HTTP/1.1" 401 27
+WARNING 2025-04-02 16:07:45,509 log Unauthorized: /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/
+WARNING 2025-04-02 16:07:45,511 basehttp "GET /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/ HTTP/1.1" 401 27
+WARNING 2025-04-02 16:07:45,523 log Unauthorized: /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/
+WARNING 2025-04-02 16:07:45,524 basehttp "GET /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/ HTTP/1.1" 401 27
+WARNING 2025-04-02 16:07:52,060 log Unauthorized: /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/
+WARNING 2025-04-02 16:07:52,061 basehttp "GET /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/ HTTP/1.1" 401 27
+WARNING 2025-04-02 16:07:58,019 log Unauthorized: /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/
+WARNING 2025-04-02 16:07:58,019 basehttp "GET /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/ HTTP/1.1" 401 27
+WARNING 2025-04-02 16:07:58,025 log Unauthorized: /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/
+WARNING 2025-04-02 16:07:58,027 basehttp "GET /api/profil/profilleri/1zxgqsXlRNXnjjtEb1KLX9IkFRH2/ HTTP/1.1" 401 27
+INFO 2025-04-02 16:08:49,853 basehttp "OPTIONS /api/auth/google-login/ HTTP/1.1" 200 0
+WARNING 2025-04-02 16:08:49,864 log Not Found: /api/auth/google-login/
+WARNING 2025-04-02 16:08:49,865 basehttp "POST /api/auth/google-login/ HTTP/1.1" 404 3359
+WARNING 2025-04-02 16:09:28,863 log Not Found: /api/auth/google-login/
+WARNING 2025-04-02 16:09:28,864 basehttp "POST /api/auth/google-login/ HTTP/1.1" 404 3359
+WARNING 2025-04-02 16:17:17,850 log Not Found: /api/auth/google-login/
+WARNING 2025-04-02 16:17:17,850 basehttp "POST /api/auth/google-login/ HTTP/1.1" 404 3359
+WARNING 2025-04-02 16:18:24,757 log Not Found: /api/auth/google-login/
+WARNING 2025-04-02 16:18:24,758 basehttp "POST /api/auth/google-login/ HTTP/1.1" 404 3359
+WARNING 2025-04-02 16:18:41,485 log Not Found: /api/auth/google-login/
+WARNING 2025-04-02 16:18:41,486 basehttp "POST /api/auth/google-login/ HTTP/1.1" 404 3359
+INFO 2025-04-02 16:19:01,815 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\core\urls.py changed, reloading.
+INFO 2025-04-02 16:19:02,644 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:19:48,843 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\core\settings.py changed, reloading.
+INFO 2025-04-02 16:19:49,382 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:21:07,688 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:21:58,002 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:22:34,682 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:23:14,385 autoreload Watching for file changes with StatReloader
+ERROR 2025-04-02 16:23:22,823 log Internal Server Error: /api/auth/google-login/
+ERROR 2025-04-02 16:23:22,824 basehttp "POST /api/auth/google-login/ HTTP/1.1" 500 264
+INFO 2025-04-02 16:23:44,953 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\core\views.py changed, reloading.
+INFO 2025-04-02 16:23:45,510 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:24:07,141 basehttp "POST /api/auth/google-login/ HTTP/1.1" 200 160
+INFO 2025-04-02 16:24:07,145 basehttp "OPTIONS /api/profil/profilleri/11/ HTTP/1.1" 200 0
+WARNING 2025-04-02 16:24:07,150 log Unauthorized: /api/profil/profilleri/11/
+WARNING 2025-04-02 16:24:07,151 basehttp "GET /api/profil/profilleri/11/ HTTP/1.1" 401 27
+INFO 2025-04-02 16:25:09,682 basehttp "OPTIONS /api/profil/profilleri/11/ HTTP/1.1" 200 0
+WARNING 2025-04-02 16:25:09,689 log Unauthorized: /api/profil/profilleri/11/
+WARNING 2025-04-02 16:25:09,689 basehttp "GET /api/profil/profilleri/11/ HTTP/1.1" 401 27
+INFO 2025-04-02 16:25:31,079 basehttp "POST /api/auth/google-login/ HTTP/1.1" 200 139
+INFO 2025-04-02 16:25:31,085 basehttp "OPTIONS /api/profil/profilleri/4/ HTTP/1.1" 200 0
+WARNING 2025-04-02 16:25:31,090 log Unauthorized: /api/profil/profilleri/4/
+WARNING 2025-04-02 16:25:31,091 basehttp "GET /api/profil/profilleri/4/ HTTP/1.1" 401 27
+WARNING 2025-04-02 16:26:09,008 log Unauthorized: /api/profil/profilleri/4/
+WARNING 2025-04-02 16:26:09,009 basehttp "GET /api/profil/profilleri/4/ HTTP/1.1" 401 58
+INFO 2025-04-02 16:26:35,345 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:26:44,320 basehttp "POST /api/auth/google-login/ HTTP/1.1" 200 160
+WARNING 2025-04-02 16:26:44,330 log Unauthorized: /api/profil/profilleri/11/
+WARNING 2025-04-02 16:26:44,332 basehttp "GET /api/profil/profilleri/11/ HTTP/1.1" 401 58
+INFO 2025-04-02 16:26:52,569 basehttp "POST /api/auth/google-login/ HTTP/1.1" 200 160
+WARNING 2025-04-02 16:26:52,577 log Unauthorized: /api/profil/profilleri/11/
+WARNING 2025-04-02 16:26:52,577 basehttp "GET /api/profil/profilleri/11/ HTTP/1.1" 401 58
+INFO 2025-04-02 16:27:52,648 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:28:14,466 basehttp "POST /api/auth/google-login/ HTTP/1.1" 200 139
+WARNING 2025-04-02 16:28:14,480 log Unauthorized: /api/profil/profilleri/4/
+WARNING 2025-04-02 16:28:14,481 basehttp "GET /api/profil/profilleri/4/ HTTP/1.1" 401 27
+INFO 2025-04-02 16:28:21,982 basehttp "POST /api/auth/google-login/ HTTP/1.1" 200 160
+WARNING 2025-04-02 16:28:21,993 log Unauthorized: /api/profil/profilleri/11/
+WARNING 2025-04-02 16:28:21,994 basehttp "GET /api/profil/profilleri/11/ HTTP/1.1" 401 27
+INFO 2025-04-02 16:28:48,257 autoreload C:\Users\ygzef\OneDrive\Masaüstü\Yazýlým Projeleri\Pomo.-E-commerce\backend\core\urls.py changed, reloading.
+INFO 2025-04-02 16:28:49,018 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:29:16,437 autoreload Watching for file changes with StatReloader
+INFO 2025-04-02 16:30:19,248 basehttp "POST /api/rest-auth/login/ HTTP/1.1" 200 238
+INFO 2025-04-02 16:30:19,269 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 16:30:19,288 basehttp "GET /media/profil_fotolari/2025/04/Ads%C4%B1z_tasar%C4%B1m_8.jpg HTTP/1.1" 304 0
+INFO 2025-04-02 16:30:57,911 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 16:31:17,898 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 16:32:27,083 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 16:33:10,509 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
+INFO 2025-04-02 16:33:20,866 basehttp "GET /api/profil/profilleri/7/ HTTP/1.1" 200 246
