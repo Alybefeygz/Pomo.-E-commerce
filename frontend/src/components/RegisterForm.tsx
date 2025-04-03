@@ -3,6 +3,7 @@ import { Form, Input, Button, message, Modal, Divider } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import '../styles/auth.css';
 import { register } from '../services/authService';
+import { signInWithGoogle } from '../services/googleAuthService';
 
 // Define empty handler functions for pointer events
 // const emptyPointerHandler = () => {};
@@ -121,6 +122,30 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
       } else {
         message.error(error.message || 'Kayıt olurken bir hata oluştu. Lütfen tekrar deneyin.');
       }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleRegister = async () => {
+    setLoading(true);
+    try {
+      const response = await signInWithGoogle();
+      
+      // Başarılı giriş mesajı göster
+      message.success('Google ile giriş başarılı!');
+      
+      // Parent component'e kayıt bilgilerini gönder
+      onRegister({
+        username: response.user.username,
+        email: response.user.email,
+        password: '' // Google ile giriş yapanlar için şifre gerekmez
+      });
+
+      // Sadece modal'ı kapat, giriş formuna yönlendirme yapma
+      onCancel();
+    } catch (error: any) {
+      message.error(error.message || 'Google ile giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.');
     } finally {
       setLoading(false);
     }
@@ -260,7 +285,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
           <Button
             size="large"
             className="w-full h-12 bg-white hover:bg-gray-50 border border-gray-200 rounded-button flex items-center justify-center space-x-2 transition-colors group"
-            onClick={() => console.log('Google register clicked')}
+            onClick={handleGoogleRegister}
+            loading={loading}
           >
             <div className="flex items-center justify-center space-x-3">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -270,7 +296,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBackToLogin, 
                 <path d="M21.8055 10.0415H21V10H12V14H17.6515C17.2571 15.1082 16.5467 16.0766 15.608 16.7855L15.6095 16.785L18.7045 19.404C18.4855 19.6025 22 17 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z" fill="#1976D2"/>
               </svg>
               <span className="text-[15px] font-medium text-gray-600 group-hover:text-gray-800">
-                Google ile Kayıt Ol
+                Google ile Giriş Yap
               </span>
             </div>
           </Button>

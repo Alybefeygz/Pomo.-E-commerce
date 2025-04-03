@@ -7,6 +7,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from rest_framework.authtoken.models import Token
+import traceback
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -101,6 +103,78 @@ def registration_view(request):
         logger.error(f'Error Message: {str(e)}')
         logger.error(f'Request Data: {request.data}')
         logger.error(f'Request Headers: {dict(request.headers)}')
+        return Response(
+            {"detail": str(e)},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+@api_view(['POST'])
+def google_auth_view(request):
+    try:
+        logger.info('=== Google Auth Request Received ===')
+        logger.info('Request data:', request.data)
+        
+        email = request.data.get('email')
+        username = request.data.get('username')
+        photo_url = request.data.get('photo_url')
+        google_id = request.data.get('google_id')
+
+        logger.info('Extracted data:', {
+            'email': email,
+            'username': username,
+            'photo_url': photo_url,
+            'google_id': google_id
+        })
+
+        if not email:
+            logger.error('Email is missing')
+            return Response(
+                {"email": "Email adresi gereklidir."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Kullanıcıyı email'e göre bul veya oluştur
+        user, created = User.objects.get_or_create(
+            email=email,
+            defaults={
+                'username': username,
+                'is_active': True
+            }
+        )
+
+        logger.info(f'User {"created" if created else "found"}: {user.username}')
+
+        # Eğer kullanıcı yeni oluşturulduysa
+        if created:
+            # Profil fotoğrafını güncelle
+            if photo_url:
+                user.profil.foto = photo_url
+                user.profil.save()
+                logger.info('Profile photo updated')
+
+        # Token oluştur veya mevcut token'ı al
+        token, _ = Token.objects.get_or_create(user=user)
+        logger.info('Token created/retrieved successfully')
+
+        response_data = {
+            'key': token.key,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            }
+        }
+        
+        logger.info('Sending response:', response_data)
+        return Response(response_data)
+
+    except Exception as e:
+        logger.error('Google authentication error:', str(e))
+        logger.error('Error details:', {
+            'type': type(e).__name__,
+            'message': str(e),
+            'traceback': traceback.format_exc()
+        })
         return Response(
             {"detail": str(e)},
             status=status.HTTP_400_BAD_REQUEST

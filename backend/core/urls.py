@@ -19,6 +19,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .views import registration_view, google_auth_view
 
 class APIRootView(APIView):
     """
@@ -35,7 +36,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),  # Browsable API için
     path('api/rest-auth/', include('dj_rest_auth.urls')),  # Güncellenmiş paket kullanımı
-    path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),  # Bu satır düzeltildi
+    path('api/rest-auth/registration/', registration_view, name='registration'),
+    path('api/rest-auth/google/', google_auth_view, name='google-auth'),
     
     # Özel API kök görünümü
     path('api/', APIRootView.as_view(), name='api-root'),

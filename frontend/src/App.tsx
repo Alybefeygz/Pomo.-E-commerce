@@ -22,6 +22,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import ProfilDüzenleForm from './components/ProfilDüzenleForm';
 import { getUserInfo, getUserProfileById, login, register, updateUserProfile } from './services/authService';
+import axios from 'axios';
 
 // Message konfigürasyonu
 message.config({
@@ -262,8 +263,12 @@ const App: React.FC = () => {
       localStorage.setItem('userIsim', data.first_name || 'Henüz değer girilmemiştir');
       localStorage.setItem('userSoyisim', data.last_name || 'Henüz değer girilmemiştir');
       localStorage.setItem('userBio', data.bio || 'Henüz girilmemiştir');
+      
+      // Profil fotoğrafını state'e güncelle
       if (data.foto) {
-        localStorage.setItem('userPhoto', data.foto);
+        setUserPhoto(data.foto);
+      } else {
+        setUserPhoto(''); // Fotoğraf yoksa boş string
       }
       
       return data;
@@ -433,6 +438,7 @@ const App: React.FC = () => {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [registrationData, setRegistrationData] = useState<{ username?: string; email?: string }>({});
   const [showProfilDüzenleModal, setShowProfilDüzenleModal] = useState(false);
+  const [userPhoto, setUserPhoto] = useState('');
 
   const handleLogin = async (values: any) => {
     setIsProfileLoading(true);
@@ -454,8 +460,14 @@ const App: React.FC = () => {
           
           // Profil verilerini hemen çek
           try {
-            await refreshProfileData(values.user.id.toString());
+            const profileData = await refreshProfileData(values.user.id.toString());
             setIsLoggedIn(true);
+            
+            // Profil fotoğrafını güncelle
+            if (profileData && profileData.foto) {
+              localStorage.setItem('userPhoto', profileData.foto);
+              setUserPhoto(profileData.foto); // State'i güncelle
+            }
           } catch (error) {
             console.error('Profil verileri çekilemedi:', error);
             message.warning('Giriş yapıldı ancak profil bilgileri yüklenemedi.');
@@ -476,7 +488,84 @@ const App: React.FC = () => {
 
   const handleRegister = async (values: { username: string; email: string; password: string }) => {
     try {
-      // Simüle edilmiş API çağrısı
+      // Eğer şifre boşsa, bu Google ile giriş yapılmış demektir
+      if (!values.password) {
+        setIsLoggedIn(true);
+        setUsername(values.username);
+        setEmail(values.email);
+        
+        // Kullanıcı bilgilerini localStorage'a kaydet
+        localStorage.setItem('username', values.username);
+        localStorage.setItem('email', values.email);
+        
+        // Google ile giriş yapan kullanıcının ID'sini al ve kaydet
+        try {
+          // Önce kullanıcı bilgilerini al
+          const userResponse = await axios.get(`${API_URL}/rest-auth/user/`, {
+            headers: {
+              'Authorization': `Token ${localStorage.getItem('authToken')}`
+            }
+          });
+          
+          console.log('User response:', userResponse.data);
+          
+          if (userResponse.data.id) {
+            const userId = userResponse.data.id.toString();
+            localStorage.setItem('userID', userId);
+            
+            // Profil verilerini hemen çek
+            try {
+              const profileData = await fetchProfileData(userId);
+              
+              // Eğer kullanıcının fotoğrafı null ise ve Google'dan gelen fotoğraf varsa, fotoğrafı güncelle
+              if (!profileData.foto && values.photo) {
+                try {
+                  const updateResponse = await axios.patch(
+                    `${API_URL}/api/profil/profilleri/${userId}/`,
+                    { foto: values.photo },
+                    {
+                      headers: {
+                        'Authorization': `Token ${localStorage.getItem('authToken')}`,
+                        'Content-Type': 'application/json'
+                      }
+                    }
+                  );
+                  
+                  if (updateResponse.data) {
+                    // Profil verilerini tekrar çek
+                    await fetchProfileData(userId);
+                  }
+                } catch (error) {
+                  console.error('Fotoğraf güncellenirken hata:', error);
+                }
+              }
+
+              // Diğer profil bilgilerini güncelle
+              if (profileData) {
+                localStorage.setItem('userIsim', profileData.first_name || 'Henüz değer girilmemiştir');
+                localStorage.setItem('userSoyisim', profileData.last_name || 'Henüz değer girilmemiştir');
+                localStorage.setItem('userBio', profileData.bio || 'Henüz girilmemiştir');
+              }
+            } catch (error) {
+              console.error('Profil verileri çekilemedi:', error);
+            }
+          } else {
+            console.error('User ID not found in response:', userResponse.data);
+            throw new Error('Kullanıcı ID bulunamadı');
+          }
+        } catch (error) {
+          console.error('Kullanıcı bilgileri alınamadı:', error);
+          throw error;
+        }
+        
+        setShowRegisterModal(false);
+        setShowLoginModal(false);
+        setCurrentPage("home");
+        message.success('Google ile giriş başarılı!');
+        return;
+      }
+
+      // Normal kayıt işlemi için simüle edilmiş API çağrısı
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Kayıt bilgilerini sakla
@@ -489,7 +578,10 @@ const App: React.FC = () => {
       setShowRegisterModal(false);
       setShowLoginModal(true);
     } catch (error) {
-      message.error('Kayıt olurken bir hata oluştu');
+      // Sadece normal kayıt işleminde hata mesajı göster
+      if (values.password) {
+        message.error('Kayıt olurken bir hata oluştu');
+      }
     }
   };
 
@@ -508,13 +600,8 @@ const App: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // Tüm kullanıcı bilgilerini localStorage'dan sil
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('username');
-    localStorage.removeItem('email');
-    localStorage.removeItem('userID');
-    localStorage.removeItem('userBio');
-    localStorage.removeItem('userPhoto');
+    // Tüm localStorage verilerini temizle
+    localStorage.clear();
     
     // State'leri sıfırla
     setIsLoggedIn(false);
@@ -594,9 +681,20 @@ const App: React.FC = () => {
     setActiveContainer("first");
   };
 
-  const handleProfileClick = () => {
+  const handleProfileClick = async () => {
     setCurrentPage("profile");
     setActiveContainer("first");
+    
+    // Profil verilerini yenile
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      try {
+        await refreshProfileData(userId);
+      } catch (error) {
+        console.error('Profil verileri yenilenirken hata:', error);
+        message.error('Profil bilgileri yüklenirken bir hata oluştu');
+      }
+    }
   };
 
   const handleProfilDüzenle = () => {
@@ -665,8 +763,8 @@ const App: React.FC = () => {
                     <div className="relative">
                       <Avatar 
                         size={Math.max(32, window.innerWidth * 0.02)} 
-                        icon={!localStorage.getItem('userPhoto') && <UserOutlined />}
-                        src={localStorage.getItem('userPhoto') || undefined}
+                        icon={!userPhoto && <UserOutlined />}
+                        src={userPhoto}
                         className="bg-gradient-to-r from-[#43426e] to-[#635e9c]"
                       />
                       <div className="absolute -bottom-1 -right-1 w-[0.8vw] h-[0.8vw] min-w-[10px] min-h-[10px] bg-green-500 rounded-full border-2 border-white"></div>
@@ -726,8 +824,8 @@ const App: React.FC = () => {
                             <div className="relative mr-[1.5vw]">
                               <Avatar 
                                 size={Math.max(100, window.innerWidth * 0.06)}
-                                icon={!localStorage.getItem('userPhoto') && <UserOutlined style={{ fontSize: 'max(40px, 3vw)' }} />}
-                                src={localStorage.getItem('userPhoto') || undefined}
+                                icon={!userPhoto && <UserOutlined style={{ fontSize: 'max(40px, 3vw)' }} />}
+                                src={userPhoto}
                                 className="bg-gradient-to-r from-[#43426e] to-[#635e9c]"
                               />
                               <div className="absolute -bottom-1 -right-1 w-[1.5vw] h-[1.5vw] min-w-[16px] min-h-[16px] bg-green-500 rounded-full border-2 border-white"></div>

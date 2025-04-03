@@ -3,6 +3,7 @@ import { Form, Input, Button, message, Modal, Divider } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import '../styles/auth.css';
 import { login } from '../services/authService';
+import { signInWithGoogle } from '../services/googleAuthService';
 
 // Define empty handler functions for pointer events
 // const emptyPointerHandler = () => {};
@@ -120,6 +121,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onShowRegister, initialV
     setIsUsernameEditable(true);
   };
 
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      const response = await signInWithGoogle();
+      onLogin(response);
+      onCancel();
+    } catch (error: any) {
+      message.error(error.message || 'Google ile giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Modal
       visible={visible}
@@ -212,7 +226,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onShowRegister, initialV
           <Button
             size="large"
             className="w-full h-12 bg-white hover:bg-gray-50 border border-gray-200 rounded-button flex items-center justify-center space-x-2 transition-colors group"
-            onClick={() => console.log('Google login clicked')}
+            onClick={handleGoogleLogin}
+            loading={loading}
           >
             <div className="flex items-center justify-center space-x-3">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
