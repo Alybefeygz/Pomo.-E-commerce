@@ -1,28 +1,45 @@
 from django.contrib import admin
 from .models import (
-    KargoFirma, DesiKgDeger, DesiKgKargoUcret, 
+    Pazaryeri, KargoFirma, DesiKgDeger, DesiKgKargoUcret, PazaryeriKargofirma,
     Kategori, AltKategori, UrunGrubu, KomisyonOrani,
-    Hesaplamalar, FiyatBelirleme
+    Hesaplamalar, KargoHesaplamaGecmisi, HesaplamaKategoriSeviyeleri,
+    HesaplamaKategoriler, HesaplamaKomisyonOranlari,
+    KategoriYolu
 )
 
 # Register your models here.
+@admin.register(Pazaryeri)
+class PazaryeriAdmin(admin.ModelAdmin):
+    list_display = ('id', 'pazar_ismi', 'aktif')
+    list_filter = ('aktif',)
+    search_fields = ('pazar_ismi',)
+    list_display_links = ('id', 'pazar_ismi')
+
 @admin.register(KargoFirma)
 class KargoFirmaAdmin(admin.ModelAdmin):
-    list_display = ('id', 'firma_ismi', 'logo')
+    list_display = ('id', 'firma_ismi', 'logo', 'aktif')
+    list_filter = ('aktif',)
     search_fields = ('firma_ismi',)
     list_display_links = ('id', 'firma_ismi')
-    fields = ('firma_ismi', 'logo')
+    fields = ('firma_ismi', 'logo', 'aktif')
 
 @admin.register(DesiKgDeger)
 class DesiKgDegerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'desi_degeri')
-    search_fields = ('desi_degeri',)
+    list_display = ('id', 'pazar_yeri', 'desi_degeri')
+    list_filter = ('pazar_yeri',)
+    search_fields = ('desi_degeri', 'pazar_yeri__pazar_ismi')
 
 @admin.register(DesiKgKargoUcret)
 class DesiKgKargoUcretAdmin(admin.ModelAdmin):
-    list_display = ('id', 'kargo_firma', 'desi_kg_deger', 'fiyat')
-    list_filter = ('kargo_firma', 'desi_kg_deger')
-    search_fields = ('kargo_firma__firma_ismi',)
+    list_display = ('id', 'pazar_yeri', 'kargo_firma', 'desi_kg_deger', 'ucret')
+    list_filter = ('pazar_yeri', 'kargo_firma', 'desi_kg_deger')
+    search_fields = ('pazar_yeri__pazar_ismi', 'kargo_firma__firma_ismi', 'desi_kg_deger__desi_degeri')
+
+@admin.register(PazaryeriKargofirma)
+class PazaryeriKargofirmaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'pazar_yeri', 'kargo_firma')
+    list_filter = ('pazar_yeri', 'kargo_firma')
+    search_fields = ('pazar_yeri__pazar_ismi', 'kargo_firma__firma_ismi')
 
 # Trendyol Kategori Komisyon Oranları için Admin Sınıfları
 @admin.register(Kategori)
@@ -56,24 +73,39 @@ class HesaplamalarAdmin(admin.ModelAdmin):
     search_fields = ('kullanici__username', 'email')
     date_hierarchy = 'olusturulma_tarihi'
 
-@admin.register(FiyatBelirleme)
-class FiyatBelirlemeAdmin(admin.ModelAdmin):
-    list_display = ('urun_id', 'urun_ismi', 'hesaplama', 'urun_maliyeti', 'satis_fiyati_kdv_dahil')
-    list_filter = ('hesaplama__kullanici', 'urun_kategorisi')
-    search_fields = ('urun_ismi', 'urun_kategorisi', 'hesaplama__kullanici__username', 'hesaplama__email')
-    fieldsets = (
-        ('Temel Bilgiler', {
-            'fields': ('hesaplama', 'urun_ismi', 'urun_maliyeti', 'paketleme_maliyeti')
-        }),
-        ('Kargo Bilgileri', {
-            'fields': ('kargo_firmasi', 'kargo_ucreti', 'desi_kg_degeri')
-        }),
-        ('Komisyon ve Fiyatlandırma', {
-            'fields': ('urun_kategorisi', 'komisyon_orani', 'komisyon_tutari', 
-                       'trendyol_hizmet_bedeli', 'stopaj_degeri')
-        }),
-        ('Satış Bilgileri', {
-            'fields': ('kdv_orani', 'kar_orani', 'kar_tutari', 
-                       'satis_fiyati_kdv_haric', 'satis_fiyati_kdv_dahil')
-        }),
-    )
+@admin.register(KargoHesaplamaGecmisi)
+class KargoHesaplamaGecmisiAdmin(admin.ModelAdmin):
+    list_display = ('id', 'kullanici', 'email', 'olusturma_tarihi')
+    list_filter = ('olusturma_tarihi',)
+    search_fields = ('kullanici__username', 'email')
+
+@admin.register(HesaplamaKategoriSeviyeleri)
+class HesaplamaKategoriSeviyeleriAdmin(admin.ModelAdmin):
+    list_display = ('pazar_yeri', 'maksimum_seviye')
+    list_filter = ('maksimum_seviye',)
+    search_fields = ('pazar_yeri__pazar_ismi',)
+
+@admin.register(HesaplamaKategoriler)
+class HesaplamaKategorilerAdmin(admin.ModelAdmin):
+    list_display = ('adi', 'ust_kategori', 'seviye')
+    list_filter = ('seviye',)
+    search_fields = ('adi', 'ust_kategori__adi')
+    ordering = ('seviye', 'adi')
+
+@admin.register(HesaplamaKomisyonOranlari)
+class HesaplamaKomisyonOranlariAdmin(admin.ModelAdmin):
+    list_display = ('pazar_yeri', 'kategori_1', 'kategori_2', 'kategori_3', 'kategori_4', 'komisyon_orani', 'gecerlilik_tarihi')
+    list_filter = ('pazar_yeri', 'gecerlilik_tarihi')
+    search_fields = ('pazar_yeri__pazar_ismi', 'kategori_1__adi', 'kategori_2__adi', 'kategori_3__adi', 'kategori_4__adi')
+    ordering = ('pazar_yeri', 'kategori_1', 'kategori_2', 'kategori_3', 'kategori_4')
+
+@admin.register(KategoriYolu)
+class KategoriYoluAdmin(admin.ModelAdmin):
+    """
+    KategoriYolu modeli için admin panel ayarları.
+    """
+    list_display = ('pazar_yeri', 'ad', 'komisyon_orani', 'ust_kategori')
+    list_filter = ('pazar_yeri',)
+    search_fields = ('ad', 'pazar_yeri__pazar_ismi')
+    raw_id_fields = ('ust_kategori',)
+    autocomplete_fields = ('pazar_yeri',)

@@ -1,16 +1,19 @@
-from rest_framework import viewsets, status, filters
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.decorators import action
+from rest_framework import viewsets, status, filters, permissions
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from django.db.models import Prefetch
-from hesaplama.models import KargoFirma, DesiKgDeger, DesiKgKargoUcret, Kategori, AltKategori, UrunGrubu, KomisyonOrani, Hesaplamalar, FiyatBelirleme
+from django.db.models import Prefetch, Q
+from hesaplama.models import KargoFirma, DesiKgDeger, DesiKgKargoUcret, Kategori, AltKategori, UrunGrubu, KomisyonOrani, Hesaplamalar, Pazaryeri, PazaryeriKargofirma, KargoHesaplamaGecmisi
 from .serializers import (
-    KargoFirmaSerializer, DesiKgDegerSerializer, DesiKgKargoUcretSerializer, KargoUcretHesaplamaSerializer,
-    KategoriSerializer, AltKategoriSerializer, UrunGrubuSerializer, KomisyonOraniSerializer,
-    KategoriKomisyonBulmaSerializer, SatisFiyatBelirlemeSerializer, UserHesaplamalarSerializer, EksikHesaplamaSerializer
+    PazaryeriSerializer, KargoFirmaSerializer, DesiKgDegerSerializer,
+    DesiKgKargoUcretSerializer, PazaryeriKargofirmaSerializer,
+    KargoUcretHesaplamaSerializer, KategoriSerializer, AltKategoriSerializer,
+    UrunGrubuSerializer, KomisyonOraniSerializer,
+    KategoriKomisyonBulmaSerializer, UserHesaplamalarSerializer, EksikHesaplamaSerializer, KargoUcretEklemeSerializer, KomisyonEklemeSerializer,
+    KomisyonOraniBulmaSerializer, FiyatHesaplamaSerializer, DesiKgHesaplamaSerializer, MarketplacePriceCalculationSerializer
 )
 from .permissions import IsSuperUserOrReadOnly
 import math
@@ -18,6 +21,13 @@ from decimal import Decimal
 from rest_framework import serializers
 import logging
 from rest_framework import renderers
+import pandas as pd
+from django.utils import timezone
+from hesaplama.models import HesaplamaKategoriSeviyeleri, HesaplamaKategoriler, HesaplamaKomisyonOranlari
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from datetime import datetime, timedelta
+from hesaplama.utils import check_and_link_calculations
 
 # Mixin to validate username in URL
 class UsernameMixin:
@@ -36,13 +46,22 @@ class UsernameMixin:
             get_object_or_404(User, username=actual_username)
             return None
         else:
-            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+            # Giriş yapmamış kullanıcılar için herhangi bir kısıtlama yok
+            return None
+
+class PazaryeriViewSet(viewsets.ModelViewSet):
+    """
+    Pazar yerlerini listeler, oluşturur, günceller ve siler.
+    """
+    queryset = Pazaryeri.objects.all().order_by('pazar_ismi')
+    serializer_class = PazaryeriSerializer
+    permission_classes = [IsAdminUser]
 
 class KargoFirmaViewSet(viewsets.ModelViewSet):
     """
     Kargo firmalarını listeler, oluşturur, günceller ve siler.
     """
-    queryset = KargoFirma.objects.all()
+    queryset = KargoFirma.objects.all().order_by('firma_ismi')
     serializer_class = KargoFirmaSerializer
     permission_classes = [IsAdminUser]
 
@@ -50,9 +69,22 @@ class DesiKgDegerViewSet(viewsets.ModelViewSet):
     """
     Desi-Kg değerlerini listeler, oluşturur, günceller ve siler.
     """
-    queryset = DesiKgDeger.objects.all().order_by('desi_degeri')
+    queryset = DesiKgDeger.objects.all().order_by('pazar_yeri', 'desi_degeri')
     serializer_class = DesiKgDegerSerializer
     permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        """
+        Opsiyonel filtreleme sağlar:
+        - pazar_yeri parametresi ile pazar yeri ID'sine göre
+        """
+        queryset = DesiKgDeger.objects.all()
+        pazar_yeri_id = self.request.query_params.get('pazar_yeri')
+        
+        if pazar_yeri_id:
+            queryset = queryset.filter(pazar_yeri_id=pazar_yeri_id)
+            
+        return queryset
 
 class DesiKgKargoUcretViewSet(viewsets.ModelViewSet):
     """
@@ -65,140 +97,173 @@ class DesiKgKargoUcretViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """
         Opsiyonel filtreleme sağlar:
+        - pazar_yeri parametresi ile pazar yeri ID'sine göre
         - kargo_firma parametresi ile kargo firma ID'sine göre
         - desi_kg_deger parametresi ile desi/kg değerine göre
         """
         queryset = DesiKgKargoUcret.objects.all()
         
-        # URL parametrelerini al
+        pazar_yeri_id = self.request.query_params.get('pazar_yeri')
         kargo_firma_id = self.request.query_params.get('kargo_firma')
         desi_kg_deger_id = self.request.query_params.get('desi_kg_deger')
         
-        # Kargo firma ID'sine göre filtrele
+        if pazar_yeri_id:
+            queryset = queryset.filter(pazar_yeri_id=pazar_yeri_id)
+            
         if kargo_firma_id:
             queryset = queryset.filter(kargo_firma_id=kargo_firma_id)
             
-        # Desi/Kg değerine göre filtrele
         if desi_kg_deger_id:
             queryset = queryset.filter(desi_kg_deger_id=desi_kg_deger_id)
             
         return queryset
 
+class PazaryeriKargofirmaViewSet(viewsets.ModelViewSet):
+    """
+    Pazar yeri ve kargo firma ilişkilerini listeler, oluşturur, günceller ve siler.
+    """
+    queryset = PazaryeriKargofirma.objects.all()
+    serializer_class = PazaryeriKargofirmaSerializer
+    permission_classes = [IsAdminUser]
+    
+    def get_queryset(self):
+        """
+        Opsiyonel filtreleme sağlar:
+        - pazar_yeri parametresi ile pazar yeri ID'sine göre
+        - kargo_firma parametresi ile kargo firma ID'sine göre
+        """
+        queryset = PazaryeriKargofirma.objects.all()
+        
+        pazar_yeri_id = self.request.query_params.get('pazar_yeri')
+        kargo_firma_id = self.request.query_params.get('kargo_firma')
+        
+        if pazar_yeri_id:
+            queryset = queryset.filter(pazar_yeri_id=pazar_yeri_id)
+            
+        if kargo_firma_id:
+            queryset = queryset.filter(kargo_firma_id=kargo_firma_id)
+            
+        return queryset
+
 class KargoUcretHesaplamaView(UsernameMixin, APIView):
     """
-    Kargo ücretini hesaplamak için API view.
-    Kullanıcıdan email, en, boy, yükseklik, net ağırlık ve kargo firması bilgilerini alır.
+    Kargo ücreti hesaplama endpoint'i için view
     """
+    permission_classes = [AllowAny]
     serializer_class = KargoUcretHesaplamaSerializer
-    
-    def get(self, request, username, format=None):
-        # Kargo firmalarını al
-        kargo_firmalar = KargoFirma.objects.all()
-        kargo_firma_secenekleri = {firma.id: firma.firma_ismi for firma in kargo_firmalar}
-        
-        # Context'i hazırla
-        context = {'kargo_firma_secenekleri': kargo_firma_secenekleri}
-        
-        # Eğer kullanıcı giriş yapmışsa, email adresini ekle
-        if request.user.is_authenticated:
-            context['email'] = request.user.email
+    renderer_classes = [renderers.JSONRenderer, renderers.BrowsableAPIRenderer]
+
+    def validate_email(self, email):
+        """
+        Email adresinin sistemde kayıtlı olup olmadığını kontrol eder
+        """
+        User = get_user_model()
+        if User.objects.filter(email__iexact=email).exists():
+            return True, None  # Email kayıtlı ise hesaplama yapılabilir
+        return True, None  # Email kayıtlı değilse de hesaplama yapılabilir
+
+    def get(self, request, username=None, format=None):
+        """
+        GET isteği için form verilerini ve seçenekleri döndürür
+        """
+        # Validate username
+        error_response = self.validate_username(username)
+        if error_response:
+            return error_response
             
-        # Serializer oluştur
-        serializer = self.serializer_class(context=context)
-        
-        # Eğer kullanıcı giriş yapmışsa, email alanını önceden doldur
-        data = serializer.data
-        if request.user.is_authenticated:
-            data['email'] = request.user.email
+        serializer = self.serializer_class()
+        return Response(serializer.to_representation(None))
+
+    def post(self, request, username=None, format=None):
+        """
+        POST isteği için hesaplama yapar ve sonuçları döndürür
+        """
+        error_response = self.validate_username(username)
+        if error_response:
+            return error_response
             
-        return Response(data)
-    
-    def post(self, request, username, format=None):
         serializer = self.serializer_class(data=request.data)
         
         if serializer.is_valid():
-            # Email validasyonu
-            submitted_email = serializer.validated_data.get('email', '').strip().lower()
-            
-            # Eğer kullanıcı giriş yapmışsa email kontrolü yap
-            if request.user.is_authenticated:
-                user_email = request.user.email.strip().lower()
-                if submitted_email != user_email:
-                    return Response(
-                        {'error': 'Giriş yaptığınız hesabın email adresi ile form üzerindeki email adresi eşleşmiyor.'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-            else:
-                # Kullanıcı giriş yapmamışsa, girilen email'in sistemde kayıtlı olup olmadığını kontrol et
-                User = get_user_model()
-                if User.objects.filter(email__iexact=submitted_email).exists():
-                    return Response(
-                        {'error': 'Bu email adresi sistemde kayıtlıdır. Lütfen giriş yapın veya başka bir email adresi kullanın.'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-            
-            en = serializer.validated_data.get('en')
-            boy = serializer.validated_data.get('boy')
-            yukseklik = serializer.validated_data.get('yukseklik')
-            net_agirlik = serializer.validated_data.get('net_agirlik')
-            kargo_firma_id = serializer.validated_data.get('kargo_firma')
-            
-            # Desi hesaplama
-            desi = (en * boy * yukseklik) / 3000
-            
-            # Desi/Kg hesaplama ve tam sayıya yuvarlama
-            desi_kg = max(desi, net_agirlik)
-            desi_kg_yuvarlama = math.ceil(desi_kg)
-            
             try:
-                # Kargo firmasını bul
-                kargo_firma = KargoFirma.objects.get(id=kargo_firma_id)
+                # Email kontrolü
+                email = serializer.validated_data.get('email', '').strip().lower()
+                
+                # Hesaplama geçmişi kontrolü ve bağlama
+                if not check_and_link_calculations(request.user, email):
+                    return Response(
+                        {'error': 'Girdiğiniz email adresi ile giriş yaptığınız email adresi eşleşmiyor.'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                # Form verilerini al
+                desi_kg_degeri = serializer.validated_data['desi_kg_degeri']
+                pazar_yeri = serializer.validated_data['pazar_yeri']
+                kargo_firma = serializer.validated_data['kargo_firma']
+                
+                # Desi/Kg değerini tam sayıya yuvarla
+                desi_kg_yuvarlama = math.ceil(desi_kg_degeri)
+                
+                # Pazar yeri ve kargo firma ilişkisini kontrol et
+                if not PazaryeriKargofirma.objects.filter(pazar_yeri=pazar_yeri, kargo_firma=kargo_firma).exists():
+                    return Response(
+                        {'error': f'{kargo_firma.firma_ismi} {pazar_yeri.pazar_ismi} için hizmet vermemektedir.'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
                 
                 # Desi/Kg değerini bul
-                desi_kg_deger = DesiKgDeger.objects.filter(desi_degeri=desi_kg_yuvarlama).first()
+                desi_kg_deger = DesiKgDeger.objects.filter(
+                    pazar_yeri=pazar_yeri,
+                    desi_degeri=desi_kg_yuvarlama
+                ).first()
                 
                 if not desi_kg_deger:
                     return Response(
-                        {'error': f'Desi/Kg değeri {desi_kg_yuvarlama} için tarife bulunamadı.'},
+                        {'error': f'{pazar_yeri.pazar_ismi} için {desi_kg_yuvarlama} desi/kg değerinde tarife bulunamadı.'},
                         status=status.HTTP_404_NOT_FOUND
                     )
                 
                 # Kargo ücretini bul
                 kargo_ucret = DesiKgKargoUcret.objects.filter(
+                    pazar_yeri=pazar_yeri,
                     kargo_firma=kargo_firma,
                     desi_kg_deger=desi_kg_deger
                 ).first()
                 
                 if not kargo_ucret:
                     return Response(
-                        {'error': f'{kargo_firma.firma_ismi} için {desi_kg_yuvarlama} desi/kg değerinde tarife bulunamadı.'},
+                        {'error': f'{pazar_yeri.pazar_ismi} - {kargo_firma.firma_ismi} için {desi_kg_yuvarlama} desi/kg değerinde tarife bulunamadı.'},
                         status=status.HTTP_404_NOT_FOUND
                     )
+
+                # Hesaplama geçmişini kaydet
+                from hesaplama.models import KargoUcretGecmis
+                KargoUcretGecmis.objects.create(
+                    kullanici=request.user if request.user.is_authenticated else None,
+                    email=email,
+                    desi_kg_degeri=desi_kg_degeri,
+                    yuvarlanmis_desi_kg=desi_kg_yuvarlama,
+                    pazar_yeri=pazar_yeri,
+                    kargo_firma=kargo_firma,
+                    kargo_ucreti=kargo_ucret.ucret
+                )
                 
                 # Sonuçları döndür
                 result = {
-                    'email': submitted_email,  # Normalize edilmiş email'i dön
-                    'en': en,
-                    'boy': boy,
-                    'yukseklik': yukseklik,
-                    'net_agirlik': net_agirlik,
-                    'desi': desi,
-                    'desi_kg': desi_kg_yuvarlama,
-                    'kargo_firma_ismi': kargo_firma.firma_ismi,
-                    'kargo_ucreti': kargo_ucret.fiyat
+                    'email': email,
+                    'desi_kg_degeri': desi_kg_degeri,
+                    'yuvarlanmis_desi_kg': desi_kg_yuvarlama,
+                    'pazar_yeri': pazar_yeri.pazar_ismi,
+                    'kargo_firma': kargo_firma.firma_ismi,
+                    'kargo_ucreti': kargo_ucret.ucret
                 }
                 
                 return Response(result)
                 
-            except KargoFirma.DoesNotExist:
-                return Response(
-                    {'error': 'Belirtilen kargo firması bulunamadı.'},
-                    status=status.HTTP_404_NOT_FOUND
-                )
             except Exception as e:
                 return Response(
                     {'error': str(e)},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    status=status.HTTP_400_BAD_REQUEST
                 )
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -313,427 +378,6 @@ class KomisyonOraniViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(urun_grubu_id=urun_grubu_id)
             
         return queryset
-
-class KategoriKomisyonBulmaView(UsernameMixin, APIView):
-    """
-    Seçilen ürün grubunun komisyon oranını bulan API view.
-    Kullanıcının hierarşik olarak kategori, alt kategori ve ürün grubu seçmesini sağlar.
-    """
-    serializer_class = KategoriKomisyonBulmaSerializer
-    
-    def get(self, request, username, format=None):
-        # Validate username
-        error_response = self.validate_username(username)
-        if error_response:
-            return error_response
-            
-        # Context'i hazırla
-        context = {}
-        
-        # Eğer kullanıcı giriş yapmışsa, email adresini ekle
-        if request.user.is_authenticated:
-            context['email'] = request.user.email
-            
-        # Boş serializer oluştur
-        serializer = self.serializer_class(context=context)
-        
-        # Eğer kullanıcı giriş yapmışsa, email alanını önceden doldur
-        data = serializer.data
-        if request.user.is_authenticated:
-            data['email'] = request.user.email
-        
-        # Kategorileri al
-        kategoriler = Kategori.objects.all().order_by('kategori_adi')
-        kategori_data = KategoriSerializer(kategoriler, many=True).data
-        
-        # Kategori ID parametresi varsa, ilgili alt kategorileri getir
-        kategori_id = request.query_params.get('kategori_id')
-        if kategori_id:
-            alt_kategoriler = AltKategori.objects.filter(kategori_id=kategori_id).order_by('alt_kategori_adi')
-            alt_kategori_data = AltKategoriSerializer(alt_kategoriler, many=True).data
-            data['alt_kategoriler'] = alt_kategori_data
-        
-        # Alt kategori ID parametresi varsa, ilgili ürün gruplarını getir
-        alt_kategori_id = request.query_params.get('alt_kategori_id')
-        if alt_kategori_id:
-            urun_gruplari = UrunGrubu.objects.filter(alt_kategori_id=alt_kategori_id).order_by('urun_grubu_adi')
-            urun_grubu_data = UrunGrubuSerializer(urun_gruplari, many=True).data
-            data['urun_gruplari'] = urun_grubu_data
-        
-        # Tüm kategorileri ekle
-        data['kategoriler'] = kategori_data
-            
-        return Response(data)
-    
-    def post(self, request, username, format=None):
-        # Validate username
-        error_response = self.validate_username(username)
-        if error_response:
-            return error_response
-            
-        serializer = self.serializer_class(data=request.data)
-        
-        if serializer.is_valid():
-            # Email validasyonu
-            submitted_email = serializer.validated_data.get('email', '').strip().lower()
-            
-            # Eğer kullanıcı giriş yapmışsa email kontrolü yap
-            if request.user.is_authenticated:
-                user_email = request.user.email.strip().lower()
-                if submitted_email != user_email:
-                    return Response(
-                        {'error': 'Giriş yaptığınız hesabın email adresi ile form üzerindeki email adresi eşleşmiyor.'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-            else:
-                # Kullanıcı giriş yapmamışsa, girilen email'in sistemde kayıtlı olup olmadığını kontrol et
-                User = get_user_model()
-                if User.objects.filter(email__iexact=submitted_email).exists():
-                    return Response(
-                        {'error': 'Bu email adresi sistemde kayıtlıdır. Lütfen giriş yapın veya başka bir email adresi kullanın.'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-            
-            # Ürün grubu alanını kontrol et
-            urun_grubu = serializer.validated_data.get('urun_grubu')
-            if not urun_grubu:
-                return Response(
-                    {'error': 'Lütfen bir ürün grubu seçiniz.'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            
-            try:
-                # Seçilen ürün grubuna ait komisyon oranını bul
-                komisyon_orani = KomisyonOrani.objects.select_related(
-                    'urun_grubu__alt_kategori__kategori'
-                ).filter(
-                    urun_grubu=urun_grubu
-                ).first()
-                
-                if komisyon_orani:
-                    # Serializer'ı komisyon oranı instance'ı ile oluştur ve email'i context'e ekle
-                    response_serializer = self.serializer_class(
-                        komisyon_orani,
-                        context={'email': submitted_email}
-                    )
-                    return Response(response_serializer.data)
-                else:
-                    return Response(
-                        {'error': f'Seçilen ürün grubu için komisyon oranı bulunamadı.'},
-                        status=status.HTTP_404_NOT_FOUND
-                    )
-                    
-            except Exception as e:
-                return Response(
-                    {'error': str(e)},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class SatisFiyatBelirlemeView(UsernameMixin, APIView):
-    """
-    Satış fiyatını belirlemek için API view.
-    """
-    serializer_class = SatisFiyatBelirlemeSerializer
-    
-    def get(self, request, username, format=None):
-        # Validate username
-        error_response = self.validate_username(username)
-        if error_response:
-            return error_response
-            
-        # Kargo firmalarını al - string ID'leri kullanarak dictionary oluştur
-        kargo_firmalar = KargoFirma.objects.all()
-        kargo_firma_secenekleri = {str(firma.id): firma.firma_ismi for firma in kargo_firmalar}
-        
-        # Context'i hazırla
-        context = {'kargo_firma_secenekleri': kargo_firma_secenekleri}
-        
-        # Eğer kullanıcı giriş yapmışsa, email adresini ekle
-        if request.user.is_authenticated:
-            context['email'] = request.user.email
-            
-        # Boş serializer oluştur
-        serializer = self.serializer_class(context=context)
-        
-        # Eğer kullanıcı giriş yapmışsa, email alanını önceden doldur
-        data = serializer.data
-        if request.user.is_authenticated:
-            data['email'] = request.user.email
-            
-        # Kategorileri al
-        kategoriler = Kategori.objects.all().order_by('kategori_adi')
-        kategori_data = KategoriSerializer(kategoriler, many=True).data
-        
-        # Kategori ID parametresi varsa, ilgili alt kategorileri getir
-        kategori_id = request.query_params.get('kategori_id')
-        if kategori_id:
-            alt_kategoriler = AltKategori.objects.filter(kategori_id=kategori_id).order_by('alt_kategori_adi')
-            alt_kategori_data = AltKategoriSerializer(alt_kategoriler, many=True).data
-            data['alt_kategoriler'] = alt_kategori_data
-        
-        # Alt kategori ID parametresi varsa, ilgili ürün gruplarını getir
-        alt_kategori_id = request.query_params.get('alt_kategori_id')
-        if alt_kategori_id:
-            urun_gruplari = UrunGrubu.objects.filter(alt_kategori_id=alt_kategori_id).order_by('urun_grubu_adi')
-            urun_grubu_data = UrunGrubuSerializer(urun_gruplari, many=True).data
-            data['urun_gruplari'] = urun_grubu_data
-        
-        # Tüm kategorileri ekle
-        data['kategoriler'] = kategori_data
-        
-        # Kargo firma seçeneklerini doğrudan ekle
-        data['kargo_firma_secenekleri'] = kargo_firma_secenekleri
-            
-        return Response(data)
-    
-    def post(self, request, username, format=None):
-        # Validate username
-        error_response = self.validate_username(username)
-        if error_response:
-            return error_response
-        
-        # Log request data for debugging
-        logger = logging.getLogger(__name__)
-        logger.info(f"Request data: {request.data}")
-        
-        # Get kargo firmalar for choices before serializer validation
-        kargo_firmalar = KargoFirma.objects.all()
-        kargo_firma_secenekleri = {str(firma.id): firma.firma_ismi for firma in kargo_firmalar}
-        
-        # Create context with kargo_firma_secenekleri
-        context = {'kargo_firma_secenekleri': kargo_firma_secenekleri}
-        
-        # Log the choices we're about to use
-        logger.info(f"Kargo firma choices for validation: {kargo_firma_secenekleri}")
-        
-        # Create serializer with context
-        serializer = self.serializer_class(data=request.data, context=context)
-            
-        if serializer.is_valid():
-            # Email validasyonu
-            submitted_email = serializer.validated_data.get('email', '').strip().lower()
-            
-            # Log validated data for debugging
-            logger.info(f"Validated data: {serializer.validated_data}")
-            
-            # Eğer kullanıcı giriş yapmışsa email kontrolü yap
-            if request.user.is_authenticated:
-                user_email = request.user.email.strip().lower()
-                if submitted_email != user_email:
-                    return Response(
-                        {'error': 'Giriş yaptığınız hesabın email adresi ile form üzerindeki email adresi eşleşmiyor.'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-            else:
-                # Kullanıcı giriş yapmamışsa, girilen email'in sistemde kayıtlı olup olmadığını kontrol et
-                User = get_user_model()
-                if User.objects.filter(email__iexact=submitted_email).exists():
-                    return Response(
-                        {'error': 'Bu email adresi sistemde kayıtlıdır. Lütfen giriş yapın veya başka bir email adresi kullanın.'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-            
-            data = serializer.validated_data
-            
-            # Kategori, alt kategori ve ürün grubu validasyonu
-            kategori = data.get('kategori')
-            alt_kategori = data.get('alt_kategori')
-            urun_grubu = data.get('urun_grubu')
-            
-            if not urun_grubu:
-                return Response(
-                    {'error': 'Lütfen bir ürün grubu seçiniz.'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            
-            # Alt kategori ve kategori tutarlılık kontrolü
-            if alt_kategori and urun_grubu.alt_kategori != alt_kategori:
-                return Response(
-                    {'error': 'Seçilen ürün grubu, seçilen alt kategori ile uyumlu değil.'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            
-            if kategori and (not alt_kategori or alt_kategori.kategori != kategori):
-                return Response(
-                    {'error': 'Seçilen alt kategori, seçilen kategori ile uyumlu değil.'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            
-            # Calculate desi
-            desi = (data['en'] * data['boy'] * data['yukseklik']) / 3000
-            
-            # Calculate desi/kg and round up
-            desi_kg = max(desi, data['net_agirlik'])
-            desi_kg_yuvarlama = math.ceil(desi_kg)
-            
-            try:
-                # Get kargo firması
-                kargo_firma_id = data['kargo_firma']
-                # String veya integer olabilir, integer'a dönüştür
-                kargo_firma_id = int(kargo_firma_id)
-                
-                kargo_firma = KargoFirma.objects.get(id=kargo_firma_id)
-                
-                # Get desi/kg değeri
-                desi_kg_deger = DesiKgDeger.objects.filter(desi_degeri=desi_kg_yuvarlama).first()
-                
-                if not desi_kg_deger:
-                    return Response(
-                        {'error': f'Desi/Kg değeri {desi_kg_yuvarlama} için tarife bulunamadı.'},
-                        status=status.HTTP_404_NOT_FOUND
-                    )
-                
-                # Get kargo ücreti
-                kargo_ucret = DesiKgKargoUcret.objects.filter(
-                    kargo_firma=kargo_firma,
-                    desi_kg_deger=desi_kg_deger
-                ).first()
-                
-                if not kargo_ucret:
-                    return Response(
-                        {'error': f'{kargo_firma.firma_ismi} için {desi_kg_yuvarlama} desi/kg değerinde tarife bulunamadı.'},
-                        status=status.HTTP_404_NOT_FOUND
-                    )
-                
-                # Get komisyon oranı
-                komisyon_orani = KomisyonOrani.objects.filter(urun_grubu=urun_grubu).first()
-                
-                if not komisyon_orani:
-                    return Response(
-                        {'error': 'Seçilen ürün grubu için komisyon oranı bulunamadı.'},
-                        status=status.HTTP_404_NOT_FOUND
-                    )
-                
-                # Trendyol hizmet bedeli ve stopaj değerlerini ayarla
-                trendyol_hizmet_bedeli = Decimal('8.49')
-                stopaj_degeri = Decimal('1.00')  # %1
-                
-                # Calculate total cost (1. madde)
-                toplam_maliyet = (
-                    data['urun_maliyeti'] +
-                    data['urun_paketleme_maliyeti'] +
-                    kargo_ucret.fiyat +
-                    trendyol_hizmet_bedeli
-                )
-                
-                # 2. madde - oranları topla ve 100'den çıkar
-                toplam_oranlar = stopaj_degeri + komisyon_orani.komisyon_orani + data['istenilen_kar_orani']
-                kalan_oran = Decimal('100') - toplam_oranlar
-                
-                # Satış fiyatı = toplam_maliyet * 100 / kalan_oran
-                satis_fiyati_kdv_haric = (toplam_maliyet * Decimal('100')) / kalan_oran
-                
-                # Calculate individual amounts based on the sales price
-                stopaj_tutari = (satis_fiyati_kdv_haric * stopaj_degeri) / Decimal('100')
-                komisyon_tutari = (satis_fiyati_kdv_haric * komisyon_orani.komisyon_orani) / Decimal('100')
-                kar_tutari = (satis_fiyati_kdv_haric * data['istenilen_kar_orani']) / Decimal('100')
-                
-                # Calculate price with VAT
-                satis_fiyati_kdv_dahil = satis_fiyati_kdv_haric * (Decimal('1') + data['kdv_orani'] / Decimal('100'))
-                
-                # Create Hesaplamalar record
-                hesaplama = Hesaplamalar.objects.create(
-                    kullanici=request.user if request.user.is_authenticated else None,
-                    email=submitted_email,
-                    toplam_fiyat=satis_fiyati_kdv_dahil
-                )
-                
-                # Create FiyatBelirleme record
-                fiyat_belirleme = FiyatBelirleme.objects.create(
-                    hesaplama=hesaplama,
-                    urun_ismi=data['urun_ismi'],
-                    urun_maliyeti=data['urun_maliyeti'],
-                    paketleme_maliyeti=data['urun_paketleme_maliyeti'],
-                    trendyol_hizmet_bedeli=trendyol_hizmet_bedeli,
-                    kargo_firmasi=kargo_firma.firma_ismi,
-                    kargo_ucreti=kargo_ucret.fiyat,
-                    stopaj_degeri=stopaj_degeri,
-                    desi_kg_degeri=desi_kg_yuvarlama,
-                    urun_kategorisi=f"{urun_grubu.alt_kategori.kategori.kategori_adi} > {urun_grubu.alt_kategori.alt_kategori_adi} > {urun_grubu.urun_grubu_adi}",
-                    komisyon_orani=komisyon_orani.komisyon_orani,
-                    komisyon_tutari=komisyon_tutari,
-                    kdv_orani=data['kdv_orani'],
-                    kar_orani=data['istenilen_kar_orani'],
-                    kar_tutari=kar_tutari,
-                    satis_fiyati_kdv_haric=satis_fiyati_kdv_haric,
-                    satis_fiyati_kdv_dahil=satis_fiyati_kdv_dahil
-                )
-                
-                # Return the calculation results
-                result = {
-                    'hesaplama_id': hesaplama.hesaplama_id,
-                    'email': submitted_email,  # Add email to response
-                    'urun_id': fiyat_belirleme.urun_id,
-                    'urun_ismi': fiyat_belirleme.urun_ismi,
-                    'urun_maliyeti': float(data['urun_maliyeti']),
-                    'Paketleme Maliyeti': float(data['urun_paketleme_maliyeti']),
-                    'Trendyol Hizmet Bedeli': float(trendyol_hizmet_bedeli),
-                    'Desi/Kg Değeri': desi_kg_yuvarlama,
-                    'Kargo Firması': kargo_firma.firma_ismi,
-                    'Kargo Ücreti': float(kargo_ucret.fiyat),
-                    'Stopaj': float(stopaj_degeri),
-                    'Stopaj Ücreti': float(stopaj_tutari),
-                    'Kategori': urun_grubu.alt_kategori.kategori.kategori_adi,
-                    'Alt Kategori': urun_grubu.alt_kategori.alt_kategori_adi,
-                    'Ürün Grubu': urun_grubu.urun_grubu_adi,
-                    'Ürün Kategorisi Komisyon Oranı': float(komisyon_orani.komisyon_orani),
-                    'Ürün Kategorisi Komisyon Tutarı': float(komisyon_tutari),
-                    'Kar Oranı': float(data['istenilen_kar_orani']),
-                    'Kar Tutarı': float(kar_tutari),
-                    'Belirlenen KDV Tutarı': float(data['kdv_orani']),
-                    'KDV fiyatı': float(satis_fiyati_kdv_dahil - satis_fiyati_kdv_haric),
-                    'Satış Fiyatı(KDV Dahil değil)': float(satis_fiyati_kdv_haric),
-                    'Satış Fiyatı(KDV Dahil)': float(satis_fiyati_kdv_dahil)
-                }
-                
-                return Response(result)
-                
-            except KargoFirma.DoesNotExist:
-                return Response(
-                    {'error': 'Belirtilen kargo firması bulunamadı.'},
-                    status=status.HTTP_404_NOT_FOUND
-                )
-            except Exception as e:
-                return Response(
-                    {'error': str(e)},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-        else:
-            # Log validation errors
-            logger.error(f"Validation errors: {serializer.errors}")
-            
-            # Check specifically for kargo_firma error
-            if 'kargo_firma' in serializer.errors:
-                logger.error(f"Kargo firma error: {serializer.errors['kargo_firma']}")
-                logger.error(f"Kargo firma value in request: {request.data.get('kargo_firma', 'Not provided')}")
-                logger.error(f"Kargo firma choices: {serializer.fields['kargo_firma'].choices}")
-            
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class UserHesaplamalarSerializer(serializers.Serializer):
-    username = serializers.ChoiceField(
-        choices=[],
-        required=False,
-        allow_null=True,
-        style={'base_template': 'select.html'},
-        help_text="Kullanıcı seçerek hesaplamalarını görüntüleyebilirsiniz"
-    )
-    show_guest = serializers.BooleanField(
-        required=False,
-        default=False,
-        help_text="Misafir kullanıcıların hesaplamalarını göster"
-    )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        User = get_user_model()
-        users = User.objects.all()
-        self.fields['username'].choices = [(None, '-- Tüm Kullanıcılar --')] + [
-            (user.username, f"Kullanıcı: {user.username}") 
-            for user in users
-        ]
 
 class KullaniciHesaplamalariViewSet(viewsets.GenericViewSet):
     """
@@ -946,5 +590,775 @@ class EksikHesaplamaView(APIView):
 
             except (ValueError, DesiKgDeger.DoesNotExist, KargoFirma.DoesNotExist, DesiKgKargoUcret.DoesNotExist) as e:
                 return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class KargoUcretEklemeView(APIView):
+    """
+    Kargo ücreti ekleme endpoint'i için view
+    """
+    permission_classes = [IsAdminUser]
+    serializer_class = KargoUcretEklemeSerializer
+    renderer_classes = [renderers.JSONRenderer, renderers.BrowsableAPIRenderer]
+
+    def get(self, request):
+        """
+        GET isteği için form verilerini ve seçenekleri döndürür
+        """
+        serializer = self.serializer_class()
+        response_data = serializer.data
+        response_data['uyari_mesaji'] = (
+            "Yüklenecek excelde kargo firma isimleri aşağıdaki kargo firmalarını içeriyorsa "
+            "kargo firma isimleri bu şekilde yazılmalıdır:\n"
+            "Aras\n"
+            "Kolay Gelsin\n"
+            "MNG\n"
+            "PTT\n"
+            "Sürat\n"
+            "TEX\n"
+            "Yurtiçi\n"
+            "Borusan\n"
+            "CEVA\n"
+            "Horoz\n"
+            "hepsiJET\n"
+            "hepsiJET XL"
+        )
+        return Response(response_data)
+
+    def find_matching_kargo_firma(self, kargo_firma_adi):
+        """
+        Verilen kargo firma adına en uygun eşleşmeyi bulur.
+        """
+        # Kargo firma adını normalize et (küçük harfe çevir)
+        normalized_input = kargo_firma_adi.lower().strip()
+        
+        # Veritabanındaki tüm kargo firmalarını al
+        all_kargo_firmalari = KargoFirma.objects.all()
+        
+        # HepsiJET ve HepsiJET XL için özel kontrol
+        if 'hepsijet' in normalized_input:
+            if 'xl' in normalized_input:
+                return KargoFirma.objects.filter(firma_ismi='HepsiJET XL').first()
+            else:
+                return KargoFirma.objects.filter(firma_ismi='HepsiJET').first()
+        
+        # Diğer firmalar için içinde geçme kontrolü
+        for firma in all_kargo_firmalari:
+            # Mevcut firma adını normalize et
+            normalized_firma = firma.firma_ismi.lower().strip()
+            
+            # Tam eşleşme kontrolü
+            if normalized_input == normalized_firma:
+                return firma
+            
+            # İçinde geçme kontrolü (HepsiJET ve HepsiJET XL hariç)
+            if firma.firma_ismi not in ['HepsiJET', 'HepsiJET XL']:
+                if normalized_firma in normalized_input or normalized_input in normalized_firma:
+                    return firma
+        
+        # Eşleşme bulunamadıysa None döndür
+        return None
+
+    def post(self, request):
+        """
+        POST isteği için Excel dosyasını işler ve kargo ücretlerini ekler
+        """
+        serializer = self.serializer_class(data=request.data)
+        
+        if serializer.is_valid():
+            try:
+                # Form verilerini al
+                pazar_yeri = serializer.validated_data.get('pazar_yeri')
+                excel_dosya = serializer.validated_data.get('excel_dosya')
+                
+                # Excel dosyasını oku
+                df = pd.read_excel(excel_dosya)
+                
+                # Desi sütununu al ve nan değerlerini temizle
+                desi_values = df.iloc[:, 0].dropna().tolist()  # İlk sütun desi değerleri
+                
+                # Kargo firmalarını al (2. sütundan sonraki tüm sütunlar)
+                kargo_firmalari = df.columns[1:].tolist()
+                
+                # Kargo firma adlarını temizle ve birleştir
+                temiz_kargo_firmalari = {}
+                for firma in kargo_firmalari:
+                    # Satır sonlarını temizle ve boşlukları normalize et
+                    temiz_firma = ' '.join(firma.replace('\n', ' ').split())
+                    temiz_kargo_firmalari[temiz_firma] = firma
+                
+                # Önce seçilen pazar yerine ait tüm kargo ücretlerini sil
+                DesiKgKargoUcret.objects.filter(pazar_yeri=pazar_yeri).delete()
+                
+                # Her bir desi değeri için
+                for desi_value in desi_values:
+                    # Desi değerini oluştur veya güncelle
+                    desi_kg_deger, created = DesiKgDeger.objects.get_or_create(
+                        pazar_yeri=pazar_yeri,
+                        desi_degeri=desi_value
+                    )
+                    
+                    # Her bir kargo firması için
+                    for temiz_firma, orijinal_firma in temiz_kargo_firmalari.items():
+                        # Kargo firmasını bul
+                        kargo_firma = self.find_matching_kargo_firma(temiz_firma)
+                        
+                        # Eşleşme bulunamadıysa yeni firma oluştur
+                        if not kargo_firma:
+                            # Baş harfleri büyük yap
+                            formatted_firma = ' '.join(word.capitalize() for word in temiz_firma.split())
+                            kargo_firma = KargoFirma.objects.create(
+                                firma_ismi=formatted_firma,
+                                aktif=True
+                            )
+                        
+                        # Pazar yeri - kargo firma ilişkisini oluştur
+                        PazaryeriKargofirma.objects.get_or_create(
+                            pazar_yeri=pazar_yeri,
+                            kargo_firma=kargo_firma
+                        )
+                        
+                        # Kargo ücretini al
+                        ucret_value = df[df.iloc[:, 0] == desi_value][orijinal_firma].iloc[0]
+                        
+                        # Eğer değer nan ise bu kargo firması için ücret oluşturma
+                        if pd.isna(ucret_value):
+                            continue
+                            
+                        # ₺ işaretini kaldır ve virgülü noktaya çevir
+                        ucret_str = str(ucret_value)
+                        ucret_str = ucret_str.replace('₺', '').replace(',', '.').strip()
+                        
+                        try:
+                            ucret = float(ucret_str)
+                            
+                            # Kargo ücretini oluştur
+                            DesiKgKargoUcret.objects.create(
+                                pazar_yeri=pazar_yeri,
+                                kargo_firma=kargo_firma,
+                                desi_kg_deger=desi_kg_deger,
+                                ucret=ucret
+                            )
+                        except (ValueError, TypeError):
+                            # Eğer değer sayıya çevrilemezse bu kargo firması için ücret oluşturma
+                            continue
+                
+                return Response({
+                    'message': f'{pazar_yeri.pazar_ismi} için kargo ücretleri başarıyla eklendi.',
+                    'pazar_yeri': pazar_yeri.pazar_ismi,
+                    'dosya_adi': excel_dosya.name,
+                    'islenen_desi_sayisi': len(desi_values),
+                    'islenen_kargo_firma_sayisi': len(kargo_firmalari)
+                })
+                
+            except Exception as e:
+                return Response(
+                    {'error': str(e)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class KomisyonEklemeView(APIView):
+    """
+    Komisyon oranı ekleme endpoint'i için view
+    """
+    permission_classes = [IsAdminUser]
+    serializer_class = KomisyonEklemeSerializer
+    renderer_classes = [renderers.JSONRenderer, renderers.BrowsableAPIRenderer]
+
+    def get(self, request):
+        """
+        GET isteği için form verilerini ve seçenekleri döndürür
+        """
+        serializer = self.serializer_class()
+        response_data = serializer.data
+        response_data['uyari_mesaji'] = (
+            "Yüklenecek excel dosyası şu formatta olmalıdır:\n"
+            "Kategori Ağacı 1 | Kategori Ağacı 2 | Kategori Ağacı 3 | Kategori Ağacı 4 | Komisyon Oranı (%)\n"
+            "Örnek: Elektronik | Telefon | Akıllı Telefon | Android | 12.5\n\n"
+            "Not: Seçtiğiniz kategori seviyesine göre Excel dosyasındaki sütun sayısı ayarlanmalıdır.\n"
+            "Örneğin, kategori seviyesi 3 seçtiyseniz, Excel dosyası şu sütunları içermelidir:\n"
+            "Kategori Ağacı 1 | Kategori Ağacı 2 | Kategori Ağacı 3 | Komisyon Oranı"
+        )
+        return Response(response_data)
+
+    def post(self, request):
+        """
+        POST isteği için Excel dosyasını işler ve komisyon oranlarını ekler
+        """
+        serializer = self.serializer_class(data=request.data)
+        
+        if serializer.is_valid():
+            try:
+                # Form verilerini al
+                pazar_yeri = serializer.validated_data.get('pazar_yeri')
+                kategori_seviyesi = serializer.validated_data.get('kategori_seviyesi')
+                excel_dosya = serializer.validated_data.get('excel_dosya')
+                
+                # Excel dosyasını oku
+                df = pd.read_excel(excel_dosya)
+                
+                # Sütun isimlerini kontrol et
+                required_columns = ['Kategori Ağacı 1', 'Komisyon Oranı']
+                if not all(col in df.columns for col in required_columns):
+                    return Response(
+                        {'error': 'Excel dosyası en az "Kategori Ağacı 1" ve "Komisyon Oranı" sütunlarını içermelidir.'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                # Excel'deki sütun sayısını kontrol et
+                kategori_columns = [f'Kategori Ağacı {i}' for i in range(1, kategori_seviyesi + 1)]
+                if not all(col in df.columns for col in kategori_columns):
+                    return Response(
+                        {'error': f'Excel dosyası seçtiğiniz {kategori_seviyesi} seviye kategori için gerekli sütunları içermelidir.'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                # Önce seçilen pazar yerine ait tüm komisyon oranlarını ve kategorileri sil
+                HesaplamaKomisyonOranlari.objects.filter(pazar_yeri=pazar_yeri).delete()
+                HesaplamaKategoriler.objects.filter(pazar_yeri=pazar_yeri).delete()
+                
+                # Yeni komisyon oranlarını ekle
+                for _, row in df.iterrows():
+                    # Kategori isimlerini al
+                    kategori_isimleri = [row[f'Kategori Ağacı {i}'] for i in range(1, kategori_seviyesi + 1)]
+                    
+                    # Her seviye için kategoriyi bul veya oluştur
+                    ust_kategori = None
+                    kategoriler = []
+                    
+                    for i, kategori_ismi in enumerate(kategori_isimleri, 1):
+                        # Kategoriyi bul veya oluştur
+                        kategori, created = HesaplamaKategoriler.objects.get_or_create(
+                            adi=kategori_ismi,
+                            ust_kategori=ust_kategori,
+                            seviye=i,
+                            pazar_yeri=pazar_yeri
+                        )
+                        kategoriler.append(kategori)
+                        ust_kategori = kategori
+                    
+                    # Komisyon oranını işle
+                    komisyon_orani_str = str(row['Komisyon Oranı'])
+                    # Yüzde işaretini kaldır
+                    komisyon_orani_str = komisyon_orani_str.replace('%', '').strip()
+                    # Virgülü noktaya çevir
+                    komisyon_orani_str = komisyon_orani_str.replace(',', '.')
+                    # String'i float'a çevir
+                    komisyon_orani = float(komisyon_orani_str)
+                    
+                    # Komisyon oranını kaydet
+                    komisyon_orani = HesaplamaKomisyonOranlari.objects.create(
+                        pazar_yeri=pazar_yeri,
+                        kategori_1=kategoriler[0],
+                        kategori_2=kategoriler[1] if len(kategoriler) > 1 else None,
+                        kategori_3=kategoriler[2] if len(kategoriler) > 2 else None,
+                        kategori_4=kategoriler[3] if len(kategoriler) > 3 else None,
+                        komisyon_orani=komisyon_orani,
+                        gecerlilik_tarihi=timezone.now().date()
+                    )
+                
+                return Response({
+                    'message': f'{pazar_yeri.pazar_ismi} için komisyon oranları başarıyla eklendi.',
+                    'pazar_yeri': pazar_yeri.pazar_ismi,
+                    'kategori_seviyesi': kategori_seviyesi,
+                    'dosya_adi': excel_dosya.name
+                })
+                
+            except Exception as e:
+                return Response(
+                    {'error': str(e)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class KomisyonOraniBulmaView(UsernameMixin, APIView):
+    """
+    Komisyon oranı bulma endpoint'i için view
+    """
+    permission_classes = [AllowAny]
+    serializer_class = KomisyonOraniBulmaSerializer
+    renderer_classes = [renderers.JSONRenderer, renderers.BrowsableAPIRenderer]
+
+    def get_kategori_yolu_choices(self, pazar_yeri_id):
+        """
+        Belirli bir pazar yeri için kategori yolu seçeneklerini getirir
+        """
+        try:
+            # Pazar yeri için komisyon oranlarını al
+            komisyon_oranlari = HesaplamaKomisyonOranlari.objects.filter(
+                pazar_yeri_id=pazar_yeri_id
+            ).select_related('kategori')
+
+            # Seçenekleri oluştur
+            choices = [{'value': '', 'label': 'Kategori Seçiniz'}]
+            
+            # Her komisyon oranı için kategori yolunu ekle
+            for komisyon_orani in komisyon_oranlari:
+                if komisyon_orani.kategori:
+                    kategori_yolu = self._get_kategori_yolu_string(komisyon_orani)
+                    if kategori_yolu:
+                        choices.append({
+                            'value': str(komisyon_orani.kategori.id),
+                            'label': kategori_yolu
+                        })
+
+            return choices
+
+        except Exception as e:
+            logging.error(f"Kategori yolu seçenekleri alınırken hata oluştu: {str(e)}")
+            return [{'value': '', 'label': 'Kategori Seçiniz'}]
+
+    def get(self, request, username=None, format=None):
+        """
+        GET isteği için form verilerini ve seçenekleri döndürür
+        """
+        # Validate username
+        error_response = self.validate_username(username)
+        if error_response:
+            return error_response
+
+        # Pazar yeri ID'si varsa kategori yolu seçeneklerini getir
+        pazar_yeri_id = request.query_params.get('pazar_yeri')
+        if pazar_yeri_id:
+            kategori_yolu_choices = self.get_kategori_yolu_choices(pazar_yeri_id)
+            return Response({'kategori_yolu_choices': kategori_yolu_choices})
+
+        serializer = self.serializer_class()
+        return Response(serializer.to_representation(None))
+
+    def post(self, request, username=None, format=None):
+        """
+        POST isteği için hesaplama yapar ve sonuçları döndürür
+        """
+        error_response = self.validate_username(username)
+        if error_response:
+            return error_response
+
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            try:
+                # Email kontrolü
+                email = serializer.validated_data.get('email', '').strip().lower()
+                
+                # Hesaplama geçmişi kontrolü ve bağlama
+                if not check_and_link_calculations(request.user, email):
+                    return Response(
+                        {'error': 'Girdiğiniz email adresi ile giriş yaptığınız email adresi eşleşmiyor.'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Sadece pazar yeri seçilmişse kategori yolu seçeneklerini döndür
+                if 'pazar_yeri' in serializer.validated_data and not serializer.validated_data.get('kategori_yolu'):
+                    kategori_yolu_choices = self.get_kategori_yolu_choices(
+                        serializer.validated_data['pazar_yeri'].id
+                    )
+                    return Response({'kategori_yolu_choices': kategori_yolu_choices})
+
+                # Form verilerini al
+                pazar_yeri = serializer.validated_data['pazar_yeri']
+                kategori = serializer.validated_data['kategori_yolu']
+
+                # Komisyon oranını bul
+                komisyon_orani = HesaplamaKomisyonOranlari.objects.filter(
+                    pazar_yeri=pazar_yeri,
+                    kategori=kategori
+                ).first()
+
+                if not komisyon_orani:
+                    return Response(
+                        {'error': f'{pazar_yeri.pazar_ismi} için seçilen kategoride komisyon oranı bulunamadı.'},
+                        status=status.HTTP_404_NOT_FOUND
+                    )
+
+                # Hesaplama geçmişini kaydet
+                from hesaplama.models import KomisyonOraniGecmisi
+                KomisyonOraniGecmisi.objects.create(
+                    kullanici=request.user if request.user.is_authenticated else None,
+                    email=email,
+                    pazar_yeri=pazar_yeri,
+                    kategori=kategori,
+                    komisyon_orani=komisyon_orani.komisyon_orani
+                )
+
+                # Sonuçları döndür
+                return Response({
+                    'komisyon_orani': komisyon_orani.komisyon_orani,
+                    'kategori_yolu': self._get_kategori_yolu_string(komisyon_orani),
+                    'pazar_yeri': pazar_yeri.pazar_ismi,
+                    'email': email
+                })
+
+            except Exception as e:
+                logging.error(f"Komisyon oranı hesaplanırken hata oluştu: {str(e)}")
+                return Response(
+                    {'error': 'Komisyon oranı hesaplanırken bir hata oluştu.'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def _get_kategori_yolu_string(self, komisyon_orani):
+        """
+        Komisyon oranı için kategori yolunu string olarak döndürür
+        """
+        try:
+            if komisyon_orani.kategori:
+                return f"{komisyon_orani.kategori.kategori_adi}"
+            return None
+        except Exception as e:
+            logging.error(f"Kategori yolu string'i oluşturulurken hata oluştu: {str(e)}")
+            return None
+
+class FiyatHesaplamaView(UsernameMixin, APIView):
+    """
+    Fiyat hesaplama endpoint'i
+    """
+    permission_classes = [AllowAny]
+    serializer_class = FiyatHesaplamaSerializer
+
+    def validate_email(self, email):
+        """
+        Email adresinin sistemde kayıtlı olup olmadığını kontrol eder
+        """
+        if not email:
+            return False
+        return get_user_model().objects.filter(email=email).exists()
+
+    def get(self, request, username=None, format=None):
+        # Validate username from URL
+        validation_response = self.validate_username(username)
+        if validation_response:
+            return validation_response
+
+        # Get query parameters
+        email = request.query_params.get('email')
+        pazar_yeri = request.query_params.get('pazar_yeri')
+        
+        if email and not self.validate_email(email):
+            return Response(
+                {'error': 'Bu email adresi sistemde kayıtlı değil.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Create context with pazar_yeri if provided
+        context = {'request': request}
+        if pazar_yeri:
+            context['pazar_yeri_id'] = pazar_yeri
+            
+        serializer = self.serializer_class(context=context)
+        return Response(serializer.to_representation({}))
+
+    def post(self, request, username=None, format=None):
+        # Validate username from URL
+        validation_response = self.validate_username(username)
+        if validation_response:
+            return validation_response
+
+        email = request.data.get('email')
+        if email and not self.validate_email(email):
+            return Response(
+                {'error': 'Bu email adresi sistemde kayıtlı değil.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self.serializer_class(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        data = serializer.validated_data
+        pazar_yeri = data['pazar_yeri']
+        urun_maliyeti = data['urun_maliyeti']
+        paketleme_bedeli = data['paketleme_bedeli']
+        urun_desi_kg = data['urun_desi_kg']
+        kargo_firma = data['kargo_firma']
+        kategori_yolu = data['kategori_yolu']
+        kar_orani = data['kar_orani']
+        kdv_orani = data['kdv_orani']
+
+        # Get shipping cost
+        try:
+            desi_kg_deger = DesiKgDeger.objects.get(
+                pazar_yeri=pazar_yeri,
+                desi_degeri__gte=urun_desi_kg
+            )
+            kargo_ucret = DesiKgKargoUcret.objects.get(
+                desi_kg_deger=desi_kg_deger,
+                kargo_firma=kargo_firma
+            )
+            kargo_bedeli = kargo_ucret.ucret
+        except (DesiKgDeger.DoesNotExist, DesiKgKargoUcret.DoesNotExist):
+            return Response(
+                {'error': 'Bu desi/kg değeri için kargo ücreti bulunamadı.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Calculate total cost
+        toplam_maliyet = urun_maliyeti + paketleme_bedeli + kargo_bedeli
+
+        # Get commission rate
+        try:
+            komisyon_orani = HesaplamaKomisyonOranlari.objects.get(
+                kategori=kategori_yolu
+            ).komisyon_orani
+        except HesaplamaKomisyonOranlari.DoesNotExist:
+            return Response(
+                {'error': 'Bu kategori için komisyon oranı bulunamadı.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Calculate amounts
+        komisyon_tutari = (toplam_maliyet * Decimal(str(komisyon_orani))) / Decimal('100')
+        kar_tutari = (toplam_maliyet * Decimal(str(kar_orani))) / Decimal('100')
+        kdv_tutari = ((toplam_maliyet + komisyon_tutari + kar_tutari) * Decimal(str(kdv_orani))) / Decimal('100')
+        satis_fiyati = toplam_maliyet + komisyon_tutari + kar_tutari + kdv_tutari
+
+        # Build category path
+        kategori_yolu_string = []
+        current = kategori_yolu
+        while current:
+            kategori_yolu_string.insert(0, current.ad)
+            current = current.ust_kategori
+        kategori_yolu_string = ' > '.join(kategori_yolu_string)
+
+        # Save calculation history if email is provided
+        if email:
+            user = get_user_model().objects.get(email=email)
+            KargoHesaplamaGecmisi.objects.create(
+                user=user,
+                pazar_yeri=pazar_yeri,
+                kargo_firma=kargo_firma,
+                urun_desi_kg=urun_desi_kg,
+                kargo_ucreti=kargo_bedeli
+            )
+
+        response_data = {
+            'urun_maliyeti': urun_maliyeti,
+            'paketleme_bedeli': paketleme_bedeli,
+            'kargo_bedeli': kargo_bedeli,
+            'toplam_maliyet': toplam_maliyet,
+            'komisyon_orani': komisyon_orani,
+            'komisyon_tutari': komisyon_tutari,
+            'kar_orani': kar_orani,
+            'kar_tutari': kar_tutari,
+            'kdv_orani': kdv_orani,
+            'kdv_tutari': kdv_tutari,
+            'satis_fiyati': satis_fiyati,
+            'kategori_yolu': kategori_yolu_string
+        }
+
+        return Response(response_data)
+
+class DesiKgHesaplamaView(APIView):
+    """
+    Desi/Kg hesaplama endpoint'i
+    """
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = DesiKgHesaplamaSerializer
+
+    def get(self, request, username):
+        serializer = self.serializer_class()
+        return Response(serializer.to_representation(None))
+
+    def post(self, request, username):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            # Email kontrolü
+            email = serializer.validated_data['email']
+            if email.lower() != request.user.email.lower():
+                return Response(
+                    {'error': 'Girdiğiniz email adresi ile giriş yaptığınız email adresi eşleşmiyor.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            en = serializer.validated_data['en']
+            boy = serializer.validated_data['boy']
+            yukseklik = serializer.validated_data['yukseklik']
+            net_agirlik = serializer.validated_data.get('net_agirlik', 0)
+
+            # Desi/Kg hesaplama
+            desi = (en * boy * yukseklik) / 3000
+            kg = max(desi, net_agirlik)
+
+            # Hesaplama geçmişini kaydet
+            from hesaplama.models import HesaplamaDesiKgGecmisi
+            HesaplamaDesiKgGecmisi.objects.create(
+                kullanici=request.user,
+                email=request.user.email,
+                en=en,
+                boy=boy,
+                yukseklik=yukseklik,
+                net_agirlik=net_agirlik,
+                desi_kg=kg
+            )
+
+            return Response({
+                'email': request.user.email,
+                'desi': desi,
+                'kg': kg,
+                'kullanilacak_deger': kg
+            })
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MarketplacePriceCalculationView(UsernameMixin, APIView):
+    """
+    Pazar yeri satış fiyatı hesaplama endpoint'i için view
+    """
+    permission_classes = [AllowAny]
+    serializer_class = MarketplacePriceCalculationSerializer
+    renderer_classes = [renderers.JSONRenderer, renderers.BrowsableAPIRenderer]
+
+    def validate_email(self, email):
+        """
+        Email adresinin sistemde kayıtlı olup olmadığını kontrol eder
+        """
+        User = get_user_model()
+        if User.objects.filter(email__iexact=email).exists():
+            return True, None  # Email kayıtlı ise hesaplama yapılabilir
+        return True, None  # Email kayıtlı değilse de hesaplama yapılabilir
+
+    def get(self, request, username=None, format=None):
+        """
+        GET isteği için form verilerini ve seçenekleri döndürür
+        """
+        # Validate username
+        error_response = self.validate_username(username)
+        if error_response:
+            return error_response
+            
+        serializer = self.serializer_class()
+        return Response(serializer.to_representation(None))
+
+    def post(self, request, username=None, format=None):
+        """
+        POST isteği için hesaplama yapar ve sonuçları döndürür
+        """
+        error_response = self.validate_username(username)
+        if error_response:
+            return error_response
+            
+        serializer = self.serializer_class(data=request.data)
+        
+        if serializer.is_valid():
+            try:
+                # Email kontrolü
+                email = serializer.validated_data.get('email', '').strip().lower()
+                
+                # Hesaplama geçmişi kontrolü ve bağlama
+                if not check_and_link_calculations(request.user, email):
+                    return Response(
+                        {'error': 'Girdiğiniz email adresi ile giriş yaptığınız email adresi eşleşmiyor.'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                # Form verilerini al
+                pazar_yeri = serializer.validated_data['pazar_yeri']
+                urun_maliyeti = serializer.validated_data['urun_maliyeti']
+                paketleme_bedeli = serializer.validated_data['paketleme_bedeli']
+                urun_desi_kg = serializer.validated_data['urun_desi_kg']
+                kargo_firma = serializer.validated_data['kargo_firma']
+                komisyon_orani = serializer.validated_data['komisyon_orani']
+                kar_orani = serializer.validated_data['kar_orani']
+                kdv_orani = serializer.validated_data['kdv_orani']
+                
+                # Hizmet bedelini belirle
+                if pazar_yeri.pazar_ismi == "Trendyol":
+                    hizmet_bedeli = Decimal('8.49')
+                elif pazar_yeri.pazar_ismi == "Hepsiburada":
+                    hizmet_bedeli = Decimal('9.5')
+                else:
+                    hizmet_bedeli = Decimal('0')
+                
+                # Kargo ücretini bul
+                desi_kg_yuvarlama = math.ceil(urun_desi_kg)
+                
+                # Pazar yeri ve kargo firma ilişkisini kontrol et
+                if not PazaryeriKargofirma.objects.filter(pazar_yeri=pazar_yeri, kargo_firma=kargo_firma).exists():
+                    return Response(
+                        {'error': f'{kargo_firma.firma_ismi} {pazar_yeri.pazar_ismi} için hizmet vermemektedir.'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                # Desi/Kg değerini bul
+                desi_kg_deger = DesiKgDeger.objects.filter(
+                    pazar_yeri=pazar_yeri,
+                    desi_degeri=desi_kg_yuvarlama
+                ).first()
+                
+                if not desi_kg_deger:
+                    return Response(
+                        {'error': f'{pazar_yeri.pazar_ismi} için {desi_kg_yuvarlama} desi/kg değerinde tarife bulunamadı.'},
+                        status=status.HTTP_404_NOT_FOUND
+                    )
+                
+                # Kargo ücretini bul
+                kargo_ucret = DesiKgKargoUcret.objects.filter(
+                    pazar_yeri=pazar_yeri,
+                    kargo_firma=kargo_firma,
+                    desi_kg_deger=desi_kg_deger
+                ).first()
+                
+                if not kargo_ucret:
+                    return Response(
+                        {'error': f'{pazar_yeri.pazar_ismi} - {kargo_firma.firma_ismi} için {desi_kg_yuvarlama} desi/kg değerinde tarife bulunamadı.'},
+                        status=status.HTTP_404_NOT_FOUND
+                    )
+                
+                # Hesaplamaları yap
+                tam_kisim = (urun_maliyeti + kargo_ucret.ucret + paketleme_bedeli + hizmet_bedeli) * Decimal('100')
+                stopaj_orani = Decimal('1')
+                yuzde_kisim = Decimal('100') - (komisyon_orani + kar_orani + stopaj_orani)
+                satis_fiyati = tam_kisim / yuzde_kisim
+                
+                komisyon_bedeli = satis_fiyati * komisyon_orani / Decimal('100')
+                kar_bedeli = satis_fiyati * kar_orani / Decimal('100')
+                stopaj_bedeli = satis_fiyati * stopaj_orani / Decimal('100')
+                kdv_dahil_satis_fiyati = satis_fiyati + (satis_fiyati * kdv_orani / Decimal('100'))
+
+                # Hesaplama geçmişini kaydet
+                from hesaplama.models import FiyatHesaplamaGecmisi
+                FiyatHesaplamaGecmisi.objects.create(
+                    kullanici=request.user if request.user.is_authenticated else None,
+                    email=email,
+                    pazar_yeri=pazar_yeri,
+                    urun_maliyeti=urun_maliyeti,
+                    paketleme_bedeli=paketleme_bedeli,
+                    hizmet_bedeli=hizmet_bedeli,
+                    urun_desi_kg=urun_desi_kg,
+                    kargo_firma=kargo_firma,
+                    kargo_ucreti=kargo_ucret.ucret,
+                    komisyon_orani=komisyon_orani,
+                    stopaj_orani=stopaj_orani,
+                    stopaj_bedeli=stopaj_bedeli,
+                    satis_fiyati=satis_fiyati,
+                    kdv_dahil_satis_fiyati=kdv_dahil_satis_fiyati
+                )
+                
+                # Sonuçları döndür
+                result = {
+                    'mail': email,
+                    'urun_maliyeti': float(urun_maliyeti),
+                    'paketleme_bedeli': float(paketleme_bedeli),
+                    'pazar_yeri': pazar_yeri.pazar_ismi,
+                    'hizmet_bedeli': float(hizmet_bedeli),
+                    'urun_desi_kg': float(urun_desi_kg),
+                    'kargo_ucreti': float(kargo_ucret.ucret),
+                    'kategori_komisyon_orani': float(komisyon_orani),
+                    'stopaj_orani': float(stopaj_orani),
+                    'hesaplanan_stopaj_bedeli': float(stopaj_bedeli),
+                    'satis_fiyati': float(satis_fiyati),
+                    'kdv_dahil_satis_fiyati': float(kdv_dahil_satis_fiyati)
+                }
+                
+                return Response(result)
+                
+            except Exception as e:
+                return Response(
+                    {'error': str(e)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
