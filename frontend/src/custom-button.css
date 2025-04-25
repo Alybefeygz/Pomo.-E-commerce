@@ -1,0 +1,50 @@
+.custom-gradient-button {
+  background: white !important;
+  color: #43426e !important;
+  border: 1px solid #43426e !important;
+  transition: all 0.3s ease !important;
+}
+
+.custom-gradient-button:hover,
+.custom-gradient-button:focus {
+  background: linear-gradient(to right, #43426e, #e7bd99) !important;
+  color: white !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 2px rgba(67, 66, 110, 0.2) !important;
+}
+
+/* Custom hover styles for inputs */
+.ant-input:hover,
+.ant-input-affix-wrapper:hover,
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: #43426e !important;
+}
+
+/* Custom focus styles for inputs */
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused,
+.ant-select-focused .ant-select-selector,
+.ant-select-selector:focus {
+  border-color: #43426e !important;
+  box-shadow: 0 0 0 2px rgba(67, 66, 110, 0.2) !important;
+}
+
+/* Specifically target email input with prefix */
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+  border-color: #43426e !important;
+  box-shadow: 0 0 0 2px rgba(67, 66, 110, 0.2) !important;
+  outline: 0;
+}
+
+.ant-input-affix-wrapper:hover {
+  border-color: #43426e !important;
+}
+
+/* Custom focus styles for select dropdown */
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: #43426e !important;
+  box-shadow: 0 0 0 2px rgba(67, 66, 110, 0.2) !important;
+} 
