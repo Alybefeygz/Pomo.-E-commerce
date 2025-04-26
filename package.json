@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "firebase": "^11.6.0",
-    "framer-motion": "^12.6.3"
-  },
-  "devDependencies": {
-    "@types/firebase": "^2.4.32"
-  }
-}
